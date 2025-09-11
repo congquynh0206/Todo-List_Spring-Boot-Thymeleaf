@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Personal Page</title>
+    <link th:href="@{/css/personal.css}" rel="stylesheet">
+    <link th:href="@{/css/topbar.css}" rel="stylesheet">
+</head>
+<body>
+
+<!-- Background Image -->
+<div class="background-image"></div>
+
+<!-- Top Bar -->
+<div th:replace="fragments/topbar :: topbar"></div>
+
+<!-- Main Content Area -->
+<div class="main-content">
+
+    <!-- Left Sidebar -->
+    <div class="sidebar">
+        <!-- User Profile -->
+        <div class="user-profile">
+            <div class="avatar-container">
+
+                <img th:src="@{'/uploads/' + ${user.avatar}}" alt="Avatar" class="avatar-img">
+
+                <form th:action="@{/update-avatar}" method="post" enctype="multipart/form-data" class="upload-form">
+                    <label for="avatarFile" class="upload-btn">📷</label>
+                    <input type="file" id="avatarFile" name="avatarFile" accept="image/*" onchange="this.form.submit()">
+                    <button type="button" class ="reset-btn" onclick="resetAvatar()">❌</button>
+                </form>
+            </div>
+
+            <div class="profile-line"></div>
+            <div class="profile-name" th:text="${user.displayName}"></div>
+            <div class="profile-info">
+                <div class="email-info">Email: <span th:text="${user.email}"></span></div>
+                <div class="role-info">Role: <span th:text="${user.role}"></span></div>
+            </div>
+        </div>
+
+        <!-- Navigation Menu -->
+        <div class="nav-menu">
+            <a class="nav-item" th:href="@{/tasks/current}" th:classappend="${activeTab == 'current'} ? 'active'">⏳ Current
+                Tasks
+            </a>
+            <a class="nav-item" th:href="@{/tasks/finished}" th:classappend="${activeTab == 'finished'} ? 'active'">
+                ✅ Finished Tasks
+            </a>
+            <a class="nav-item" th:href="@{/tasks/removed}" th:classappend="${activeTab == 'removed'} ? 'active'">🗑️ Removed
+                Tasks
+            </a>
+            <a class="nav-item" th:href="@{/tasks/infor}" th:classappend="${activeTab == 'infor'} ? 'active'">⚙ Change
+                information
+            </a>
+        </div>
+
+    </div>
+
+    <!-- Right Content Area -->
+    <div class="content-area">
+        <a th:href="@{/home}">
+            <img th:src="@{/icon/home-icon.png}" alt="Home" class="home-icon">
+        </a>
+        <div th:if="${success}" th:text="${success}" class="success"></div>
+        <div th:if="${error}" th:text="${error}" class="error"></div>
+
+
+        <!-- Current Section -->
+        <div th:if="${activeTab == 'current'}" class="task-section">
+            <table>
+                <tr>
+                    <th>Number</th>
+                    <th>Title</th>
+                    <th>Description</th>
+                    <th>Create date</th>
+                    <th>Due date</th>
+                    <th>Delete</th>
+                </tr>
+                <tr th:each="task, iterStat : ${listCurrent}">
+                    <td th:text="${iterStat.index + 1 + (listCurrent.number * listCurrent.size)}"></td>
+                    <td th:text="${task.title}"></td>
+                    <td th:text="${task.description}"></td>
+                    <td th:text="${#temporals.format(task.createdAt, 'dd/MM/yyyy HH:mm')}"></td>
+                    <td th:text="${task.dueDate}"></td>
+                    <td>
+                        <form th:action="@{'/delete-task-current/' + ${task.task_id}}" method="post">
+                            <input type="hidden" name="tab" value="current"/>
+                            <button type="submit">Delete</button>
+                        </form>
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="8">
+                        <div class="pagination-container">
+                            <a th:if="${listCurrent.hasPrevious()}"
+                               th:href="@{/tasks/finished(page=${listCurrent.number - 1}, size=${listCurrent.size})}">Previous</a>
+
+                            <span class="page-info">
+                            Page <span th:text="${listCurrent.number + 1}"></span> /
+                            <span th:text="${listCurrent.totalPages}"></span>
+                                    </span>
+                            <a th:if="${listCurrent.hasNext()}"
+                               th:href="@{/tasks/current(page=${listCurrent.number + 1}, size=${listCurrent.size})}">Next</a>
+                        </div>
+                    </td>
+                </tr>
+            </table>
+        </div>
+
+        <!-- Finished Section -->
+        <div th:if="${activeTab == 'finished'}" class="task-section">
+            <table>
+                <tr>
+                    <th>Number</th>
+                    <th>Title</th>
+                    <th>Description</th>
+                    <th>Create date</th>
+                    <th>Due date</th>
+                    <th>Delete</th>
+                </tr>
+                <tr th:each="task, iterStat : ${listFinished}">
+                    <td th:text="${iterStat.index + 1 + (listFinished.number * listFinished.size)}"></td>
+                    <td th:text="${task.title}"></td>
+                    <td th:text="${task.description}"></td>
+                    <td th:text="${#temporals.format(task.createdAt, 'dd/MM/yyyy HH:mm')}"></td>
+                    <td th:text="${task.dueDate}"></td>
+                    <td>
+                        <form th:action="@{'/delete-task-permanent/' + ${task.task_id}}" method="post">
+                            <input type="hidden" name="tab" value="finished"/>
+                            <input type="hidden" name="from" value="personal"/>
+                            <button type="submit">Delete</button>
+                        </form>
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="8">
+                        <div class="pagination-container">
+                            <a th:if="${listFinished.hasPrevious()}"
+                               th:href="@{/tasks/finished(page=${listFinished.number - 1}, size=${listFinished.size})}">Previous</a>
+
+                            <span class="page-info">
+                            Page <span th:text="${listFinished.number + 1}"></span> /
+                            <span th:text="${listFinished.totalPages}"></span>
+                                    </span>
+
+                            <a th:if="${listFinished.hasNext()}"
+                               th:href="@{/tasks/finished(page=${listFinished.number + 1}, size=${listFinished.size})}">Next</a>
+                        </div>
+                    </td>
+                </tr>
+            </table>
+        </div>
+
+        <!-- Removed Section -->
+        <div th:if="${activeTab == 'removed'}" class="task-section">
+            <table>
+                <tr>
+                    <th>Number</th>
+                    <th>Title</th>
+                    <th>Description</th>
+                    <th>Create date</th>
+                    <th>Due date</th>
+                    <th>Restore</th>
+                    <th>Delete</th>
+                </tr>
+                <tr th:each="task, iterStat : ${listRemoved}">
+                    <td th:text="${iterStat.index + 1 + (listRemoved.number * listRemoved.size)}"></td>
+                    <td th:text="${task.title}"></td>
+                    <td th:text="${task.description}"></td>
+                    <td th:text="${#temporals.format(task.createdAt, 'dd/MM/yyyy HH:mm')}"></td>
+                    <td th:text="${task.dueDate}"></td>
+                    <td>
+                        <form th:action="@{'/restore-task/' + ${task.task_id}}" method="post">
+                            <button type="submit" class="restore-btn">Restore</button>
+                        </form>
+                    </td>
+                    <td>
+                        <form th:action="@{'/delete-task-permanent/' + ${task.task_id}}" method="post">
+                            <input type="hidden" name="tab" value="removed"/>
+                            <input type="hidden" name="from" value="personal"/>
+                            <button type="submit">Delete</button>
+                        </form>
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="8">
+                        <div class="pagination-container">
+                            <a th:if="${listRemoved.hasPrevious()}"
+                               th:href="@{/tasks/removed(page=${listRemoved.number - 1}, size=${listRemoved.size})}">Previous</a>
+
+                            <span class="page-info">
+                            Page <span th:text="${listRemoved.number + 1}"></span> /
+                            <span th:text="${listRemoved.totalPages}"></span>
+                                    </span>
+
+                            <a th:if="${listRemoved.hasNext()}"
+                               th:href="@{/tasks/removed(page=${listRemoved.number + 1}, size=${listRemoved.size})}">Next</a>
+                        </div>
+                    </td>
+                </tr>
+            </table>
+        </div>
+
+        <!-- Change information Section -->
+        <div th:if="${activeTab == 'infor'}" class="change_infor">
+            <form  th:action="@{/update-username}"  method="post" class="info-section username-section">
+                <div class="section-title">User name</div>
+                <div class="input-container">
+                    <input type="text" name="newName" placeholder="New user name" th:value="${user.displayName}">
+                </div>
+                <div th:if="${error_username}" class="error-message">
+                    <p th:text="${error_username}"></p>
+                </div>
+                <div th:if="${success_username}" class="success-message">
+                    <p th:text="${success_username}"></p>
+                </div>
+                <button class="save-btn" type="submit">Save</button>
+            </form>
+
+            <!-- Gmail Section -->
+            <form th:action="@{/update-email}" method="post" class="info-section email-section">
+                <div class="section-title">Gmail</div>
+                <div class="input-container">
+                    <input type="email" name="newEmail" placeholder="New email" th:value="${user.email}">
+                </div>
+                <div th:if="${error_email}" class="error-message">
+                    <p th:text="${error_email}"></p>
+                </div>
+                <div th:if="${success_email}" class="success-message">
+                    <p th:text="${success_email}"></p>
+                </div>
+                <button class="save-btn" type="submit">Save</button>
+            </form>
+
+            <!-- Password Section -->
+            <form th:action="@{/update-password}" method="post" class="info-section password-section">
+                <div class="section-title">Password</div>
+                <div class="input-container">
+                    <input type="password" name="currentPassword" placeholder="Current password">
+                </div>
+                <div class="input-container">
+                    <input type="password" name="newPassword" placeholder="New password">
+                </div>
+                <div th:if="${error_password}" class="error-message">
+                    <p th:text="${error_password}"></p>
+                </div>
+                <div th:if="${success_password}" class="success-message">
+                    <p th:text="${success_password}"></p>
+                </div>
+                <button class="save-btn" type="submit">Save</button>
+            </form>
+        </div>
+    </div>
+</div>
+
+<script th:src="@{/js/personal.js}"></script>
+</body>
+</html>

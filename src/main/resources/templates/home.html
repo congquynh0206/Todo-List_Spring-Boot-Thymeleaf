@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <title>To-Do List</title>
+    <link th:href="@{/css/home.css}" rel="stylesheet">
+    <link th:href="@{/css/topbar.css}" rel="stylesheet">
+</head>
+<body>
+<!-- Overlay -->
+<div id="overlay" class="overlay"></div>
+
+<!-- Thanh top-bar -->
+<div th:replace="fragments/topbar :: topbar"></div>
+
+<!-- To-do List -->
+<div class="todo-container">
+    <h2>To-Do List</h2>
+
+    <div class="progress-section">
+        <div th:text="|${message} ${numberOfFinished}/${totalTask}|" class="progress-text"></div>
+        <div class="progress-bar">
+            <div class="progress-fill" th:style="|width: ${(numberOfFinished * 100.0 / totalTask)}%|"></div>
+        </div>
+    </div>
+
+    <!-- Hiển thị danh sách tasks -->
+    <div th:each="task : ${tasks.content}" class="todo-item"
+         th:data-id="${task.task_id}"
+         th:data-title="${task.title}"
+         th:data-desc="${task.description}"
+         th:data-date="${task.dueDate}">
+        <input type="checkbox"
+               th:checked="${task.status == 'FINISHED'}"
+               th:attr="data-id=${task.task_id}"
+               onchange="toggleStatus(this)">
+        <span th:text="${task.title}">Task title</span>
+    </div>
+
+
+    <div th:if="${#lists.isEmpty(tasks)}" class="no-tasks">
+        <p>No tasks yet. Add your first to-do!</p>
+    </div>
+
+    <div>
+        <a th:if="${tasks.hasPrevious()}"
+           th:href="@{/home(page=${tasks.number - 1}, size=${tasks.size})}">Previous</a>
+
+        <span>Page <span th:text="${tasks.number + 1}"></span> /
+          <span th:text="${tasks.totalPages}"></span></span>
+
+        <a th:if="${tasks.hasNext()}"
+           th:href="@{/home(page=${tasks.number + 1}, size=${tasks.size})}">Next</a>
+    </div>
+
+    <button class="add-btn">+ Add new to-do</button>
+</div>
+
+<!-- Modal: Detail -->
+<div id="detailModal" class="modal">
+    <div class="modal-content">
+        <span class="close-btn" id="closeDetail">&times;</span>
+        <h3>Detail</h3>
+
+        <form id="updateForm" method="post">
+            <input type="hidden" id="taskId" name="taskId">
+
+            <label>Title</label>
+            <input type="text" id="detailTitle" name="title" required>
+
+            <label>Description</label>
+            <textarea id="detailDesc" name="description"></textarea>
+
+            <label>Due date</label>
+            <input type="date" id="detailDate" name="dueDate">
+
+            <p id="taskStatus" style="font-weight: bold;"></p>
+
+            <div class="modal-actions">
+                <button type="button" id="saveDetail">Save</button>
+                <button type="button" id="deleteDetail" class="delete-btn">Delete</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<!-- Modal: Add New -->
+<div id="addModal" class="modal">
+    <div class="modal-content">
+        <span class="close-btn" id="closeAdd">&times;</span>
+        <h3>Add New To-Do</h3>
+
+        <form th:action="@{/add-task}" method="post" th:object="${newTask}">
+            <label>Title</label>
+            <input type="text" id="addTitle" th:field="*{title}" required>
+
+            <label>Description</label>
+            <textarea id="addDesc" th:field="*{description}"></textarea>
+
+            <label>Due date</label>
+            <input type="date" id="addDate" th:field="*{dueDate}">
+            <p th:text="${error} " th:if="${error}" style="color: #b91c1c"></p>
+            <button type="submit" id="addTask">ADD</button>
+        </form>
+    </div>
+</div>
+
+<script th:inline="javascript">
+    /*<![CDATA[*/
+    window.openAddModal = /*[[${openAddModal != null ? openAddModal : false}]]*/false;
+    /*]]>*/
+</script>
+
+<script th:src="@{/js/home.js}"></script>
+
+
+</body>
+</html>

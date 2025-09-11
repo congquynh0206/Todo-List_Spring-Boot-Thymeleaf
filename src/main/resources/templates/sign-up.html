@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sign-Up Page</title>
+    <link rel="stylesheet" th:href="@{/css/sign-up.css}">
+</head>
+<body>
+
+<div class="top-buttons">
+    <button class="small-btn" disabled>SIGN-UP</button>
+    <button class="small-btn">
+        <a th:href="@{/login}">LOGIN</a>
+    </button>
+</div>
+
+<div class="form-container">
+    <h2>SIGN-UP</h2>
+
+    <!-- Hiển thị lỗi từ backend -->
+    <div class="error-message" th:if="${emailError}" th:text="${emailError}"></div>
+    <div class="error-message" th:if="${error}" th:text="${error}"></div>
+
+    <form id="signUpForm" th:action="@{/signup}" th:object="${user}" method="post">
+        <div class="form-group">
+            <input type="text" id="displayName" th:field="*{displayName}" placeholder="Display Name" required>
+            <span class="error" id="usernameError"></span>
+        </div>
+
+        <div class="form-group">
+            <input type="email" id="email" th:field="*{email}" placeholder="Email" required>
+            <span class="error" id="emailError"></span>
+        </div>
+
+        <div class="form-group password-group">
+            <input type="password" id="password" th:field="*{password}" placeholder="Password" required>
+            <img th:src="@{/icon/eye-showpass.png}" alt="Show/Hide Password" id="togglePassword" class="eye-icon">
+            <span class="error" id="passwordError"></span>
+        </div>
+
+        <button type="submit">SIGN-UP</button>
+    </form>
+</div>
+
+<!-- JS -->
+<script th:src="@{/js/sign-up.js}"></script>
+<script th:src="@{/js/show-pass.js}"></script>
+</body>
+</html>

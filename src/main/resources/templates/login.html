@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Login Page</title>
+    <link rel="stylesheet" th:href="@{/css/login.css}">
+</head>
+<body>
+
+<div class="top-buttons">
+    <button class="small-btn">
+        <a th:href="@{/signup}">SIGN-UP</a>
+    </button>
+    <button class="small-btn" disabled>LOGIN</button>
+</div>
+
+<div class="login-container">
+    <h2>LOGIN</h2>
+
+    <form th:action="@{/login}" method="post">
+
+        <div class="form-group">
+            <input type="email" name="email" placeholder="Email" required>
+        </div>
+
+        <div class="form-group password-group">
+            <input type="password" name="password" id="password" placeholder="Password" required>
+            <img th:src="@{/icon/eye-showpass.png}" alt="Show/Hide Password" id="togglePassword" class="eye-icon">
+        </div>
+
+        <div class="error-message" th:if="${error}" th:text="${error}"></div>
+
+        <button type="submit" class="login-btn">LOGIN</button>
+    </form>
+</div>
+
+<script th:src="@{/js/show-pass.js}"></script>
+</body>
+</html>

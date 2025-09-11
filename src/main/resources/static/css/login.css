@@ -1,0 +1,147 @@
+/* reset */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html, body {
+    height: 100%;
+    font-family: Inter, sans-serif;
+}
+
+body {
+    background: url("../image/background.png") no-repeat center center;
+    background-size: cover;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+
+/* nút ở góc trên phải */
+.top-buttons {
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+    display: flex;
+    gap: 0.5rem;
+}
+
+.small-btn {
+    background: rgba(150, 150, 150, 0.5);
+    color: white;
+    border: 2px solid white;
+    border-radius: 1rem;
+    padding: 0.4rem 0.9rem;
+    font-size: 0.85rem;
+    cursor: pointer;
+    transition: opacity 0.2s ease-in-out;
+}
+
+/* khối login giữa màn hình */
+.login-container {
+    background: rgba(89, 71, 71, 0.5); /* nền mờ */
+    padding: 2rem;
+    border: 2px solid white;
+    border-radius: 1rem;
+    text-align: center;
+    width: 300px;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+}
+
+.login-container h2 {
+    color: white;
+    margin-bottom: 1.5rem;
+    font-size: 1.8rem;
+}
+
+.login-container input {
+    display: block;
+    width: 100%;
+    padding: 0.8rem;
+    margin-bottom: 1rem;
+    border-radius: 0.5rem;
+    border: 2px solid white;
+    background: rgba(255, 255, 255, 0.15);
+    color: white;
+    font-size: 1rem;
+}
+
+.login-container input::placeholder {
+    color: #eee;
+}
+
+.login-btn {
+    width: 100%;
+    padding: 0.8rem;
+    border: 2px solid white;
+    border-radius: 0.5rem;
+    background: mediumpurple;
+    color: white;
+    font-size: 1.1rem;
+    cursor: pointer;
+}
+.small-btn:hover,
+.login-btn:hover {
+    opacity: 80%;
+}
+.small-btn:disabled {
+    opacity: 0.6;
+}
+a {
+    text-decoration: none;
+    color: white;
+}
+.password-group {
+    position: relative; /* thêm dòng này */
+}
+
+.eye-icon {
+    display: none;
+    position: absolute;
+    right: 0.3em;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 2.5em;
+    height: 1.5em;
+    cursor: pointer;
+    opacity: 0.7;
+}
+
+.eye-icon:hover {
+    opacity: 1;
+}
+
+
+
+/* Thêm vào file login.css */
+.error-message {
+    background-color: #f8d7da;
+    color: #721c24;
+    padding: 10px;
+    border: 1px solid #f5c6cb;
+    border-radius: 4px;
+    margin-bottom: 15px;
+    font-size: 14px;
+    text-align: center;
+    animation: shake 0.5s ease-in-out;
+}
+
+@keyframes shake {
+    0% { transform: translateX(0); }
+    10%, 30%, 50%, 70%, 90% { transform: translateX(-5px); }
+    20%, 40%, 60%, 80% { transform: translateX(5px); }
+    100% { transform: translateX(0); }
+}
+
+/* Style cho input khi có lỗi */
+.form-group.error input {
+    border-color: #dc3545;
+    box-shadow: 0 0 5px rgba(220, 53, 69, 0.3);
+}
+
+.form-group.error input:focus {
+    border-color: #dc3545;
+    box-shadow: 0 0 8px rgba(220, 53, 69, 0.5);
+}

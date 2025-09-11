@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+</head>
+<body>
+<!-- Fragment Top-Bar -->
+<div th:fragment="topbar">
+  <div class="top-bar">
+    <a class="nav-btn" th:href="@{/admin}">Manage</a>
+    <div class="nav-btn"><a th:href="@{/login}">Sign-Out</a></div>
+    <div class="username" th:text="${user.displayName}">Name</div>
+
+    <!-- Avatar hiển thị -->
+    <a th:href="@{/personal}" class="avatar-link">
+      <img th:src="@{'/uploads/' + ${user.avatar}}" alt="Avatar" class="avatar-topBar">
+    </a>
+  </div>
+</div>
+</body>
+</html>
