@@ -96,14 +96,14 @@
                     <td colspan="8">
                         <div class="pagination-container">
                             <a th:if="${listCurrent.hasPrevious()}"
-                               th:href="@{/tasks/finished(page=${listCurrent.number - 1}, size=${listCurrent.size})}">Previous</a>
+                               th:href="@{/tasks/finished(page=${listCurrent.number - 1}, size=${listCurrent.size})}">⟵</a>
 
                             <span class="page-info">
                             Page <span th:text="${listCurrent.number + 1}"></span> /
                             <span th:text="${listCurrent.totalPages}"></span>
                                     </span>
                             <a th:if="${listCurrent.hasNext()}"
-                               th:href="@{/tasks/current(page=${listCurrent.number + 1}, size=${listCurrent.size})}">Next</a>
+                               th:href="@{/tasks/current(page=${listCurrent.number + 1}, size=${listCurrent.size})}">⟶</a>
                         </div>
                     </td>
                 </tr>
@@ -139,7 +139,7 @@
                     <td colspan="8">
                         <div class="pagination-container">
                             <a th:if="${listFinished.hasPrevious()}"
-                               th:href="@{/tasks/finished(page=${listFinished.number - 1}, size=${listFinished.size})}">Previous</a>
+                               th:href="@{/tasks/finished(page=${listFinished.number - 1}, size=${listFinished.size})}">⟵</a>
 
                             <span class="page-info">
                             Page <span th:text="${listFinished.number + 1}"></span> /
@@ -147,7 +147,7 @@
                                     </span>
 
                             <a th:if="${listFinished.hasNext()}"
-                               th:href="@{/tasks/finished(page=${listFinished.number + 1}, size=${listFinished.size})}">Next</a>
+                               th:href="@{/tasks/finished(page=${listFinished.number + 1}, size=${listFinished.size})}">⟶</a>
                         </div>
                     </td>
                 </tr>
@@ -189,7 +189,7 @@
                     <td colspan="8">
                         <div class="pagination-container">
                             <a th:if="${listRemoved.hasPrevious()}"
-                               th:href="@{/tasks/removed(page=${listRemoved.number - 1}, size=${listRemoved.size})}">Previous</a>
+                               th:href="@{/tasks/removed(page=${listRemoved.number - 1}, size=${listRemoved.size})}">⟵</a>
 
                             <span class="page-info">
                             Page <span th:text="${listRemoved.number + 1}"></span> /
@@ -197,7 +197,7 @@
                                     </span>
 
                             <a th:if="${listRemoved.hasNext()}"
-                               th:href="@{/tasks/removed(page=${listRemoved.number + 1}, size=${listRemoved.size})}">Next</a>
+                               th:href="@{/tasks/removed(page=${listRemoved.number + 1}, size=${listRemoved.size})}">⟶</a>
                         </div>
                     </td>
                 </tr>

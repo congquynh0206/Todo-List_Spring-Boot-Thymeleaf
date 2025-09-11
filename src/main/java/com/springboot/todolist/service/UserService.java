@@ -3,6 +3,8 @@ package com.springboot.todolist.service;
 import com.springboot.todolist.repository.UserRepository;
 import com.springboot.todolist.model.User;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -85,5 +87,9 @@ public class UserService {
 
     public Optional<User> findById (long id){
         return userRepository.findById(id);
+    }
+
+    public Page<User> findByRole (String role, int page, int size){
+        return userRepository.findByRole(role, PageRequest.of(page, size));
     }
 }

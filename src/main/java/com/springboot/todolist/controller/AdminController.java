@@ -45,8 +45,8 @@ public class AdminController {
             case "dashboard":
                 break;
             case "user":
-                model.addAttribute("listUser", userService.getUserByRole("USER"));
-                model.addAttribute("listAdmin", userService.getUserByRole("ADMIN"));
+                model.addAttribute("listUser", userService.findByRole("USER", page,size));
+                model.addAttribute("listAdmin", userService.findByRole("ADMIN", page,size));
                 break;
             case "task":
                 model.addAttribute("listTask", taskService.getAllTaskPage(page, size));
@@ -58,6 +58,42 @@ public class AdminController {
         return "admin";
     }
 
+
+
+    @GetMapping("/admin/user")
+    public String userManagement (@RequestParam (defaultValue = "0") int page,
+                                  @RequestParam (defaultValue = "1") int size,
+                                  HttpSession session,
+                                  Model model){
+        String email = (String) session.getAttribute("userEmail");
+        if ( email == null){
+            return "redirect:/login";
+        }
+        User user = userService.findByEmail(email).orElseThrow();
+        model.addAttribute("listUser", userService.findByRole("USER", page,size));
+        model.addAttribute("listAdmin", userService.findByRole("ADMIN", page,size));
+        model.addAttribute("user", user);
+        model.addAttribute("activeTab", "user");
+        model.addAttribute("size", size);
+        return "admin";
+    }
+    @GetMapping("/admin/ad")
+    public String adminManagement (@RequestParam (defaultValue = "0") int page,
+                                  @RequestParam (defaultValue = "1") int size,
+                                  HttpSession session,
+                                  Model model){
+        String email = (String) session.getAttribute("userEmail");
+        if ( email == null){
+            return "redirect:/login";
+        }
+        User user = userService.findByEmail(email).orElseThrow();
+        model.addAttribute("listUser", userService.findByRole("USER", page,size));
+        model.addAttribute("listAdmin", userService.findByRole("ADMIN", page,size));
+        model.addAttribute("user", user);
+        model.addAttribute("activeTab", "user");
+        model.addAttribute("size", size);
+        return "admin";
+    }
     @GetMapping("/admin/task")
     public String taskManagement (@RequestParam (defaultValue = "0") int page,
                                   @RequestParam (defaultValue = "5") int size,

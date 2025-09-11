@@ -233,3 +233,37 @@ body {
     font-weight: bold;
 }
 
+
+/* Pagination with arrows */
+.pagination {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 12px;
+    margin-top: 20px;
+    font-family: Arial, sans-serif;
+}
+
+.pagination a {
+    color: #4b5563;
+}
+
+.pagination a:hover {
+    color: #ffffff;
+}
+
+.pagination a.disabled {
+    background: #f9fafb;
+    border-color: #e5e7eb;
+    color: #9ca3af;
+    cursor: not-allowed;
+    pointer-events: none;
+}
+
+.page-info {
+    font-size: 14px;
+    color: #4b5563;
+    font-weight: 500;
+}
+
+

@@ -43,16 +43,20 @@
         <p>No tasks yet. Add your first to-do!</p>
     </div>
 
-    <div>
+    <div class="pagination">
         <a th:if="${tasks.hasPrevious()}"
-           th:href="@{/home(page=${tasks.number - 1}, size=${tasks.size})}">Previous</a>
+           th:href="@{/home(page=${tasks.number - 1}, size=${tasks.size})}"
+           th:classappend="${!tasks.hasPrevious()} ? 'disabled' : ''">⟵</a>
 
-        <span>Page <span th:text="${tasks.number + 1}"></span> /
-          <span th:text="${tasks.totalPages}"></span></span>
+        <div class="page-info">
+            Page <span th:text="${tasks.number + 1}"></span> / <span th:text="${tasks.totalPages}"></span>
+        </div>
 
         <a th:if="${tasks.hasNext()}"
-           th:href="@{/home(page=${tasks.number + 1}, size=${tasks.size})}">Next</a>
+           th:href="@{/home(page=${tasks.number + 1}, size=${tasks.size})}"
+           th:classappend="${!tasks.hasNext()} ? 'disabled' : ''">⟶</a>
     </div>
+
 
     <button class="add-btn">+ Add new to-do</button>
 </div>

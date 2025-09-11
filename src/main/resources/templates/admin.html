@@ -90,7 +90,7 @@
 
         </tr>
         <tr th:each="user, iterStat : ${listUser}">
-          <td th:text="${iterStat.index + 1}"></td>
+          <td th:text="${iterStat.index + 1 + (listUser.number * listUser.size)}"></td>
           <td th:text="${user.user_id}"></td>
           <td th:text="${user.displayName}"></td>
           <td th:text="${user.email}"></td>
@@ -116,6 +116,21 @@
             </form>
           </td>
         </tr>
+        <tr>
+          <td colspan="8">
+            <div class="pagination-container">
+              <a th:if="${listUser.hasPrevious()}"
+                 th:href="@{/admin/user(page=${listUser.number - 1}, size=${listUser.size})}">⟵</a>
+
+              <span class="page-info">
+                            Page <span th:text="${listUser.number + 1}"></span> /
+                            <span th:text="${listUser.totalPages}"></span>
+                                    </span>
+              <a th:if="${listUser.hasNext()}"
+                 th:href="@{/admin/user(page=${listUser.number + 1}, size=${listUser.size})}">⟶</a>
+            </div>
+          </td>
+        </tr>
       </table>
 
       <!-- Admin Table-->
@@ -131,7 +146,7 @@
 
         </tr>
         <tr th:each="admin, iterStat : ${listAdmin}">
-          <td th:text="${iterStat.index + 1}"></td>
+          <td th:text="${iterStat.index + 1 + (listAdmin.number * listAdmin.size)}"></td>
           <td th:text="${admin.user_id}"></td>
           <td th:text="${admin.displayName}"></td>
           <td th:text="${admin.email}"></td>
@@ -139,6 +154,21 @@
           <td >
             <img th:src="@{'/uploads/' + ${admin.avatar}}" alt="Avatar" class="avatar">
 
+          </td>
+        </tr>
+        <tr>
+          <td colspan="8">
+            <div class="pagination-container">
+              <a th:if="${listAdmin.hasPrevious()}"
+                 th:href="@{/admin/ad(page=${listAdmin.number - 1}, size=${listAdmin.size})}">⟵</a>
+
+              <span class="page-info">
+                            Page <span th:text="${listAdmin.number + 1}"></span> /
+                            <span th:text="${listAdmin.totalPages}"></span>
+                                    </span>
+              <a th:if="${listAdmin.hasNext()}"
+                 th:href="@{/admin/ad(page=${listAdmin.number + 1}, size=${listAdmin.size})}">⟶</a>
+            </div>
           </td>
         </tr>
       </table>
@@ -191,7 +221,7 @@
           <td colspan="8">
             <div class="pagination-container">
               <a th:if="${listTask.hasPrevious()}"
-                 th:href="@{/admin/task(page=${listTask.number - 1}, size=${listTask.size})}">Previous</a>
+                 th:href="@{/admin/task(page=${listTask.number - 1}, size=${listTask.size})}">⟵</a>
 
               <span class="page-info">
                     Page <span th:text="${listTask.number + 1}"></span> /
@@ -199,7 +229,7 @@
               </span>
 
               <a th:if="${listTask.hasNext()}"
-                 th:href="@{/admin/task(page=${listTask.number + 1}, size=${listTask.size})}">Next</a>
+                 th:href="@{/admin/task(page=${listTask.number + 1}, size=${listTask.size})}">⟶</a>
             </div>
           </td>
         </tr>
@@ -207,39 +237,6 @@
 
     </div>
 
-    <!-- Removed Section -->
-    <div th:if="${activeTab == 'removed'}" class="task-section">
-      <table>
-        <tr>
-          <th>Number</th>
-          <th>Title</th>
-          <th>Description</th>
-          <th>Create date</th>
-          <th>Due date</th>
-          <th>Restore</th>
-          <th>Delete</th>
-        </tr>
-        <tr th:each="task, iterStat : ${listRemoved}">
-          <td th:text="${iterStat.index + 1}"></td>
-          <td th:text="${task.title}"></td>
-          <td th:text="${task.description}"></td>
-          <td th:text="${#temporals.format(task.createdAt, 'dd/MM/yyyy HH:mm')}"></td>
-          <td th:text="${task.dueDate}"></td>
-          <td>
-            <form th:action="@{'/restore-task/' + ${task.task_id}}" method="post">
-              <button type="submit" class="restore-btn">Restore</button>
-            </form>
-          </td>
-          <td>
-            <form th:action="@{'/delete-task-permanent/' + ${task.task_id}}" method="post">
-              <input type="hidden" name="tab" value="removed"/>
-              <button type="submit" class="delete-btn">Delete</button>
-            </form>
-          </td>
-        </tr>
-      </table>
-    </div>
-  </div>
 </div>
 
 <script th:src="@{/js/personal.js}"></script>
