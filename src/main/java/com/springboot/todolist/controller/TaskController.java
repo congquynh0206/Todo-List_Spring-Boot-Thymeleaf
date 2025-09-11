@@ -48,8 +48,12 @@ public class TaskController {
         int numberOfFinishedTask = taskService.countTask(user, Task.TaskStatus.FINISHED);
         int totalTask = numberOfFinishedTask + numberOfCurrentTask;
 
+        int safeTotalTask = (totalTask == 0) ? 1 : totalTask;
+
         String message;
-        if (totalTask == numberOfFinishedTask) {
+        if (totalTask == 0) {
+            message = "Let's start your first task 🚀";
+        } else if (totalTask == numberOfFinishedTask) {
             message = "Well done 🎉";
         } else if ((double) numberOfFinishedTask / totalTask >= 0.7) {
             message = "Almost there 🔥";
@@ -61,10 +65,11 @@ public class TaskController {
 
         model.addAttribute("user", user);
         model.addAttribute("tasks", tasks);
-        model.addAttribute("totalTask", totalTask);
+        model.addAttribute("totalTask", safeTotalTask);
         model.addAttribute("numberOfFinished", numberOfFinishedTask);
         model.addAttribute("message", message);
         model.addAttribute("newTask", new Task());
+
 
         return "home";
     }

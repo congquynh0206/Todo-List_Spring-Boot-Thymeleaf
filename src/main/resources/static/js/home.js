@@ -40,11 +40,13 @@ document.addEventListener('DOMContentLoaded', function() {
                 const title = this.dataset.title;
                 const desc = this.dataset.desc;
                 const date = this.dataset.date;
+                const createdAt = this.dataset.create;
 
                 document.getElementById('taskId').value = taskId;
                 document.getElementById('detailTitle').value = title;
                 document.getElementById('detailDesc').value = desc || '';
                 document.getElementById('detailDate').value = date || '';
+                document.getElementById('createdAt').value = createdAt || '';
 
                 // Hiển thị trạng thái task
                 const status = this.querySelector('input[type="checkbox"]').checked ? 'Completed' : 'Pending';

@@ -30,7 +30,8 @@
          th:data-id="${task.task_id}"
          th:data-title="${task.title}"
          th:data-desc="${task.description}"
-         th:data-date="${task.dueDate}">
+         th:data-date="${task.dueDate}"
+         th:data-create="${#temporals.format(task.createdAt, 'yyyy-MM-dd')}">
         <input type="checkbox"
                th:checked="${task.status == 'FINISHED'}"
                th:attr="data-id=${task.task_id}"
@@ -75,6 +76,9 @@
 
             <label>Description</label>
             <textarea id="detailDesc" name="description"></textarea>
+
+            <label>Create date</label>
+            <input type="text" id="createdAt" name="createdAt" readonly>
 
             <label>Due date</label>
             <input type="date" id="detailDate" name="dueDate">
