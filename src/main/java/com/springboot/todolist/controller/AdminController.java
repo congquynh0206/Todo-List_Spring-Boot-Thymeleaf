@@ -71,6 +71,7 @@ public class AdminController {
         model.addAttribute("listTask", taskService.getAllTaskPage(page, size));
         model.addAttribute("user", user);
         model.addAttribute("activeTab", "task");
+        model.addAttribute("size", size);
         return "admin";
     }
 
