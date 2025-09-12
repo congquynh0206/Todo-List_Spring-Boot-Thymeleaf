@@ -42,7 +42,7 @@ public class TaskController {
         }
 
         User user = userOpt.get();
-        Page<Task> tasks = taskService.getTasksByUserAndStatus(user.getUser_id(), page, size, Task.TaskStatus.CURRENT);
+        Page<Task> tasks = taskService.getTasksByUserAndStatusAndCreateAt(user.getUser_id(), page, size, Task.TaskStatus.CURRENT);
 
         int numberOfCurrentTask = taskService.countTask(user, Task.TaskStatus.CURRENT);
         int numberOfFinishedTask = taskService.countTask(user, Task.TaskStatus.FINISHED);
@@ -69,8 +69,6 @@ public class TaskController {
         model.addAttribute("numberOfFinished", numberOfFinishedTask);
         model.addAttribute("message", message);
         model.addAttribute("newTask", new Task());
-
-
         return "home";
     }
 
@@ -87,9 +85,7 @@ public class TaskController {
         task.setUser(user);
 
         if (task.getTitle() == null || task.getTitle().isBlank()
-                || task.getDescription() == null || task.getDescription().isBlank()
-                || task.getDueDate() == null) {
-            model.addAttribute("error", "Any field cannot be empty!");
+                || task.getDescription() == null || task.getDescription().isBlank()) {
             model.addAttribute("openAddModal", true);
             model.addAttribute("newTask", task);
             model.addAttribute("user", user);

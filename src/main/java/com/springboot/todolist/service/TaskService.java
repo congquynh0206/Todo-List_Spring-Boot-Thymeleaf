@@ -9,6 +9,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -79,6 +80,10 @@ public class TaskService {
         taskRepository.deleteById(taskId);
     }
 
+    public Page<Task> getTasksByUserAndStatusAndCreateAt(Long userId, int page, int size, Task.TaskStatus status) {
+        User user = userRepository.findById(userId).orElseThrow();
+        return taskRepository.findByUserAndStatusOrderByCreatedAtDesc(user, PageRequest.of(page, size), status);
+    }
     public Page<Task> getTasksByUserAndStatus(Long userId, int page, int size, Task.TaskStatus status) {
         User user = userRepository.findById(userId).orElseThrow();
         return taskRepository.findByUserAndStatus(user, PageRequest.of(page, size), status);

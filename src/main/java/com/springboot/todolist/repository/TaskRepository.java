@@ -6,6 +6,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 
+import java.util.Date;
 import java.util.List;
 
 public interface TaskRepository extends JpaRepository<Task, Long> {
@@ -14,6 +15,7 @@ public interface TaskRepository extends JpaRepository<Task, Long> {
     List<Task> findByUserAndStatus(User user, Task.TaskStatus status);
     int countByUserAndStatus(User user, Task.TaskStatus status);
     int countTasksByStatus(Task.TaskStatus status);
+    Page<Task> findByUserAndStatusOrderByCreatedAtDesc(User user, Pageable pageable, Task.TaskStatus status);
     Page<Task> findByUserAndStatus(User user, Pageable pageable, Task.TaskStatus status);
     Page<Task> findAllBy(Pageable pageable);
 }

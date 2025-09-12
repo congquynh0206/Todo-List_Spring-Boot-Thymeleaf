@@ -364,6 +364,7 @@ button[type="submit"] {
     text-transform: uppercase;
     letter-spacing: 0.5px;
     min-width: 80px;
+    border: 1px solid;
 }
 
 /* Delete buttons */

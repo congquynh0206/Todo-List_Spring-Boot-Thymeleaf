@@ -81,7 +81,7 @@
             <input type="text" id="createdAt" name="createdAt" readonly>
 
             <label>Due date</label>
-            <input type="date" id="detailDate" name="dueDate">
+            <input type="date" id="detailDate" name="dueDate" th:min="${#dates.format(#dates.createNow(),'yyyy-MM-dd')}">
 
             <p id="taskStatus" style="font-weight: bold;"></p>
 
@@ -107,8 +107,9 @@
             <textarea id="addDesc" th:field="*{description}"></textarea>
 
             <label>Due date</label>
-            <input type="date" id="addDate" th:field="*{dueDate}">
-            <p th:text="${error} " th:if="${error}" style="color: #b91c1c"></p>
+            <input type="date" id="addDate" th:field="*{dueDate}"
+                   th:min="${#dates.format(#dates.createNow(),'yyyy-MM-dd')}" />
+            <p th:text="${error} " th:if="${error}" style="color: #b91c1c" ></p>
             <button type="submit" id="addTask">ADD</button>
         </form>
     </div>
