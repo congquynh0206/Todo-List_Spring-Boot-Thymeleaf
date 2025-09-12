@@ -28,7 +28,7 @@ public class AdminController {
     @GetMapping("/admin")
     public String showAdminPage(@RequestParam(defaultValue = "dashboard") String tab,
                                    @RequestParam (defaultValue = "0") int page,
-                                   @RequestParam (defaultValue = "5") int size,
+                                   @RequestParam (defaultValue = "1") int size,
                                    HttpSession session,
                                    Model model) {
         String userEmail = (String) session.getAttribute("userEmail");
@@ -61,8 +61,10 @@ public class AdminController {
 
 
     @GetMapping("/admin/user")
-    public String userManagement (@RequestParam (defaultValue = "0") int page,
-                                  @RequestParam (defaultValue = "1") int size,
+    public String userManagement (@RequestParam (defaultValue = "0") int pageUser,
+                                  @RequestParam (defaultValue = "1") int sizeUser,
+                                  @RequestParam (defaultValue = "0") int pageAdmin,
+                                  @RequestParam (defaultValue = "1") int sizeAdmin,
                                   HttpSession session,
                                   Model model){
         String email = (String) session.getAttribute("userEmail");
@@ -70,28 +72,12 @@ public class AdminController {
             return "redirect:/login";
         }
         User user = userService.findByEmail(email).orElseThrow();
-        model.addAttribute("listUser", userService.findByRole("USER", page,size));
-        model.addAttribute("listAdmin", userService.findByRole("ADMIN", page,size));
+        model.addAttribute("listUser", userService.findByRole("USER", pageUser,sizeUser));
+        model.addAttribute("listAdmin", userService.findByRole("ADMIN", pageAdmin,sizeAdmin));
         model.addAttribute("user", user);
         model.addAttribute("activeTab", "user");
-        model.addAttribute("size", size);
-        return "admin";
-    }
-    @GetMapping("/admin/ad")
-    public String adminManagement (@RequestParam (defaultValue = "0") int page,
-                                  @RequestParam (defaultValue = "1") int size,
-                                  HttpSession session,
-                                  Model model){
-        String email = (String) session.getAttribute("userEmail");
-        if ( email == null){
-            return "redirect:/login";
-        }
-        User user = userService.findByEmail(email).orElseThrow();
-        model.addAttribute("listUser", userService.findByRole("USER", page,size));
-        model.addAttribute("listAdmin", userService.findByRole("ADMIN", page,size));
-        model.addAttribute("user", user);
-        model.addAttribute("activeTab", "user");
-        model.addAttribute("size", size);
+        model.addAttribute("sizeAdmin", sizeAdmin);
+        model.addAttribute("sizeUser", sizeUser);
         return "admin";
     }
     @GetMapping("/admin/task")

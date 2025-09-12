@@ -120,14 +120,16 @@
           <td colspan="8">
             <div class="pagination-container">
               <a th:if="${listUser.hasPrevious()}"
-                 th:href="@{/admin/user(page=${listUser.number - 1}, size=${listUser.size})}">⟵</a>
+                 th:href="@{/admin/user(pageUser=${listUser.number - 1}, sizeUser=${listUser.size},
+                                        pageAdmin=${listAdmin.number}, sizeAdmin=${listAdmin.size})}">⟵</a>
 
               <span class="page-info">
                             Page <span th:text="${listUser.number + 1}"></span> /
                             <span th:text="${listUser.totalPages}"></span>
                                     </span>
               <a th:if="${listUser.hasNext()}"
-                 th:href="@{/admin/user(page=${listUser.number + 1}, size=${listUser.size})}">⟶</a>
+                 th:href="@{/admin/user(pageUser=${listUser.number + 1}, sizeUser=${listUser.size},
+                                        pageAdmin=${listAdmin.number}, sizeAdmin=${listAdmin.size})}">⟶</a>
             </div>
           </td>
         </tr>
@@ -160,14 +162,16 @@
           <td colspan="8">
             <div class="pagination-container">
               <a th:if="${listAdmin.hasPrevious()}"
-                 th:href="@{/admin/ad(page=${listAdmin.number - 1}, size=${listAdmin.size})}">⟵</a>
+                 th:href="@{/admin/user(pageUser=${listUser.number}, sizeUser=${listUser.size},
+                                        pageAdmin=${listAdmin.number - 1}, sizeAdmin=${listAdmin.size})}">⟵</a>
 
               <span class="page-info">
                             Page <span th:text="${listAdmin.number + 1}"></span> /
                             <span th:text="${listAdmin.totalPages}"></span>
                                     </span>
               <a th:if="${listAdmin.hasNext()}"
-                 th:href="@{/admin/ad(page=${listAdmin.number + 1}, size=${listAdmin.size})}">⟶</a>
+                 th:href="@{/admin/user(pageUser=${listUser.number}, sizeUser=${listUser.size},
+                                        pageAdmin=${listAdmin.number + 1}, sizeAdmin=${listAdmin.size})}">⟶</a>
             </div>
           </td>
         </tr>
