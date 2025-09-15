@@ -247,8 +247,15 @@ html, body {
 }
 
 .avatar{
-    width: 3em;
+    display: block;
+    width: 40px;
+    height: 40px;
+    background: #d9d9d9;
+    border-radius: 50%;
+    margin-left: 1rem;
+    object-fit: cover;
 }
+
 /* Container styling */
 .user-section {
     margin: 20px 0;

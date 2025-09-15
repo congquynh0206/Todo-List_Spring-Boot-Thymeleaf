@@ -1,7 +1,7 @@
-package com.springboot.todolist.service;
+package com.springboot.todolist.services;
 
-import com.springboot.todolist.model.Task;
-import com.springboot.todolist.model.User;
+import com.springboot.todolist.models.Task;
+import com.springboot.todolist.models.User;
 import com.springboot.todolist.repository.TaskRepository;
 import com.springboot.todolist.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,7 +9,6 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
-import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -84,9 +83,14 @@ public class TaskService {
         User user = userRepository.findById(userId).orElseThrow();
         return taskRepository.findByUserAndStatusOrderByCreatedAtDesc(user, PageRequest.of(page, size), status);
     }
-    public Page<Task> getTasksByUserAndStatus(Long userId, int page, int size, Task.TaskStatus status) {
+    public Page<Task> getTasksByUserAndStatus(Long userId, int page, int size, String status) {
         User user = userRepository.findById(userId).orElseThrow();
-        return taskRepository.findByUserAndStatus(user, PageRequest.of(page, size), status);
+        Task.TaskStatus enumStatus = Task.TaskStatus.valueOf(status.toUpperCase());
+        return taskRepository.findByUserAndStatus(user, PageRequest.of(page, size), enumStatus);
+    }
+    public Page<Task> getTasksByStatus(int page, int size, String status) {
+        Task.TaskStatus enumStatus = Task.TaskStatus.valueOf(status.toUpperCase());
+        return taskRepository.findByStatus(PageRequest.of(page, size), enumStatus);
     }
     public Page<Task> getAllTaskPage (int page, int size){
         return taskRepository.findAllBy(PageRequest.of(page,size));

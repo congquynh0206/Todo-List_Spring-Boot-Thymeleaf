@@ -1,16 +1,16 @@
-package com.springboot.todolist.controller;
+package com.springboot.todolist.controllers;
 
-import com.springboot.todolist.model.Task;
-import com.springboot.todolist.model.User;
-import com.springboot.todolist.service.TaskService;
-import com.springboot.todolist.service.UserService;
+import com.springboot.todolist.models.User;
+import com.springboot.todolist.services.TaskService;
+import com.springboot.todolist.services.UserService;
 import java.nio.file.Path;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
@@ -20,7 +20,6 @@ import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
-import java.util.List;
 import java.util.Optional;
 
 @Controller
@@ -35,12 +34,10 @@ public class PersonalController {
     public String showPersonalPage(@RequestParam(defaultValue = "current") String tab,
                                    @RequestParam (defaultValue = "0") int page,
                                    @RequestParam (defaultValue = "5") int size,
-                                   HttpSession session,
                                    Model model) {
-        String userEmail = (String) session.getAttribute("userEmail");
-        if (userEmail == null) {
-            return "redirect:/login";
-        }
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String userEmail = authentication.getName();
+
         User user = userService.findByEmail(userEmail).orElseThrow();
         model.addAttribute("user", user);
 
@@ -49,13 +46,13 @@ public class PersonalController {
 
         switch (tab) {
             case "finished":
-                model.addAttribute("listFinished", taskService.getTasksByUserAndStatus(user.getUser_id(),page,size, Task.TaskStatus.FINISHED));
+                model.addAttribute("listFinished", taskService.getTasksByUserAndStatus(user.getUser_id(),page,size, "FINISHED"));
                 break;
             case "removed":
-                model.addAttribute("listRemoved", taskService.getTasksByUserAndStatus(user.getUser_id(),page,size, Task.TaskStatus.REMOVED));
+                model.addAttribute("listRemoved", taskService.getTasksByUserAndStatus(user.getUser_id(),page,size,"REMOVED"));
                 break;
             case "current":
-                model.addAttribute("listCurrent", taskService.getTasksByUserAndStatus(user.getUser_id(),page,size, Task.TaskStatus.CURRENT));
+                model.addAttribute("listCurrent", taskService.getTasksByUserAndStatus(user.getUser_id(),page,size, "CURRENT"));
                 break;
             default:
                 model.addAttribute("user",user);
@@ -69,14 +66,13 @@ public class PersonalController {
     @GetMapping("/tasks/current")
     public String getCurrentTask ( @RequestParam (defaultValue = "0") int page,
                                    @RequestParam (defaultValue = "5") int size,
-                                   HttpSession session, Model model){
-        String userEmail = (String) session.getAttribute("userEmail");
-        if (userEmail == null) {
-            return "redirect:/login";
-        }
+                                    Model model){
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String userEmail = authentication.getName();
+
         User user = userService.findByEmail(userEmail).orElseThrow();
         model.addAttribute("user", user);
-        model.addAttribute("listCurrent", taskService.getTasksByUserAndStatus(user.getUser_id(),page,size, Task.TaskStatus.CURRENT));
+        model.addAttribute("listCurrent", taskService.getTasksByUserAndStatus(user.getUser_id(),page,size, "CURRENT"));
         model.addAttribute("activeTab","current");
         return "personal";
     }
@@ -85,15 +81,14 @@ public class PersonalController {
     @GetMapping("/tasks/finished")
     public String getFinishedTask ( @RequestParam (defaultValue = "0") int page,
                                     @RequestParam (defaultValue = "5") int size,
-                                    HttpSession session, Model model){
-        String userEmail = (String) session.getAttribute("userEmail");
-        if (userEmail == null) {
-            return "redirect:/login";
-        }
+                                    Model model){
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String userEmail = authentication.getName();
+
         User user = userService.findByEmail(userEmail).orElseThrow();
         model.addAttribute("user", user);
         model.addAttribute("user",user);
-        model.addAttribute("listFinished", taskService.getTasksByUserAndStatus(user.getUser_id(),page,size, Task.TaskStatus.FINISHED));
+        model.addAttribute("listFinished", taskService.getTasksByUserAndStatus(user.getUser_id(),page,size, "FINISHED"));
         model.addAttribute("activeTab","finished");
         return "personal";
     }
@@ -102,14 +97,13 @@ public class PersonalController {
     @GetMapping("/tasks/removed")
     public String getRemovedTask ( @RequestParam (defaultValue = "0") int page,
                                    @RequestParam (defaultValue = "5") int size,
-                                   HttpSession session, Model model){
-        String email = (String) session.getAttribute("userEmail");
-        if(email == null){
-            return "redirect:/login";
-        }
-        User user = userService.findByEmail(email).orElseThrow();
+                                   Model model){
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String userEmail = authentication.getName();
+
+        User user = userService.findByEmail(userEmail).orElseThrow();
         model.addAttribute("user",user);
-        model.addAttribute("listRemoved", taskService.getTasksByUserAndStatus(user.getUser_id(),page,size, Task.TaskStatus.FINISHED));
+        model.addAttribute("listRemoved", taskService.getTasksByUserAndStatus(user.getUser_id(),page,size,"FINISHED"));
         model.addAttribute("activeTab","removed");
         return "personal";
     }
@@ -117,11 +111,10 @@ public class PersonalController {
     // Change Infor
     @GetMapping("/tasks/infor")
     public String getUserToChange ( HttpSession session, Model model){
-        String email = (String) session.getAttribute("userEmail");
-        if(email == null){
-            return "redirect:/login";
-        }
-        User user = userService.findByEmail(email).orElseThrow();
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String userEmail = authentication.getName();
+
+        User user = userService.findByEmail(userEmail).orElseThrow();
         model.addAttribute("user",user);
         model.addAttribute("activeTab","infor");
         return "personal";
@@ -134,11 +127,8 @@ public class PersonalController {
     public String updateUsername(@RequestParam String newName,
                                  HttpSession session,
                                  RedirectAttributes redirectAttributes) {
-        String userEmail = (String) session.getAttribute("userEmail");
-
-        if (userEmail == null) {
-            return "redirect:/login";
-        }
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String userEmail = authentication.getName();
 
         try {
             userService.updateDisplayName(userEmail, newName);
@@ -155,11 +145,8 @@ public class PersonalController {
     public String updateEmail(@RequestParam String newEmail,
                               HttpSession session,
                               RedirectAttributes redirectAttributes) {
-        String userEmail = (String) session.getAttribute("userEmail");
-
-        if (userEmail == null) {
-            return "redirect:/login";
-        }
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String userEmail = authentication.getName();
 
         // Kiểm tra email mới đã tồn tại chưa
         if (userService.findByEmail(newEmail).isPresent() && !newEmail.equals(userEmail)) {
@@ -185,11 +172,8 @@ public class PersonalController {
                                  @RequestParam String newPassword,
                                  HttpSession session,
                                  RedirectAttributes redirectAttributes) {
-        String userEmail = (String) session.getAttribute("userEmail");
-
-        if (userEmail == null) {
-            return "redirect:/login";
-        }
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String userEmail = authentication.getName();
 
         Optional<User> user = userService.findByEmail(userEmail);
         if (user.isPresent()) {
@@ -214,10 +198,8 @@ public class PersonalController {
     public String updateAvatar(@RequestParam("avatarFile") MultipartFile file,
                                HttpSession session,
                                RedirectAttributes redirectAttributes) {
-        String userEmail = (String) session.getAttribute("userEmail");
-        if (userEmail == null) {
-            return "redirect:/login";
-        }
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String userEmail = authentication.getName();
 
         // Kiểm tra file có rỗng không
         if (file.isEmpty()) {
@@ -275,11 +257,10 @@ public class PersonalController {
 
     @PostMapping("/reset-avatar")
     public String resetAvatar (HttpSession session){
-        String email = (String) session.getAttribute("userEmail");
-        if (email == null){
-            return "redirect:login";
-        }
-        User user = userService.findByEmail(email).orElseThrow();
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String userEmail = authentication.getName();
+
+        User user = userService.findByEmail(userEmail).orElseThrow();
         user.setAvatar("default-avatar.png");
         userService.save(user);
         return "redirect:/personal";

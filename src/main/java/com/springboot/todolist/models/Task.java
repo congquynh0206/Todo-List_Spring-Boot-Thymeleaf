@@ -1,9 +1,11 @@
-package com.springboot.todolist.model;
+package com.springboot.todolist.models;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.NoArgsConstructor;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -27,14 +29,16 @@ public class Task {
     private String description;
 
     @Column(name = "due_date")
-    private LocalDate dueDate;
+    private LocalDateTime dueDate;
 
     @Column(name = "created_at", updatable = false)
+    @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm")
     private LocalDateTime createdAt = LocalDateTime.now();
 
-    // 1 user have many tasks
+    // Task.java
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id", nullable = false)
+    @JsonBackReference
     private User user;
 
     @Enumerated(EnumType.STRING)
@@ -43,5 +47,10 @@ public class Task {
         CURRENT,
         FINISHED,
         REMOVED
+    }
+
+    @PrePersist
+    protected void onCreate() {
+        this.createdAt = LocalDateTime.now();
     }
 }

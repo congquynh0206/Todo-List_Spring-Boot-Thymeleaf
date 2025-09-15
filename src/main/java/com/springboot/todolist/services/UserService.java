@@ -1,10 +1,11 @@
-package com.springboot.todolist.service;
+package com.springboot.todolist.services;
 
 import com.springboot.todolist.repository.UserRepository;
-import com.springboot.todolist.model.User;
+import com.springboot.todolist.models.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -14,6 +15,8 @@ import java.util.Optional;
 public class UserService {
     @Autowired
     private UserRepository userRepository;
+    @Autowired
+    private PasswordEncoder passwordEncoder;
 
     // Service register
     public User save(User user){
@@ -60,11 +63,11 @@ public class UserService {
         }
     }
     // Reset password
-    public void resetPassword(long id) {
+    public void resetPassword(long id, String password) {
         Optional<User> userOpt = userRepository.findById(id);
         if (userOpt.isPresent()) {
             User user = userOpt.get();
-            user.setPassword("123456");
+            user.setPassword(passwordEncoder.encode(password));
             userRepository.save(user);
         }
     }

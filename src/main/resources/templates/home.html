@@ -4,8 +4,8 @@
     <meta charset="UTF-8">
     <meta content="width=device-width, initial-scale=1.0" name="viewport">
     <title>To-Do List</title>
-    <link th:href="@{/css/home.css}" rel="stylesheet">
-    <link th:href="@{/css/topbar.css}" rel="stylesheet">
+    <link th:href="@{/css/home2.css}" rel="stylesheet">
+    <link th:href="@{/css/topbar2.css}" rel="stylesheet">
 </head>
 <body>
 <!-- Overlay -->
@@ -30,8 +30,8 @@
          th:data-id="${task.task_id}"
          th:data-title="${task.title}"
          th:data-desc="${task.description}"
-         th:data-date="${task.dueDate}"
-         th:data-create="${#temporals.format(task.createdAt, 'yyyy-MM-dd')}">
+         th:data-date="${#temporals.format(task.dueDate, 'yyyy-MM-dd''T''HH:mm')}"
+         th:data-create="${#temporals.format(task.createdAt, 'yyyy-MM-dd''T''HH:mm')}">
         <input type="checkbox"
                th:checked="${task.status == 'FINISHED'}"
                th:attr="data-id=${task.task_id}"
@@ -78,10 +78,11 @@
             <textarea id="detailDesc" name="description"></textarea>
 
             <label>Create date</label>
-            <input type="text" id="createdAt" name="createdAt" readonly>
+            <input type="datetime-local" id="createdAt" name="createdAt" readonly />
 
             <label>Due date</label>
-            <input type="date" id="detailDate" name="dueDate" th:min="${#dates.format(#dates.createNow(),'yyyy-MM-dd')}">
+            <input type="datetime-local" id="detailDate" name="dueDate"
+                   th:min="${#dates.format(#dates.createNow(),'yyyy-MM-dd''T''HH:mm')}">
 
             <p id="taskStatus" style="font-weight: bold;"></p>
 
@@ -92,6 +93,7 @@
         </form>
     </div>
 </div>
+
 
 <!-- Modal: Add New -->
 <div id="addModal" class="modal">
@@ -107,19 +109,16 @@
             <textarea id="addDesc" th:field="*{description}"></textarea>
 
             <label>Due date</label>
-            <input type="date" id="addDate" th:field="*{dueDate}"
-                   th:min="${#dates.format(#dates.createNow(),'yyyy-MM-dd')}" />
-            <p th:text="${error} " th:if="${error}" style="color: #b91c1c" ></p>
+            <input type="datetime-local" id="addDate" name="dueDate"
+                   th:min="${#dates.format(#dates.createNow(),'yyyy-MM-dd''T''HH:mm')}">
+
+            <p th:text="${error} " th:if="${error}" style="color: #b91c1c"></p>
+
             <button type="submit" id="addTask">ADD</button>
         </form>
     </div>
 </div>
 
-<script th:inline="javascript">
-    /*<![CDATA[*/
-    window.openAddModal = /*[[${openAddModal != null ? openAddModal : false}]]*/false;
-    /*]]>*/
-</script>
 
 <script th:src="@{/js/home.js}"></script>
 

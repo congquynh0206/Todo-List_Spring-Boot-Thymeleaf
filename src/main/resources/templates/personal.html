@@ -4,8 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Personal Page</title>
-    <link th:href="@{/css/personal.css}" rel="stylesheet">
-    <link th:href="@{/css/topbar.css}" rel="stylesheet">
+    <link th:href="@{/css/personal2.css}" rel="stylesheet">
+    <link th:href="@{/css/topbar2.css}" rel="stylesheet">
 </head>
 <body>
 
@@ -24,7 +24,7 @@
         <div class="user-profile">
             <div class="avatar-container">
 
-                <img th:src="@{'/uploads/' + ${user.avatar}}" alt="Avatar" class="avatar-img">
+                <img th:src="@{'/' + ${user.avatar}}" alt="Avatar" class="avatar-img">
 
                 <form th:action="@{/update-avatar}" method="post" enctype="multipart/form-data" class="upload-form">
                     <label for="avatarFile" class="upload-btn">📷</label>
@@ -83,8 +83,8 @@
                     <td th:text="${iterStat.index + 1 + (listCurrent.number * listCurrent.size)}"></td>
                     <td th:text="${task.title}"></td>
                     <td th:text="${task.description}"></td>
-                    <td th:text="${#temporals.format(task.createdAt, 'dd/MM/yyyy HH:mm')}"></td>
-                    <td th:text="${task.dueDate}"></td>
+                    <td th:text="${#temporals.format(task.createdAt, 'dd/MM/yyyy hh:mm a')}"></td>
+                    <td th:text="${#temporals.format(task.dueDate, 'dd/MM/yyyy hh:mm a')}"></td>
                     <td>
                         <form th:action="@{'/delete-task-current/' + ${task.task_id}}" method="post">
                             <input type="hidden" name="tab" value="current"/>
@@ -125,8 +125,8 @@
                     <td th:text="${iterStat.index + 1 + (listFinished.number * listFinished.size)}"></td>
                     <td th:text="${task.title}"></td>
                     <td th:text="${task.description}"></td>
-                    <td th:text="${#temporals.format(task.createdAt, 'dd/MM/yyyy HH:mm')}"></td>
-                    <td th:text="${task.dueDate}"></td>
+                    <td th:text="${#temporals.format(task.createdAt, 'dd/MM/yyyy hh:mm a')}"></td>
+                    <td th:text="${#temporals.format(task.dueDate, 'dd/MM/yyyy hh:mm a')}"></td>
                     <td>
                         <form th:action="@{'/delete-task-permanent/' + ${task.task_id}}" method="post">
                             <input type="hidden" name="tab" value="finished"/>
@@ -170,8 +170,8 @@
                     <td th:text="${iterStat.index + 1 + (listRemoved.number * listRemoved.size)}"></td>
                     <td th:text="${task.title}"></td>
                     <td th:text="${task.description}"></td>
-                    <td th:text="${#temporals.format(task.createdAt, 'dd/MM/yyyy HH:mm')}"></td>
-                    <td th:text="${task.dueDate}"></td>
+                    <td th:text="${#temporals.format(task.createdAt, 'dd/MM/yyyy hh:mm a')}"></td>
+                    <td th:text="${#temporals.format(task.dueDate, 'dd/MM/yyyy hh:mm a')}"></td>
                     <td>
                         <form th:action="@{'/restore-task/' + ${task.task_id}}" method="post">
                             <button type="submit" class="restore-btn">Restore</button>

@@ -1,20 +1,22 @@
-package com.springboot.todolist.controller;
+package com.springboot.todolist.controllers;
 
-import com.springboot.todolist.model.Task;
-import com.springboot.todolist.model.User;
-import com.springboot.todolist.service.TaskService;
-import com.springboot.todolist.service.UserService;
-import java.nio.file.Path;
+import com.springboot.todolist.models.Task;
+import com.springboot.todolist.models.User;
+import com.springboot.todolist.services.TaskService;
+import com.springboot.todolist.services.UserService;
+
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 @Controller
@@ -28,18 +30,23 @@ public class AdminController {
     @GetMapping("/admin")
     public String showAdminPage(@RequestParam(defaultValue = "dashboard") String tab,
                                    @RequestParam (defaultValue = "0") int page,
-                                   @RequestParam (defaultValue = "1") int size,
-                                   HttpSession session,
+                                   @RequestParam (defaultValue = "5") int size,
+                                   @RequestParam(required = false) String status,
                                    Model model) {
-        String userEmail = (String) session.getAttribute("userEmail");
-        if (userEmail == null) {
-            return "redirect:/login";
-        }
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String userEmail = authentication.getName();
+
         User user = userService.findByEmail(userEmail).orElseThrow();
         model.addAttribute("user", user);
 
         // Xác định tab active
         model.addAttribute("activeTab", tab);
+        Page<Task> listTask;
+        if (status == null || status.isEmpty() || status.equals("ALL")){
+            listTask = taskService.getAllTaskPage(page, size);
+        }else {
+            listTask = taskService.getTasksByStatus (page, size, status);
+        }
 
         switch (tab) {
             case "dashboard":
@@ -49,7 +56,8 @@ public class AdminController {
                 model.addAttribute("listAdmin", userService.findByRole("ADMIN", page,size));
                 break;
             case "task":
-                model.addAttribute("listTask", taskService.getAllTaskPage(page, size));
+                model.addAttribute("listTask", listTask);
+                model.addAttribute("status", status);
                 break;
             default:
                 model.addAttribute("user",user);
@@ -62,16 +70,14 @@ public class AdminController {
 
     @GetMapping("/admin/user")
     public String userManagement (@RequestParam (defaultValue = "0") int pageUser,
-                                  @RequestParam (defaultValue = "1") int sizeUser,
+                                  @RequestParam (defaultValue = "5") int sizeUser,
                                   @RequestParam (defaultValue = "0") int pageAdmin,
-                                  @RequestParam (defaultValue = "1") int sizeAdmin,
-                                  HttpSession session,
+                                  @RequestParam (defaultValue = "5") int sizeAdmin,
                                   Model model){
-        String email = (String) session.getAttribute("userEmail");
-        if ( email == null){
-            return "redirect:/login";
-        }
-        User user = userService.findByEmail(email).orElseThrow();
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String userEmail = authentication.getName();
+
+        User user = userService.findByEmail(userEmail).orElseThrow();
         model.addAttribute("listUser", userService.findByRole("USER", pageUser,sizeUser));
         model.addAttribute("listAdmin", userService.findByRole("ADMIN", pageAdmin,sizeAdmin));
         model.addAttribute("user", user);
@@ -83,33 +89,38 @@ public class AdminController {
     @GetMapping("/admin/task")
     public String taskManagement (@RequestParam (defaultValue = "0") int page,
                                   @RequestParam (defaultValue = "5") int size,
+                                  @RequestParam (required = false ) String status,
                                   HttpSession session,
                                   Model model){
-        String email = (String) session.getAttribute("userEmail");
-        if ( email == null){
-            return "redirect:/login";
+
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String userEmail = authentication.getName();
+
+        User user = userService.findByEmail(userEmail).orElseThrow();
+        Page<Task> listTask;
+        if (status == null || status.isEmpty() || status.equals("ALL")){
+            listTask = taskService.getAllTaskPage(page, size);
+        }else {
+            listTask = taskService.getTasksByStatus (page, size, status);
         }
-        User user = userService.findByEmail(email).orElseThrow();
-        model.addAttribute("listTask", taskService.getAllTaskPage(page, size));
+        model.addAttribute("listTask", listTask);
         model.addAttribute("user", user);
         model.addAttribute("activeTab", "task");
+        model.addAttribute("status", status);
         model.addAttribute("size", size);
         return "admin";
     }
 
     // Xử lý cập nhật password
     @PostMapping("/reset-password/{id}")
-    public String resetPassword(@PathVariable long id, HttpSession session,
+    public String resetPassword(@PathVariable long id,
                                  RedirectAttributes redirectAttributes) {
-        String userEmail = (String) session.getAttribute("userEmail");
-
-        if (userEmail == null) {
-            return "redirect:/login";
-        }
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String userEmail = authentication.getName();
 
         User user = userService.findById(id).orElseThrow();
             try {
-                userService.resetPassword(id);
+                userService.resetPassword(id, "123456");
                 redirectAttributes.addFlashAttribute("success", "Password reset successfully for " + user.getDisplayName());
             } catch (Exception e) {
                 redirectAttributes.addFlashAttribute("error", "Password reset fail!");
@@ -119,11 +130,8 @@ public class AdminController {
 
     // Set Admin
     @PostMapping("/set-admin/{id}")
-    public String setAdmin (@PathVariable long id, HttpSession session, RedirectAttributes redirectAttributes){
-        String email = (String) session.getAttribute("userEmail");
-        if (email == null){
-            return "redirect:login";
-        }
+    public String setAdmin (@PathVariable long id, RedirectAttributes redirectAttributes){
+
         try {
             User user = userService.findById(id).orElseThrow();
             userService.setRole(id,"ADMIN" );
@@ -136,11 +144,8 @@ public class AdminController {
 
     // Xóa user
     @PostMapping("/delete-user/{id}")
-    public String deleteUser(@PathVariable long id, HttpSession session, RedirectAttributes redirectAttributes){
-        String userEmail = (String) session.getAttribute("userEmail");
-        if (userEmail == null){
-            return "redirect:/login";
-        }
+    public String deleteUser(@PathVariable long id, RedirectAttributes redirectAttributes){
+
         try {
             User user = userService.findById(id).orElseThrow();
             userService.deleteById(id);

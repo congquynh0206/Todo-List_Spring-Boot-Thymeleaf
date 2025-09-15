@@ -1,40 +1,41 @@
-document.addEventListener('DOMContentLoaded', function() {
+document.addEventListener('DOMContentLoaded', function () {
     const overlay = document.getElementById('overlay');
     const addModal = document.getElementById('addModal');
     const detailModal = document.getElementById('detailModal');
+
     const addBtn = document.querySelector('.add-btn');
     const closeAddBtn = document.getElementById('closeAdd');
     const closeDetailBtn = document.getElementById('closeDetail');
+
     const todoItems = document.querySelectorAll('.todo-item');
 
-    // Mở modal add task
-    addBtn.addEventListener('click', function() {
+    // ================== OPEN / CLOSE ADD MODAL ==================
+    addBtn.addEventListener('click', function () {
         addModal.style.display = 'block';
         overlay.style.display = 'block';
     });
 
-    // Đóng modal add
-    closeAddBtn.addEventListener('click', function() {
+    closeAddBtn.addEventListener('click', function () {
         addModal.style.display = 'none';
         overlay.style.display = 'none';
     });
 
-    // Đóng modal detail
-    closeDetailBtn.addEventListener('click', function() {
+    // ================== OPEN / CLOSE DETAIL MODAL ==================
+    closeDetailBtn.addEventListener('click', function () {
         detailModal.style.display = 'none';
         overlay.style.display = 'none';
     });
 
     // Đóng modal khi click overlay
-    overlay.addEventListener('click', function() {
+    overlay.addEventListener('click', function () {
         addModal.style.display = 'none';
         detailModal.style.display = 'none';
         overlay.style.display = 'none';
     });
 
     // Mở modal detail khi click vào task item
-    todoItems.forEach(function(item) {
-        item.addEventListener('click', function(e) {
+    todoItems.forEach(function (item) {
+        item.addEventListener('click', function (e) {
             if (e.target.type !== 'checkbox') {
                 const taskId = this.dataset.id;
                 const title = this.dataset.title;
@@ -58,19 +59,17 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     });
 
-    // Xử lý save task detail
-    document.getElementById('saveDetail').addEventListener('click', function() {
+    // ================== SAVE DETAIL ==================
+    document.getElementById('saveDetail').addEventListener('click', function () {
         const taskId = document.getElementById('taskId').value;
         const title = document.getElementById('detailTitle').value;
         const desc = document.getElementById('detailDesc').value;
         const date = document.getElementById('detailDate').value;
 
-        // Tạo form để submit
         const form = document.createElement('form');
         form.method = 'post';
         form.action = '/update-task/' + taskId;
 
-        // Tạo các input hidden
         const titleInput = document.createElement('input');
         titleInput.type = 'hidden';
         titleInput.name = 'title';
@@ -94,21 +93,40 @@ document.addEventListener('DOMContentLoaded', function() {
         form.submit();
     });
 
-    // Xử lý delete task
-    document.getElementById('deleteDetail').addEventListener('click', function() {
+    // ================== DELETE TASK ==================
+    document.getElementById('deleteDetail').addEventListener('click', function () {
         const taskId = document.getElementById('taskId').value;
 
-            // Tạo form để submit delete
-            const form = document.createElement('form');
-            form.method = 'post';
-            form.action = '/delete-task/' + taskId;
+        const form = document.createElement('form');
+        form.method = 'post';
+        form.action = '/delete-task/' + taskId;
 
-            document.body.appendChild(form);
-            form.submit();
-
+        document.body.appendChild(form);
+        form.submit();
     });
+
+    // ================== CHECKBOX STATUS STYLE ==================
+    const checkboxes = document.querySelectorAll('.todo-item input[type="checkbox"]');
+    checkboxes.forEach(function (checkbox) {
+        checkbox.addEventListener('change', function () {
+            const todoItem = this.closest('.todo-item');
+            if (this.checked) {
+                todoItem.style.backgroundColor = "#e0f7e9";
+                todoItem.style.textDecoration = "line-through";
+            } else {
+                todoItem.style.backgroundColor = "";
+                todoItem.style.textDecoration = "";
+            }
+        });
+    });
+
+    // ================== AUTO OPEN ADD MODAL ==================
+    if (window.openAddModal) {
+        addModal.style.display = "block";
+    }
 });
 
+// ================== TOGGLE STATUS WITH FETCH ==================
 function toggleStatus(checkbox) {
     const taskId = checkbox.getAttribute("data-id");
     const newStatus = checkbox.checked ? "FINISHED" : "CURRENT";
@@ -125,28 +143,3 @@ function toggleStatus(checkbox) {
         })
         .catch(error => console.error(error));
 }
-document.addEventListener('DOMContentLoaded', function() {
-    const checkboxes = document.querySelectorAll('.todo-item input[type="checkbox"]');
-
-    checkboxes.forEach(function(checkbox) {
-        checkbox.addEventListener('change', function() {
-            const todoItem = this.closest('.todo-item');
-
-            if (this.checked) {
-                // Đổi sang xanh
-                todoItem.style.backgroundColor = "#e0f7e9";
-                todoItem.style.textDecoration = "line-through";
-            } else {
-                // Trả về mặc định
-                todoItem.style.backgroundColor = "";
-                todoItem.style.textDecoration = "";
-            }
-        });
-    });
-});
-document.addEventListener("DOMContentLoaded", function() {
-    if (window.openAddModal) {
-        document.getElementById("addModal").style.display = "block";
-    }
-});
-

@@ -12,7 +12,7 @@
 
     <!-- Avatar hiển thị -->
     <a th:href="@{/personal}" class="avatar-link">
-      <img th:src="@{'/uploads/' + ${user.avatar}}" alt="Avatar" class="avatar-topBar">
+      <img th:src="@{'/' + ${user.avatar}}" alt="Avatar" class="avatar-topBar">
     </a>
   </div>
 </div>

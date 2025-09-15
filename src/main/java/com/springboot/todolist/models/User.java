@@ -1,5 +1,7 @@
-package com.springboot.todolist.model;
+package com.springboot.todolist.models;
 
+
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
@@ -33,11 +35,13 @@ public class User {
     private LocalDateTime createdAt = LocalDateTime.now();
 
     @Column(name = "avatar", length = 255)
-    private String avatar = "/icon/default-avatar.png";
+    private String avatar = "default-avatar.png";
 
     @Column(nullable = false, length = 20)
     private String role = "USER";
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonManagedReference
     private List<Task> tasks = new ArrayList<>();
+
 }

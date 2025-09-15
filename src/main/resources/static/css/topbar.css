@@ -40,6 +40,7 @@
     background: #d9d9d9;
     border-radius: 50%;
     margin-left: 1rem;
+    object-fit: cover;
 }
 
 a {

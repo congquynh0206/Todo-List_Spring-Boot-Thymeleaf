@@ -4,8 +4,8 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Admin Dashboard</title>
-  <link th:href="@{/css/admin.css}" rel="stylesheet">
-  <link th:href="@{/css/topbar.css}" rel="stylesheet">
+  <link th:href="@{/css/admin2.css}" rel="stylesheet">
+  <link th:href="@{/css/topbar2.css}" rel="stylesheet">
 </head>
 <body>
 
@@ -24,7 +24,7 @@
     <div class="user-profile">
       <div class="avatar-container">
 
-        <img th:src="@{'/uploads/' + ${user.avatar}}" alt="Avatar" class="avatar-img">
+        <img th:src="@{'/' + ${user.avatar}}" alt="Avatar" class="avatar-img">
 
         <form th:action="@{/update-avatar}" method="post" enctype="multipart/form-data" class="upload-form">
           <label for="avatarFile" class="upload-btn">📷</label>
@@ -49,9 +49,6 @@
         👤 User Management
       </a>
       <a class="nav-item" th:href="@{/admin(tab='task')}" th:classappend="${activeTab == 'task'} ? 'active'">📝 Task Management
-      </a>
-      <a class="nav-item" th:href="@{/admin/infor}" th:classappend="${activeTab == 'infor'} ? 'active'">Change
-        information
       </a>
     </div>
 
@@ -94,9 +91,9 @@
           <td th:text="${user.user_id}"></td>
           <td th:text="${user.displayName}"></td>
           <td th:text="${user.email}"></td>
-          <td th:text="${#temporals.format(user.createdAt, 'dd/MM/yyyy HH:mm')}"></td>
+          <td th:text="${#temporals.format(user.createdAt, 'dd/MM/yyyy hh:mm a')}"></td>
           <td >
-            <img th:src="@{'/uploads/' + ${user.avatar}}" alt="Avatar" class="avatar">
+            <img th:src="@{'/' + ${user.avatar}}" alt="Avatar" class="avatar">
 
           </td>
           <td>
@@ -154,7 +151,7 @@
           <td th:text="${admin.email}"></td>
           <td th:text="${#temporals.format(admin.createdAt, 'dd/MM/yyyy HH:mm')}"></td>
           <td >
-            <img th:src="@{'/uploads/' + ${admin.avatar}}" alt="Avatar" class="avatar">
+            <img th:src="@{'/' + ${admin.avatar}}" alt="Avatar" class="avatar">
 
           </td>
         </tr>
@@ -182,6 +179,15 @@
     <div th:if="${activeTab == 'task'}" class="task-section">
 
       <form th:action="@{/admin/task}" method="get">
+
+        <label for="status">Find by Status:</label>
+        <select name="status" id="status">
+          <option th:value="ALL" th:selected="${status == 'ALL'}">ALL</option>
+          <option th:value="CURRENT" th:selected="${status == 'CURRENT'}">CURRENT</option>
+          <option th:value="FINISHED" th:selected="${status == 'FINISHED'}">FINISHED</option>
+          <option th:value="REMOVED" th:selected="${status == 'REMOVED'}">REMOVED</option>
+        </select>
+
         <label for="size">Show per page:</label>
         <select name="size" id="size">
           <option th:value="5" th:selected="${size == 5}">5</option>
@@ -209,8 +215,8 @@
           <td th:text="${iterStat.index + 1 + (listTask.number * listTask.size)}"></td>
           <td th:text="${task.title}"></td>
           <td th:text="${task.description}"></td>
-          <td th:text="${#temporals.format(task.createdAt, 'dd/MM/yyyy HH:mm')}"></td>
-          <td th:text="${task.dueDate}"></td>
+          <td th:text="${#temporals.format(task.createdAt, 'dd/MM/yyyy hh:mm a')}"></td>
+          <td th:text="${#temporals.format(task.dueDate, 'dd/MM/yyyy hh:mm a')}"></td>
           <td th:text="${task.user.getDisplayName()}"></td>
           <td th:text="${task.getStatus()}"></td>
           <td>
