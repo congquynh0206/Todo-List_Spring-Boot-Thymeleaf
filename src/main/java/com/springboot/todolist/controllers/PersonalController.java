@@ -118,7 +118,7 @@ public class PersonalController {
 
     // Change Infor
     @GetMapping("/tasks/infor")
-    public String getUserToChange ( HttpSession session, Model model){
+    public String getUserToChange ( Model model){
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         String userEmail = authentication.getName();
 
@@ -133,7 +133,6 @@ public class PersonalController {
     // Xử lý cập nhật username
     @PostMapping("/update-username")
     public String updateUsername(@RequestParam String newName,
-                                 HttpSession session,
                                  RedirectAttributes redirectAttributes) {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         String userEmail = authentication.getName();
@@ -184,7 +183,6 @@ public class PersonalController {
     @PostMapping("/update-password")
     public String updatePassword(@RequestParam String currentPassword,
                                  @RequestParam String newPassword,
-                                 HttpSession session,
                                  RedirectAttributes redirectAttributes) {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         String userEmail = authentication.getName();
@@ -217,7 +215,7 @@ public class PersonalController {
 
         // Kiểm tra file có rỗng không
         if (file.isEmpty()) {
-            redirectAttributes.addFlashAttribute("error_avatar", "Vui lòng chọn file!");
+            redirectAttributes.addFlashAttribute("error_avatar", "Please choose a file!");
             return "redirect:/personal";
         }
 
@@ -228,14 +226,14 @@ public class PersonalController {
                         contentType.equals("image/jpeg") ||
                         contentType.equals("image/gif") ||
                         contentType.equals("image/webp"))) {
-            redirectAttributes.addFlashAttribute("error_avatar", "Chỉ chấp nhận ảnh PNG, JPG, GIF, WEBP!");
+            redirectAttributes.addFlashAttribute("error", "Only accept image PNG, JPG, GIF, WEBP!");
             return "redirect:/personal";
         }
 
         // Giới hạn dung lượng (VD: tối đa 2MB)
         long maxFileSize = 2 * 1024 * 1024; // 2MB
         if (file.getSize() > maxFileSize) {
-            redirectAttributes.addFlashAttribute("error_avatar", "Kích thước file tối đa 2MB!");
+            redirectAttributes.addFlashAttribute("error", "Maximum file size 2MB!");
             return "redirect:/personal";
         }
 
@@ -258,19 +256,19 @@ public class PersonalController {
 
             // Cập nhật avatar trong DB
             User user = userService.findByEmail(userEmail).orElseThrow();
-            user.setAvatar(fileName); // đường dẫn để Thymeleaf load
+            user.setAvatar(fileName);
             userService.save(user);
 
-            redirectAttributes.addFlashAttribute("success_avatar", "Cập nhật avatar thành công!");
+            redirectAttributes.addFlashAttribute("success", "Avatar update successful!");
         } catch (IOException e) {
-            redirectAttributes.addFlashAttribute("error_avatar", "Lỗi khi upload ảnh!");
+            redirectAttributes.addFlashAttribute("error", "Error uploading photo!");
         }
 
         return "redirect:/personal";
     }
 
     @PostMapping("/reset-avatar")
-    public String resetAvatar (HttpSession session){
+    public String resetAvatar (){
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         String userEmail = authentication.getName();
 

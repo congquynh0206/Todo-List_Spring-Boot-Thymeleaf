@@ -7,9 +7,12 @@
 <div th:fragment="topbar">
   <div class="top-bar">
 
+    <a class="nav-btn-topbar" th:href="@{/admin}" th:if="${user.role} == 'ADMIN'">Manage</a>
 
-    <a class="nav-btn" th:href="@{/admin}" th:if="${user.role} == 'ADMIN'">Manage</a>
-    <div class="nav-btn"><a th:href="@{/login}">Sign-Out</a></div>
+    <form action="/logout" method="post">
+      <button type="submit" class="nav-btn-topbar">Sign-out</button>
+    </form>
+
     <input id="toggle-theme" type="checkbox" role="switch" class="toggle-switch" />
     <div class="username" th:text="${user.displayName}">Name</div>
 

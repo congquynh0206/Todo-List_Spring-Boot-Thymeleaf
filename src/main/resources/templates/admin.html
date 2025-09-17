@@ -78,6 +78,23 @@
 
         <!-- User Section -->
         <div th:if="${activeTab == 'user'}" class="user-section">
+
+            <form th:action="@{/admin/task}" method="get">
+
+                <label for="status">Find by Email:</label>
+                <input th:value="${email_text}" type="text" name="email_text">
+
+                <label for="size">Show per page:</label>
+                <select name="size" id="size">
+                    <option th:value="5" th:selected="${size == 5}">5</option>
+                    <option th:value="10" th:selected="${size == 10}">10</option>
+                    <option th:value="15" th:selected="${size == 15}">15</option>
+                    <option th:value="20" th:selected="${size == 20}">20</option>
+                </select>
+                <input type="hidden" name="page" th:value="${page}">
+                <button type="submit" class="apply-btn">Apply</button>
+            </form>
+
             <h2> User Table</h2>
             <table>
                 <tr>
@@ -192,8 +209,8 @@
                     <option th:value="REMOVED" th:selected="${status == 'REMOVED'}">REMOVED</option>
                 </select>
 
-                <label for="size">Show per page:</label>
-                <select name="size" id="size">
+                <label for="sizeTask">Show per page:</label>
+                <select name="sizeTask" id="sizeTask">
                     <option th:value="5" th:selected="${size == 5}">5</option>
                     <option th:value="10" th:selected="${size == 10}">10</option>
                     <option th:value="15" th:selected="${size == 15}">15</option>
@@ -202,7 +219,6 @@
                 <input type="hidden" name="page" th:value="${page}">
                 <button type="submit" class="apply-btn">Apply</button>
             </form>
-
 
             <table>
                 <tr>

@@ -25,7 +25,7 @@ public class AuthController {
     @PostMapping("/signup")
     public String processSignup(User user, Model model) {
         if (userService.findByEmail(user.getEmail()).isPresent()) {
-            model.addAttribute("emailError", "Email đã tồn tại!");
+            model.addAttribute("emailError", "Email is exited!");
             return "sign-up";
         }
         user.setAvatar("default-avatar.png");
@@ -36,7 +36,7 @@ public class AuthController {
 
     @GetMapping("/signup")
     public String signupPage(Model model) {
-        model.addAttribute("user", new User()); // Thêm model để th:object="${user}" bind được
+        model.addAttribute("user", new User());
         return "sign-up";
     }
 

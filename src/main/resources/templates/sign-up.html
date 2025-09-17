@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Sign-Up Page</title>
-    <link rel="stylesheet" th:href="@{/css/sign-up.css}">
+    <link id="theme-signup" rel="stylesheet" th:href="@{/css/sign-up.css}">
 </head>
 <body>
 
@@ -36,8 +36,8 @@
         <div class="form-group password-group">
             <input type="password" id="password" th:field="*{password}" placeholder="Password" required>
             <img th:src="@{/icon/eye-showpass.png}" alt="Show/Hide Password" id="togglePassword" class="eye-icon">
-            <span class="error" id="passwordError"></span>
         </div>
+        <span class="error" id="passwordError"></span>
 
         <button type="submit">SIGN-UP</button>
     </form>
@@ -46,5 +46,7 @@
 <!-- JS -->
 <script th:src="@{/js/sign-up.js}"></script>
 <script th:src="@{/js/show-pass.js}"></script>
+<script th:src="@{/js/theme-toggle.js}"></script>
+
 </body>
 </html>

@@ -5,6 +5,7 @@ import com.springboot.todolist.models.User;
 import com.springboot.todolist.services.TaskService;
 import com.springboot.todolist.services.UserService;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -74,11 +75,20 @@ public class AdminController {
                                   @RequestParam (defaultValue = "5") int sizeUser,
                                   @RequestParam (defaultValue = "0") int pageAdmin,
                                   @RequestParam (defaultValue = "5") int sizeAdmin,
+                                  @RequestParam  String textFind,
                                   Model model){
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         String userEmail = authentication.getName();
 
         User user = userService.findByEmail(userEmail).orElseThrow();
+        User userFindBy = userService.findByEmail(textFind).orElseThrow();
+        List <User> listFind = new ArrayList<>();
+        listFind.add(userService.findByEmail(textFind).orElseThrow());
+        listFind.addAll(userService.findByName(textFind));
+        if (listFind.isEmpty()){
+            model.addAttribute("empty", "Not found");
+        }
+
         model.addAttribute("listUser", userService.findByRole("USER", pageUser,sizeUser));
         model.addAttribute("listAdmin", userService.findByRole("ADMIN", pageAdmin,sizeAdmin));
         model.addAttribute("user", user);
@@ -89,7 +99,7 @@ public class AdminController {
     }
     @GetMapping("/admin/task")
     public String taskManagement (@RequestParam (defaultValue = "0") int page,
-                                  @RequestParam (defaultValue = "5") int size,
+                                  @RequestParam (defaultValue = "5") int sizeTask,
                                   @RequestParam (required = false ) String status,
                                   Model model){
 
@@ -99,15 +109,15 @@ public class AdminController {
         User user = userService.findByEmail(userEmail).orElseThrow();
         Page<Task> listTask;
         if (status == null || status.isEmpty() || status.equals("ALL")){
-            listTask = taskService.getAllTaskPage(page, size);
+            listTask = taskService.getAllTaskPage(page, sizeTask);
         }else {
-            listTask = taskService.getTasksByStatus (page, size, status);
+            listTask = taskService.getTasksByStatus (page, sizeTask, status);
         }
         model.addAttribute("listTask", listTask);
         model.addAttribute("user", user);
         model.addAttribute("activeTab", "task");
         model.addAttribute("status", status);
-        model.addAttribute("size", size);
+        model.addAttribute("size", sizeTask);
         return "admin";
     }
 
@@ -116,7 +126,6 @@ public class AdminController {
     public String resetPassword(@PathVariable long id,
                                  RedirectAttributes redirectAttributes) {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        String userEmail = authentication.getName();
 
         User user = userService.findById(id).orElseThrow();
             try {

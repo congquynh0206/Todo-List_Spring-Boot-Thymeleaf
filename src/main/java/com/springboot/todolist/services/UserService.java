@@ -28,6 +28,10 @@ public class UserService {
         return userRepository.findByEmail(email);
     }
 
+    public List<User> findByName (String name){
+        return userRepository.findAllByDisplayName(name);
+    }
+
     // Cập nhật display name
     public void updateDisplayName(String email, String newDisplayName) {
         Optional<User> userOpt = userRepository.findByEmail(email);

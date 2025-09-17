@@ -4,6 +4,8 @@ const themeLinks = [
     document.getElementById('theme-home'),
     document.getElementById('theme-admin'),
     document.getElementById('theme-personal'),
+    document.getElementById('theme-signup'),
+    document.getElementById('theme-login'),
     document.getElementById('theme-topbar')
 ];
 

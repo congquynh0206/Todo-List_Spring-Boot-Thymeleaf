@@ -127,6 +127,16 @@ a {
     text-align: center;
     animation: shake 0.5s ease-in-out;
 }
+.success-message {
+    background-color: #aaf896;
+    color: black;
+    padding: 10px;
+    border: 1px solid #fae8c0;
+    border-radius: 4px;
+    margin-bottom: 15px;
+    font-size: 14px;
+    text-align: center;
+}
 
 @keyframes shake {
     0% { transform: translateX(0); }
