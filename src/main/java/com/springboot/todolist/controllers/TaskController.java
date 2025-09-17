@@ -58,7 +58,9 @@
                 message = "Keep going 💪";
             }
 
+
             model.addAttribute("user", user);
+            model.addAttribute("role", user.getRole());
             model.addAttribute("tasks", tasks);
             model.addAttribute("totalTask", safeTotalTask);
             model.addAttribute("numberOfFinished", numberOfFinishedTask);

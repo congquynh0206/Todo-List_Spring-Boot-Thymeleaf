@@ -103,7 +103,7 @@ public class PersonalController {
 
         User user = userService.findByEmail(userEmail).orElseThrow();
         model.addAttribute("user",user);
-        model.addAttribute("listRemoved", taskService.getTasksByUserAndStatus(user.getUser_id(),page,size,"FINISHED"));
+        model.addAttribute("listRemoved", taskService.getTasksByUserAndStatus(user.getUser_id(),page,size,"REMOVED"));
         model.addAttribute("activeTab","removed");
         return "personal";
     }

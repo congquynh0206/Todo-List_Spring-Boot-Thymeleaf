@@ -4,8 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Personal Page</title>
-    <link th:href="@{/css/personal2.css}" rel="stylesheet">
-    <link th:href="@{/css/topbar2.css}" rel="stylesheet">
+    <link id="theme-personal" th:href="@{/css/personal.css}" rel="stylesheet">
+    <link id="theme-topbar" th:href="@{/css/topbar.css}" rel="stylesheet">
 </head>
 <body>
 
@@ -61,12 +61,13 @@
 
     <!-- Right Content Area -->
     <div class="content-area">
-        <a th:href="@{/home}">
-            <img th:src="@{/icon/home-icon.png}" alt="Home" class="home-icon">
-        </a>
-        <div th:if="${success}" th:text="${success}" class="success"></div>
-        <div th:if="${error}" th:text="${error}" class="error"></div>
-
+        <div class="content-header">
+            <a th:href="@{/home}">
+                <img th:src="@{/icon/home-icon.png}" alt="Home" class="home-icon">
+            </a>
+            <div th:if="${success}" th:text="${success}" class="success"></div>
+            <div th:if="${error}" th:text="${error}" class="error"></div>
+        </div>
 
         <!-- Current Section -->
         <div th:if="${activeTab == 'current'}" class="task-section">
@@ -256,6 +257,8 @@
     </div>
 </div>
 
-<script th:src="@{/js/personal.js}"></script>
+<script th:src="@{/js/reset-avatar.js}"></script>
+<script th:src="@{/js/theme-toggle.js}"></script>
+
 </body>
 </html>

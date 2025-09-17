@@ -5,21 +5,31 @@
     padding: 0;
     box-sizing: border-box;
 }
+.content-area {
+    position: relative;
+    padding: 20px;
+}
+
+.content-header {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    margin-bottom: 20px;
+}
+
+.success {
+    color: green;
+    font-weight: bold;
+}
+
+.error {
+    color: red;
+    font-weight: bold;
+}
+
+
 th {
     text-align: center;
-}
-.error{
-    position: absolute;
-    color:#dc3545;
-    top: 3rem;
-    left: 20rem;
-
-}
-.success{
-    position: absolute;
-    color: green;
-    top: 3rem;
-    left: 20rem;
 }
 
 

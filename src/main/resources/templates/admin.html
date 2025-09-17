@@ -1,11 +1,11 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Admin Dashboard</title>
-  <link th:href="@{/css/admin2.css}" rel="stylesheet">
-  <link th:href="@{/css/topbar2.css}" rel="stylesheet">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard</title>
+    <link id="theme-admin" th:href="@{/css/admin.css}" rel="stylesheet">
+    <link id="theme-topbar" th:href="@{/css/topbar.css}" rel="stylesheet">
 </head>
 <body>
 
@@ -18,237 +18,242 @@
 <!-- Main Content Area -->
 <div class="main-content">
 
-  <!-- Left Sidebar -->
-  <div class="sidebar">
-    <!-- User Profile -->
-    <div class="user-profile">
-      <div class="avatar-container">
+    <!-- Left Sidebar -->
+    <div class="sidebar">
+        <!-- User Profile -->
+        <div class="user-profile">
+            <div class="avatar-container">
 
-        <img th:src="@{'/' + ${user.avatar}}" alt="Avatar" class="avatar-img">
+                <img th:src="@{'/' + ${user.avatar}}" alt="Avatar" class="avatar-img">
 
-        <form th:action="@{/update-avatar}" method="post" enctype="multipart/form-data" class="upload-form">
-          <label for="avatarFile" class="upload-btn">📷</label>
-          <input type="file" id="avatarFile" name="avatarFile" accept="image/*" onchange="this.form.submit()">
-          <button type="button" class ="reset-btn" onclick="resetAvatar()">❌</button>
-        </form>
-      </div>
+                <form th:action="@{/update-avatar}" method="post" enctype="multipart/form-data" class="upload-form">
+                    <label for="avatarFile" class="upload-btn">📷</label>
+                    <input type="file" id="avatarFile" name="avatarFile" accept="image/*" onchange="this.form.submit()">
+                    <button type="button" class="reset-btn" onclick="resetAvatar()">❌</button>
+                </form>
+            </div>
 
-      <div class="profile-line"></div>
-      <div class="profile-name" th:text="${user.displayName}"></div>
-      <div class="profile-info">
-        <div class="email-info">Email: <span th:text="${user.email}"></span></div>
-        <div class="role-info">Role: <span th:text="${user.role}"></span></div>
-      </div>
+            <div class="profile-line"></div>
+            <div class="profile-name" th:text="${user.displayName}"></div>
+            <div class="profile-info">
+                <div class="email-info">Email: <span th:text="${user.email}"></span></div>
+                <div class="role-info">Role: <span th:text="${user.role}"></span></div>
+            </div>
+        </div>
+
+        <!-- Navigation Menu -->
+        <div class="nav-menu">
+            <a class="nav-item" th:href="@{/admin(tab='dashboard')}"
+               th:classappend="${activeTab == 'dashboard'} ? 'active'"> 📊 Dashboard
+            </a>
+            <a class="nav-item" th:href="@{/admin(tab='user')}" th:classappend="${activeTab == 'user'} ? 'active'">
+                👤 User Management
+            </a>
+            <a class="nav-item" th:href="@{/admin(tab='task')}" th:classappend="${activeTab == 'task'} ? 'active'">📝
+                Task Management
+            </a>
+        </div>
+
     </div>
 
-    <!-- Navigation Menu -->
-    <div class="nav-menu">
-      <a class="nav-item" th:href="@{/admin(tab='dashboard')}" th:classappend="${activeTab == 'dashboard'} ? 'active'"> 📊 Dashboard
-      </a>
-      <a class="nav-item" th:href="@{/admin(tab='user')}" th:classappend="${activeTab == 'user'} ? 'active'">
-        👤 User Management
-      </a>
-      <a class="nav-item" th:href="@{/admin(tab='task')}" th:classappend="${activeTab == 'task'} ? 'active'">📝 Task Management
-      </a>
-    </div>
-
-  </div>
-
-  <!-- Right Content Area -->
-  <div class="content-area">
-    <a th:href="@{/home}">
-      <img th:src="@{/icon/home-icon.png}" alt="Home" class="home-icon">
-    </a>
-    <div th:if="${success}" th:text="${success}" class="success"></div>
-    <div th:if="${error}" th:text="${error}" class="error"></div>
+    <!-- Right Content Area -->
+    <div class="content-area">
+        <div class="content-header">
+            <a th:href="@{/home}">
+                <img th:src="@{/icon/home-icon.png}" alt="Home" class="home-icon">
+            </a>
+            <div th:if="${success}" th:text="${success}" class="success"></div>
+            <div th:if="${error}" th:text="${error}" class="error"></div>
+        </div>
 
 
-    <!--Dashboard Section-->
-    <div th:if="${activeTab == 'dashboard'}" class = "dashboard-section">
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <canvas id="taskChart" width="600" height="300" ></canvas>
-    <canvas id="rateChart" width="600" height="300" ></canvas>
-    <script src="/js/chart.js"></script>
-    </div>
+        <!--Dashboard Section-->
+        <div th:if="${activeTab == 'dashboard'}" class="dashboard-section">
+            <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+            <canvas id="taskChart" width="600" height="300"></canvas>
+            <canvas id="rateChart" width="600" height="300"></canvas>
+            <script src="/js/chart.js"></script>
+        </div>
 
 
-    <!-- User Section -->
-    <div th:if="${activeTab == 'user'}" class="user-section">
-      <h2> User Table</h2>
-      <table>
-        <tr>
-          <th>Number</th>
-          <th>ID</th>
-          <th>Name</th>
-          <th>Email</th>
-          <th>Create date</th>
-          <th>Avatar</th>
-          <th>Option</th>
+        <!-- User Section -->
+        <div th:if="${activeTab == 'user'}" class="user-section">
+            <h2> User Table</h2>
+            <table>
+                <tr>
+                    <th>Number</th>
+                    <th>ID</th>
+                    <th>Name</th>
+                    <th>Email</th>
+                    <th>Create date</th>
+                    <th>Avatar</th>
+                    <th>Option</th>
 
-        </tr>
-        <tr th:each="user, iterStat : ${listUser}">
-          <td th:text="${iterStat.index + 1 + (listUser.number * listUser.size)}"></td>
-          <td th:text="${user.user_id}"></td>
-          <td th:text="${user.displayName}"></td>
-          <td th:text="${user.email}"></td>
-          <td th:text="${#temporals.format(user.createdAt, 'dd/MM/yyyy hh:mm a')}"></td>
-          <td >
-            <img th:src="@{'/' + ${user.avatar}}" alt="Avatar" class="avatar">
+                </tr>
+                <tr th:each="user, iterStat : ${listUser}">
+                    <td th:text="${iterStat.index + 1 + (listUser.number * listUser.size)}"></td>
+                    <td th:text="${user.user_id}"></td>
+                    <td th:text="${user.displayName}"></td>
+                    <td th:text="${user.email}"></td>
+                    <td th:text="${#temporals.format(user.createdAt, 'dd/MM/yyyy hh:mm a')}"></td>
+                    <td>
+                        <img th:src="@{'/' + ${user.avatar}}" alt="Avatar" class="avatar">
 
-          </td>
-          <td>
-            <form th:action="@{'/reset-password/' + ${user.user_id}}" method="post">
-              <input type="hidden" name="tab" value="user"/>
-              <button type="submit" class="reset-pass-btn">Reset Password</button>
-            </form>
+                    </td>
+                    <td>
+                        <form th:action="@{'/reset-password/' + ${user.user_id}}" method="post">
+                            <input type="hidden" name="tab" value="user"/>
+                            <button type="submit" class="reset-pass-btn">Reset Password</button>
+                        </form>
 
-            <form th:action="@{'/set-admin/' + ${user.user_id}}" method="post">
-              <input type="hidden" name="tab" value="user"/>
-              <button type="submit" class="set-admin-btn">Set Admin</button>
-            </form>
+                        <form th:action="@{'/set-admin/' + ${user.user_id}}" method="post">
+                            <input type="hidden" name="tab" value="user"/>
+                            <button type="submit" class="set-admin-btn">Set Admin</button>
+                        </form>
 
-            <form th:action="@{'/delete-user/' + ${user.user_id}}" method="post">
-              <input type="hidden" name="tab" value="user"/>
-              <button type="submit" class="delete-btn">Delete</button>
-            </form>
-          </td>
-        </tr>
-        <tr>
-          <td colspan="8">
-            <div class="pagination-container">
-              <a th:if="${listUser.hasPrevious()}"
-                 th:href="@{/admin/user(pageUser=${listUser.number - 1}, sizeUser=${listUser.size},
+                        <form th:action="@{'/delete-user/' + ${user.user_id}}" method="post">
+                            <input type="hidden" name="tab" value="user"/>
+                            <button type="submit" class="delete-btn">Delete</button>
+                        </form>
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="8">
+                        <div class="pagination-container">
+                            <a th:if="${listUser.hasPrevious()}"
+                               th:href="@{/admin/user(pageUser=${listUser.number - 1}, sizeUser=${listUser.size},
                                         pageAdmin=${listAdmin.number}, sizeAdmin=${listAdmin.size})}">⟵</a>
 
-              <span class="page-info">
+                            <span class="page-info">
                             Page <span th:text="${listUser.number + 1}"></span> /
                             <span th:text="${listUser.totalPages}"></span>
                                     </span>
-              <a th:if="${listUser.hasNext()}"
-                 th:href="@{/admin/user(pageUser=${listUser.number + 1}, sizeUser=${listUser.size},
+                            <a th:if="${listUser.hasNext()}"
+                               th:href="@{/admin/user(pageUser=${listUser.number + 1}, sizeUser=${listUser.size},
                                         pageAdmin=${listAdmin.number}, sizeAdmin=${listAdmin.size})}">⟶</a>
-            </div>
-          </td>
-        </tr>
-      </table>
+                        </div>
+                    </td>
+                </tr>
+            </table>
 
-      <!-- Admin Table-->
-      <h2 style="padding-top: 50px"> Admin Table</h2>
-      <table>
-        <tr>
-          <th>Number</th>
-          <th>ID</th>
-          <th>Name</th>
-          <th>Email</th>
-          <th>Create date</th>
-          <th>Avatar</th>
+            <!-- Admin Table-->
+            <h2 style="padding-top: 50px"> Admin Table</h2>
+            <table>
+                <tr>
+                    <th>Number</th>
+                    <th>ID</th>
+                    <th>Name</th>
+                    <th>Email</th>
+                    <th>Create date</th>
+                    <th>Avatar</th>
 
-        </tr>
-        <tr th:each="admin, iterStat : ${listAdmin}">
-          <td th:text="${iterStat.index + 1 + (listAdmin.number * listAdmin.size)}"></td>
-          <td th:text="${admin.user_id}"></td>
-          <td th:text="${admin.displayName}"></td>
-          <td th:text="${admin.email}"></td>
-          <td th:text="${#temporals.format(admin.createdAt, 'dd/MM/yyyy HH:mm')}"></td>
-          <td >
-            <img th:src="@{'/' + ${admin.avatar}}" alt="Avatar" class="avatar">
+                </tr>
+                <tr th:each="admin, iterStat : ${listAdmin}">
+                    <td th:text="${iterStat.index + 1 + (listAdmin.number * listAdmin.size)}"></td>
+                    <td th:text="${admin.user_id}"></td>
+                    <td th:text="${admin.displayName}"></td>
+                    <td th:text="${admin.email}"></td>
+                    <td th:text="${#temporals.format(admin.createdAt, 'dd/MM/yyyy HH:mm')}"></td>
+                    <td>
+                        <img th:src="@{'/' + ${admin.avatar}}" alt="Avatar" class="avatar">
 
-          </td>
-        </tr>
-        <tr>
-          <td colspan="8">
-            <div class="pagination-container">
-              <a th:if="${listAdmin.hasPrevious()}"
-                 th:href="@{/admin/user(pageUser=${listUser.number}, sizeUser=${listUser.size},
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="8">
+                        <div class="pagination-container">
+                            <a th:if="${listAdmin.hasPrevious()}"
+                               th:href="@{/admin/user(pageUser=${listUser.number}, sizeUser=${listUser.size},
                                         pageAdmin=${listAdmin.number - 1}, sizeAdmin=${listAdmin.size})}">⟵</a>
 
-              <span class="page-info">
+                            <span class="page-info">
                             Page <span th:text="${listAdmin.number + 1}"></span> /
                             <span th:text="${listAdmin.totalPages}"></span>
                                     </span>
-              <a th:if="${listAdmin.hasNext()}"
-                 th:href="@{/admin/user(pageUser=${listUser.number}, sizeUser=${listUser.size},
+                            <a th:if="${listAdmin.hasNext()}"
+                               th:href="@{/admin/user(pageUser=${listUser.number}, sizeUser=${listUser.size},
                                         pageAdmin=${listAdmin.number + 1}, sizeAdmin=${listAdmin.size})}">⟶</a>
-            </div>
-          </td>
-        </tr>
-      </table>
-    </div>
+                        </div>
+                    </td>
+                </tr>
+            </table>
+        </div>
 
-    <!-- Task Section -->
-    <div th:if="${activeTab == 'task'}" class="task-section">
+        <!-- Task Section -->
+        <div th:if="${activeTab == 'task'}" class="task-section">
 
-      <form th:action="@{/admin/task}" method="get">
+            <form th:action="@{/admin/task}" method="get">
 
-        <label for="status">Find by Status:</label>
-        <select name="status" id="status">
-          <option th:value="ALL" th:selected="${status == 'ALL'}">ALL</option>
-          <option th:value="CURRENT" th:selected="${status == 'CURRENT'}">CURRENT</option>
-          <option th:value="FINISHED" th:selected="${status == 'FINISHED'}">FINISHED</option>
-          <option th:value="REMOVED" th:selected="${status == 'REMOVED'}">REMOVED</option>
-        </select>
+                <label for="status">Find by Status:</label>
+                <select name="status" id="status">
+                    <option th:value="ALL" th:selected="${status == 'ALL'}">ALL</option>
+                    <option th:value="CURRENT" th:selected="${status == 'CURRENT'}">CURRENT</option>
+                    <option th:value="FINISHED" th:selected="${status == 'FINISHED'}">FINISHED</option>
+                    <option th:value="REMOVED" th:selected="${status == 'REMOVED'}">REMOVED</option>
+                </select>
 
-        <label for="size">Show per page:</label>
-        <select name="size" id="size">
-          <option th:value="5" th:selected="${size == 5}">5</option>
-          <option th:value="10" th:selected="${size == 10}">10</option>
-          <option th:value="15" th:selected="${size == 15}">15</option>
-          <option th:value="20" th:selected="${size == 20}">20</option>
-        </select>
-        <input type="hidden" name="page" th:value="${page}">
-        <button type="submit" class="apply-btn">Apply</button>
-      </form>
-
-
-      <table>
-        <tr>
-          <th>Number</th>
-          <th>Title</th>
-          <th>Description</th>
-          <th>Create date</th>
-          <th>Due date</th>
-          <th>Owner</th>
-          <th>Status</th>
-          <th>Delete</th>
-        </tr>
-        <tr th:each="task, iterStat : ${listTask}">
-          <td th:text="${iterStat.index + 1 + (listTask.number * listTask.size)}"></td>
-          <td th:text="${task.title}"></td>
-          <td th:text="${task.description}"></td>
-          <td th:text="${#temporals.format(task.createdAt, 'dd/MM/yyyy hh:mm a')}"></td>
-          <td th:text="${#temporals.format(task.dueDate, 'dd/MM/yyyy hh:mm a')}"></td>
-          <td th:text="${task.user.getDisplayName()}"></td>
-          <td th:text="${task.getStatus()}"></td>
-          <td>
-            <form th:action="@{'/delete-task-permanent/' + ${task.task_id}}" method="post">
-              <input type="hidden" name="tab" value="task"/>
-              <input type="hidden" name="from" value="admin"/>
-              <button type="submit" class="delete-btn">Delete</button>
+                <label for="size">Show per page:</label>
+                <select name="size" id="size">
+                    <option th:value="5" th:selected="${size == 5}">5</option>
+                    <option th:value="10" th:selected="${size == 10}">10</option>
+                    <option th:value="15" th:selected="${size == 15}">15</option>
+                    <option th:value="20" th:selected="${size == 20}">20</option>
+                </select>
+                <input type="hidden" name="page" th:value="${page}">
+                <button type="submit" class="apply-btn">Apply</button>
             </form>
-          </td>
-        </tr>
-        <tr>
-          <td colspan="8">
-            <div class="pagination-container">
-              <a th:if="${listTask.hasPrevious()}"
-                 th:href="@{/admin/task(page=${listTask.number - 1}, size=${listTask.size})}">⟵</a>
 
-              <span class="page-info">
+
+            <table>
+                <tr>
+                    <th>Number</th>
+                    <th>Title</th>
+                    <th>Description</th>
+                    <th>Create date</th>
+                    <th>Due date</th>
+                    <th>Owner</th>
+                    <th>Status</th>
+                    <th>Delete</th>
+                </tr>
+                <tr th:each="task, iterStat : ${listTask}">
+                    <td th:text="${iterStat.index + 1 + (listTask.number * listTask.size)}"></td>
+                    <td th:text="${task.title}"></td>
+                    <td th:text="${task.description}"></td>
+                    <td th:text="${#temporals.format(task.createdAt, 'dd/MM/yyyy hh:mm a')}"></td>
+                    <td th:text="${#temporals.format(task.dueDate, 'dd/MM/yyyy hh:mm a')}"></td>
+                    <td th:text="${task.user.getDisplayName()}"></td>
+                    <td th:text="${task.getStatus()}"></td>
+                    <td>
+                        <form th:action="@{'/delete-task-permanent/' + ${task.task_id}}" method="post">
+                            <input type="hidden" name="tab" value="task"/>
+                            <input type="hidden" name="from" value="admin"/>
+                            <button type="submit" class="delete-btn">Delete</button>
+                        </form>
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="8">
+                        <div class="pagination-container">
+                            <a th:if="${listTask.hasPrevious()}"
+                               th:href="@{/admin/task(page=${listTask.number - 1}, size=${listTask.size})}">⟵</a>
+
+                            <span class="page-info">
                     Page <span th:text="${listTask.number + 1}"></span> /
                 <span th:text="${listTask.totalPages}"></span>
               </span>
 
-              <a th:if="${listTask.hasNext()}"
-                 th:href="@{/admin/task(page=${listTask.number + 1}, size=${listTask.size})}">⟶</a>
-            </div>
-          </td>
-        </tr>
-      </table>
+                            <a th:if="${listTask.hasNext()}"
+                               th:href="@{/admin/task(page=${listTask.number + 1}, size=${listTask.size})}">⟶</a>
+                        </div>
+                    </td>
+                </tr>
+            </table>
+
+        </div>
 
     </div>
+    <script th:src="@{/js/reset-avatar.js}"></script>
+    <script th:src="@{/js/theme-toggle.js}"></script>
 
-</div>
-
-<script th:src="@{/js/personal.js}"></script>
 </body>
 </html>

@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>500 - Server error</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      color: white;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+      text-align: center;
+      margin: 0;
+    }
+    .container {
+      max-width: 500px;
+    }
+    .error-code {
+      font-size: 6rem;
+      font-weight: 900;
+      background: linear-gradient(45deg, #ff6b6b, #feca57, #48dbfb, #ff9ff3);
+      background-clip: text;
+      -webkit-background-clip: text;
+      color: transparent;
+      margin-bottom: 20px;
+    }
+    .error-title {
+      font-size: 2rem;
+      font-weight: 700;
+      margin-bottom: 15px;
+    }
+    .error-message {
+      font-size: 1.1rem;
+      margin-bottom: 30px;
+      opacity: 0.9;
+    }
+    .btn {
+      padding: 12px 25px;
+      background: linear-gradient(45deg, #ff6b6b, #feca57);
+      color: white;
+      text-decoration: none;
+      border-radius: 30px;
+      font-weight: 600;
+    }
+  </style>
+</head>
+<body>
+<div class="container">
+  <div class="error-code">500</div>
+  <div class="error-title">Internal Server Error</div>
+  <div class="error-message">
+    A server error occurred. Please try again later.
+  </div>
+  <a href="/login" class="btn">Back to Login</a>
+</div>
+</body>
+</html>
