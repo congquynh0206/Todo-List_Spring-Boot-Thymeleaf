@@ -4,7 +4,6 @@
     import com.springboot.todolist.models.User;
     import com.springboot.todolist.services.TaskService;
     import com.springboot.todolist.services.UserService;
-    import jakarta.servlet.http.HttpSession;
     import org.springframework.beans.factory.annotation.Autowired;
     import org.springframework.data.domain.Page;
     import org.springframework.security.core.Authentication;
@@ -153,11 +152,11 @@
             return "redirect:/personal?tab=removed";
         }
 
-        // Delete Permanent task
         @PostMapping("/delete-task-permanent/{id}")
         public String deleteTaskPermanent(@PathVariable long id,
-                                          @RequestParam String tab,
                                           @RequestParam String from,
+                                          @RequestParam(required = false) String status,
+                                          @RequestParam(defaultValue = "5") int size,
                                           RedirectAttributes redirectAttributes) {
             try {
                 taskService.deleteTask(id);
@@ -167,11 +166,12 @@
             }
 
             if ("admin".equals(from)) {
-                return "redirect:/admin?tab=" + tab;
+                return "redirect:/admin/task?status=" + status + "&size=" + size;
             } else {
-                return "redirect:/personal?tab=" + tab;
+                return "redirect:/personal?tab=task";
             }
         }
+
 
 
     }

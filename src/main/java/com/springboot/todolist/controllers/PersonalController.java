@@ -6,8 +6,12 @@ import com.springboot.todolist.services.UserService;
 import java.nio.file.Path;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -29,6 +33,10 @@ public class PersonalController {
     private UserService userService;
     @Autowired
     private  TaskService taskService;
+    @Autowired
+    private UserDetailsService userDetailsService;
+    @Autowired
+    private PasswordEncoder passwordEncoder;
 
     @GetMapping("/personal")
     public String showPersonalPage(@RequestParam(defaultValue = "current") String tab,
@@ -143,23 +151,29 @@ public class PersonalController {
     // Xử lý cập nhật email
     @PostMapping("/update-email")
     public String updateEmail(@RequestParam String newEmail,
-                              HttpSession session,
                               RedirectAttributes redirectAttributes) {
+
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         String userEmail = authentication.getName();
 
-        // Kiểm tra email mới đã tồn tại chưa
-        if (userService.findByEmail(newEmail).isPresent() && !newEmail.equals(userEmail)) {
-            redirectAttributes.addFlashAttribute("error_email", "This email is existed!");
-            return "redirect:/personal?tab=infor";
-        }
-
         try {
+            if (!userService.findByEmail(newEmail).isEmpty()) {
+                redirectAttributes.addFlashAttribute("error_email", "This email is existed!");
+                return "redirect:/personal?tab=infor";
+            }
             userService.updateEmail(userEmail, newEmail);
-            // Cập nhật session với email mới
-            session.setAttribute("userEmail", newEmail);
             redirectAttributes.addFlashAttribute("success_email", "Email updated successfully!");
+
+            UserDetails userDetails = userDetailsService.loadUserByUsername(newEmail);
+            Authentication newAuth = new UsernamePasswordAuthenticationToken(
+                    userDetails,
+                    userDetails.getPassword(),
+                    userDetails.getAuthorities()
+            );
+            SecurityContextHolder.getContext().setAuthentication(newAuth);
+
         } catch (Exception e) {
+            e.printStackTrace(); // log lỗi để xem chi tiết
             redirectAttributes.addFlashAttribute("error_email", "Email updated fail!");
         }
 
@@ -178,7 +192,7 @@ public class PersonalController {
         Optional<User> user = userService.findByEmail(userEmail);
         if (user.isPresent()) {
             // Kiểm tra mật khẩu hiện tại
-            if (!user.get().getPassword().equals(currentPassword)) {
+            if (passwordEncoder.matches(user.get().getPassword(), currentPassword)) {
                 redirectAttributes.addFlashAttribute("error_password", "Current password is incorrect!");
                 return "redirect:/personal?tab=infor";
             }

@@ -45,12 +45,9 @@ public class UserService {
 
     // Cập nhật email
     public void updateEmail(String oldEmail, String newEmail) {
-        Optional<User> userOpt = userRepository.findByEmail(oldEmail);
-        if (userOpt.isPresent()) {
-            User user = userOpt.get();
+        User user = userRepository.findByEmail(oldEmail).orElseThrow();
             user.setEmail(newEmail);
             userRepository.save(user);
-        }
     }
 
     // Cập nhật password
@@ -58,7 +55,7 @@ public class UserService {
         Optional<User> userOpt = userRepository.findByEmail(email);
         if (userOpt.isPresent()) {
             User user = userOpt.get();
-            user.setPassword(newPassword);
+            user.setPassword(passwordEncoder.encode(newPassword));
             userRepository.save(user);
         }
     }

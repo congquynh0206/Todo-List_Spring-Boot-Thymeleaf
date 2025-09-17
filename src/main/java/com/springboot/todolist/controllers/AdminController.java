@@ -58,6 +58,7 @@ public class AdminController {
             case "task":
                 model.addAttribute("listTask", listTask);
                 model.addAttribute("status", status);
+                model.addAttribute("size", size);
                 break;
             default:
                 model.addAttribute("user",user);
@@ -90,7 +91,6 @@ public class AdminController {
     public String taskManagement (@RequestParam (defaultValue = "0") int page,
                                   @RequestParam (defaultValue = "5") int size,
                                   @RequestParam (required = false ) String status,
-                                  HttpSession session,
                                   Model model){
 
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
