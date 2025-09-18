@@ -96,4 +96,8 @@ public class UserService {
     public Page<User> findByRole (String role, int page, int size){
         return userRepository.findByRole(role, PageRequest.of(page, size));
     }
+
+    public Page<User> findByTextAndRole (String text, String role, int page, int size){
+        return userRepository.findByRoleAndEmailContainingIgnoreCaseOrRoleAndDisplayNameContainingIgnoreCase(role, text,role, text, PageRequest.of(page,size));
+    }
 }

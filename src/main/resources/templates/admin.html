@@ -79,19 +79,20 @@
         <!-- User Section -->
         <div th:if="${activeTab == 'user'}" class="user-section">
 
-            <form th:action="@{/admin/task}" method="get">
+            <form th:action="@{/admin/user}" method="get" class="filter">
 
-                <label for="status">Find by Email:</label>
-                <input th:value="${email_text}" type="text" name="email_text">
+                <label for="textFind">Find by Email, Name:</label>
+                <input th:value="${textFind}" type="text" name="textFind" id="textFind">
 
-                <label for="size">Show per page:</label>
-                <select name="size" id="size">
-                    <option th:value="5" th:selected="${size == 5}">5</option>
-                    <option th:value="10" th:selected="${size == 10}">10</option>
-                    <option th:value="15" th:selected="${size == 15}">15</option>
-                    <option th:value="20" th:selected="${size == 20}">20</option>
+                <label for="sizeU">Show per page:</label>
+                <select name="sizeU" id="sizeU">
+                    <option th:value="5" th:selected="${sizeU == 5}">5</option>
+                    <option th:value="10" th:selected="${sizeU == 10}">10</option>
+                    <option th:value="15" th:selected="${sizeU == 15}">15</option>
+                    <option th:value="20" th:selected="${sizeU == 20}">20</option>
                 </select>
-                <input type="hidden" name="page" th:value="${page}">
+
+                <input type="hidden" name="pageU" th:value="${pageU}">
                 <button type="submit" class="apply-btn">Apply</button>
             </form>
 

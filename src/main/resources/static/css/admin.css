@@ -12,7 +12,9 @@
     left: 20rem;
 
 }
-
+.filter{
+    margin-bottom: 40px;
+}
 .success{
     position: absolute;
     color: green;
@@ -360,7 +362,7 @@ td:nth-child(4), td:nth-child(5) {
 }
 
 /* Button styling */
-button[type="submit"] {
+button[type="submit"]:not(.nav-btn-topbar) {
     padding: 8px 16px;
     border: none;
     border-radius: 6px;

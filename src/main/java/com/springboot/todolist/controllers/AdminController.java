@@ -72,29 +72,31 @@ public class AdminController {
 
     @GetMapping("/admin/user")
     public String userManagement (@RequestParam (defaultValue = "0") int pageUser,
-                                  @RequestParam (defaultValue = "5") int sizeUser,
+                                  @RequestParam (defaultValue = "5") int sizeU,
                                   @RequestParam (defaultValue = "0") int pageAdmin,
-                                  @RequestParam (defaultValue = "5") int sizeAdmin,
-                                  @RequestParam  String textFind,
+                                  @RequestParam (defaultValue = "")String textFind,
+                                  @RequestParam (defaultValue = "0")int pageU,
                                   Model model){
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         String userEmail = authentication.getName();
-
         User user = userService.findByEmail(userEmail).orElseThrow();
-        User userFindBy = userService.findByEmail(textFind).orElseThrow();
-        List <User> listFind = new ArrayList<>();
-        listFind.add(userService.findByEmail(textFind).orElseThrow());
-        listFind.addAll(userService.findByName(textFind));
-        if (listFind.isEmpty()){
-            model.addAttribute("empty", "Not found");
+        Page<User> listUser;
+        Page<User> listAdmin;
+
+        if (textFind != null ){
+            listUser = userService.findByTextAndRole(textFind, "USER", pageU, sizeU);
+            listAdmin = userService.findByTextAndRole(textFind, "ADMIN", pageU, sizeU);
+        }else {
+            listUser = userService.findByRole("USER", pageUser, sizeU);
+            listAdmin = userService.findByRole("ADMIN", pageAdmin, sizeU);
         }
 
-        model.addAttribute("listUser", userService.findByRole("USER", pageUser,sizeUser));
-        model.addAttribute("listAdmin", userService.findByRole("ADMIN", pageAdmin,sizeAdmin));
+        model.addAttribute("listUser", listUser);
+        model.addAttribute("listAdmin", listAdmin);
         model.addAttribute("user", user);
         model.addAttribute("activeTab", "user");
-        model.addAttribute("sizeAdmin", sizeAdmin);
-        model.addAttribute("sizeUser", sizeUser);
+        model.addAttribute("sizeAdmin", sizeU);
+        model.addAttribute("sizeU", sizeU);
         return "admin";
     }
     @GetMapping("/admin/task")
