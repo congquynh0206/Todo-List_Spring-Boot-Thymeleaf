@@ -96,6 +96,7 @@ public class AdminController {
         model.addAttribute("user", user);
         model.addAttribute("activeTab", "user");
         model.addAttribute("sizeAdmin", sizeU);
+        model.addAttribute("textFind", textFind);
         model.addAttribute("sizeU", sizeU);
         return "admin";
     }

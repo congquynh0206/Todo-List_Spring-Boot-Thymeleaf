@@ -1,11 +1,13 @@
 package com.springboot.todolist.controllers;
 
+import com.springboot.todolist.models.Task;
 import com.springboot.todolist.models.User;
 import com.springboot.todolist.services.TaskService;
 import com.springboot.todolist.services.UserService;
 import java.nio.file.Path;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -73,30 +75,54 @@ public class PersonalController {
     // Lấy Current Task
     @GetMapping("/tasks/current")
     public String getCurrentTask ( @RequestParam (defaultValue = "0") int page,
-                                   @RequestParam (defaultValue = "5") int size,
+                                   @RequestParam (defaultValue = "0") int pageC,
+                                   @RequestParam (defaultValue = "5") int sizeC,
+                                   @RequestParam (defaultValue = "") String textFind,
                                     Model model){
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         String userEmail = authentication.getName();
 
         User user = userService.findByEmail(userEmail).orElseThrow();
+        Page<Task> listCurrent;
+        if (textFind != null){
+            listCurrent = taskService.getTasksByUserAndStatusAndTitle(user.getUser_id(), pageC, sizeC, "CURRENT", textFind);
+        }else{
+            listCurrent = taskService.getTasksByUserAndStatus(user.getUser_id(),page,sizeC, "CURRENT");
+        }
+
         model.addAttribute("user", user);
-        model.addAttribute("listCurrent", taskService.getTasksByUserAndStatus(user.getUser_id(),page,size, "CURRENT"));
+        model.addAttribute("listCurrent", listCurrent);
         model.addAttribute("activeTab","current");
+        model.addAttribute("textFind",textFind);
+        model.addAttribute("sizeC",sizeC);
         return "personal";
     }
 
     // Lấy Finished Task
     @GetMapping("/tasks/finished")
     public String getFinishedTask ( @RequestParam (defaultValue = "0") int page,
-                                    @RequestParam (defaultValue = "5") int size,
+                                    @RequestParam (defaultValue = "0") int pageF,
+                                    @RequestParam (defaultValue = "5") int sizeF,
+                                    @RequestParam (defaultValue = "") String textFindF,
                                     Model model){
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         String userEmail = authentication.getName();
 
         User user = userService.findByEmail(userEmail).orElseThrow();
+
+        Page<Task> listFinished;
+        if (textFindF != null){
+            listFinished = taskService.getTasksByUserAndStatusAndTitle(user.getUser_id(), pageF, sizeF, "FINISHED", textFindF);
+        }else{
+            listFinished = taskService.getTasksByUserAndStatus(user.getUser_id(),page,sizeF, "FINISHED");
+        }
+
         model.addAttribute("user", user);
         model.addAttribute("user",user);
-        model.addAttribute("listFinished", taskService.getTasksByUserAndStatus(user.getUser_id(),page,size, "FINISHED"));
+        model.addAttribute("listFinished", listFinished);
+        model.addAttribute("textFindF", textFindF);
+        model.addAttribute("pageF", pageF);
+        model.addAttribute("sizeF", sizeF);
         model.addAttribute("activeTab","finished");
         return "personal";
     }
@@ -104,14 +130,28 @@ public class PersonalController {
     // Lấy Removed Task
     @GetMapping("/tasks/removed")
     public String getRemovedTask ( @RequestParam (defaultValue = "0") int page,
-                                   @RequestParam (defaultValue = "5") int size,
+                                   @RequestParam (defaultValue = "0") int pageR,
+                                   @RequestParam (defaultValue = "5") int sizeR,
+                                   @RequestParam (defaultValue = "") String textFindR,
                                    Model model){
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         String userEmail = authentication.getName();
 
         User user = userService.findByEmail(userEmail).orElseThrow();
+
+        Page<Task> listRemoved;
+        if (textFindR != null){
+            listRemoved = taskService.getTasksByUserAndStatusAndTitle(user.getUser_id(), pageR, sizeR, "REMOVED", textFindR);
+        }else{
+            listRemoved = taskService.getTasksByUserAndStatus(user.getUser_id(),page,sizeR, "REMOVED");
+        }
+
+
         model.addAttribute("user",user);
-        model.addAttribute("listRemoved", taskService.getTasksByUserAndStatus(user.getUser_id(),page,size,"REMOVED"));
+        model.addAttribute("listRemoved", listRemoved);
+        model.addAttribute("textFindR", textFindR);
+        model.addAttribute("pageR", pageR);
+        model.addAttribute("sizeR", sizeR);
         model.addAttribute("activeTab","removed");
         return "personal";
     }

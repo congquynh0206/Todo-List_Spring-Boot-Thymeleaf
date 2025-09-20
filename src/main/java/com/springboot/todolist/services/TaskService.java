@@ -88,6 +88,11 @@ public class TaskService {
         Task.TaskStatus enumStatus = Task.TaskStatus.valueOf(status.toUpperCase());
         return taskRepository.findByUserAndStatus(user, PageRequest.of(page, size), enumStatus);
     }
+    public Page<Task> getTasksByUserAndStatusAndTitle(Long userId, int page, int size, String status, String text) {
+        User user = userRepository.findById(userId).orElseThrow();
+        Task.TaskStatus enumStatus = Task.TaskStatus.valueOf(status.toUpperCase());
+        return taskRepository.findByUserAndStatusAndTitleContainingIgnoreCase(user, PageRequest.of(page, size), enumStatus, text);
+    }
     public Page<Task> getTasksByStatus(int page, int size, String status) {
         Task.TaskStatus enumStatus = Task.TaskStatus.valueOf(status.toUpperCase());
         return taskRepository.findByStatus(PageRequest.of(page, size), enumStatus);

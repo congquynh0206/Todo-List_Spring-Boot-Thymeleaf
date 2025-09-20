@@ -12,10 +12,12 @@ public interface TaskRepository extends JpaRepository<Task, Long> {
     List<Task> findByUser(User user);
     List<Task> findByUserOrderByCreatedAtDesc(User user);
     List<Task> findByUserAndStatus(User user, Task.TaskStatus status);
+
     int countByUserAndStatus(User user, Task.TaskStatus status);
     int countTasksByStatus(Task.TaskStatus status);
     Page<Task> findByUserAndStatusOrderByCreatedAtDesc(User user, Pageable pageable, Task.TaskStatus status);
     Page<Task> findByUserAndStatus(User user, Pageable pageable, Task.TaskStatus status);
+    Page<Task> findByUserAndStatusAndTitleContainingIgnoreCase(User user, Pageable pageable, Task.TaskStatus status, String text);
     Page<Task> findByStatus( Pageable pageable, Task.TaskStatus status);
     Page<Task> findAllBy(Pageable pageable);
 }

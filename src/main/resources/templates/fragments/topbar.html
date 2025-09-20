@@ -7,7 +7,7 @@
 <div th:fragment="topbar">
   <div class="top-bar">
 
-    <a class="nav-btn-topbar" th:href="@{/admin}" th:if="${user.role} == 'ADMIN'">Manage</a>
+    <a class="nav-btn-topbar manage-btn" th:href="@{/admin}" th:if="${user.role} == 'ADMIN'">Manage</a>
 
     <form action="/logout" method="post">
       <button type="submit" class="nav-btn-topbar">Sign-out</button>

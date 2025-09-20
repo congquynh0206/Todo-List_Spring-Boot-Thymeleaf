@@ -71,18 +71,26 @@
         <form id="updateForm" method="post">
             <input type="hidden" id="taskId" name="taskId">
 
-            <label>Title</label>
-            <input type="text" id="detailTitle" name="title" required>
+            <div class="form-group">
+                <label>Title</label>
+                <input type="text" id="detailTitle" name="title" required>
+            </div>
 
-            <label>Description</label>
-            <textarea id="detailDesc" name="description"></textarea>
+            <div class="form-group">
+                <label>Description</label>
+                <textarea id="detailDesc" name="description"></textarea>
+            </div>
 
-            <label>Create date</label>
-            <input type="datetime-local" id="createdAt" name="createdAt" readonly />
+            <div class="form-group">
+                <label>Create date</label>
+                <input type="datetime-local" id="createdAt" name="createdAt" readonly/>
+            </div>
 
-            <label>Due date</label>
-            <input type="datetime-local" id="detailDate" name="dueDate"
-                   th:min="${#dates.format(#dates.createNow(),'yyyy-MM-dd''T''HH:mm')}">
+            <div class="form-group">
+                <label>Due date</label>
+                <input type="datetime-local" id="detailDate" name="dueDate"
+                       th:min="${#dates.format(#dates.createNow(),'yyyy-MM-dd''T''HH:mm')}">
+            </div>
 
             <p id="taskStatus" style="font-weight: bold;"></p>
 

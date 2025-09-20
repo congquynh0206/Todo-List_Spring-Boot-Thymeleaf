@@ -12,6 +12,9 @@
     left: 20rem;
 
 }
+#textFind{
+    padding:3px;
+}
 .filter{
     margin-bottom: 40px;
 }

@@ -108,7 +108,11 @@
                     <th>Option</th>
 
                 </tr>
+                <tr th:if="${listUser.isEmpty()}">
+                    <td colspan="8" style="text-align:center;">Not found</td>
+                </tr>
                 <tr th:each="user, iterStat : ${listUser}">
+                    <td th:if="${listUser.isEmpty()}" th:text="Not found"></td>
                     <td th:text="${iterStat.index + 1 + (listUser.number * listUser.size)}"></td>
                     <td th:text="${user.user_id}"></td>
                     <td th:text="${user.displayName}"></td>
@@ -165,6 +169,9 @@
                     <th>Create date</th>
                     <th>Avatar</th>
 
+                </tr>
+                <tr th:if="${listAdmin.isEmpty()}">
+                    <td colspan="8" style="text-align:center;">Not found</td>
                 </tr>
                 <tr th:each="admin, iterStat : ${listAdmin}">
                     <td th:text="${iterStat.index + 1 + (listAdmin.number * listAdmin.size)}"></td>
@@ -254,7 +261,7 @@
                     <td colspan="8">
                         <div class="pagination-container">
                             <a th:if="${listTask.hasPrevious()}"
-                               th:href="@{/admin/task(page=${listTask.number - 1}, size=${listTask.size})}">⟵</a>
+                               th:href="@{/admin/task(page=${listTask.number - 1}, sizeTask=${listTask.size}, status=${status})}">⟵</a>
 
                             <span class="page-info">
                     Page <span th:text="${listTask.number + 1}"></span> /
@@ -262,7 +269,7 @@
               </span>
 
                             <a th:if="${listTask.hasNext()}"
-                               th:href="@{/admin/task(page=${listTask.number + 1}, size=${listTask.size})}">⟶</a>
+                               th:href="@{/admin/task(page=${listTask.number + 1}, sizeTask=${listTask.size},status=${status})}">⟶</a>
                         </div>
                     </td>
                 </tr>

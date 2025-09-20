@@ -72,6 +72,24 @@
 
         <!-- Current Section -->
         <div th:if="${activeTab == 'current'}" class="task-section">
+
+            <form th:action="@{/tasks/current}" method="get" class="filter">
+
+                <label for="textFind">Find by Name Task:</label>
+                <input th:value="${textFind}" type="text" name="textFind" id="textFind" class="textFind">
+
+                <label for="sizeC">Show per page:</label>
+                <select name="sizeC" id="sizeC">
+                    <option th:value="5" th:selected="${sizeC == 5}">5</option>
+                    <option th:value="10" th:selected="${sizeC == 10}">10</option>
+                    <option th:value="15" th:selected="${sizeC == 15}">15</option>
+                    <option th:value="20" th:selected="${sizeC == 20}">20</option>
+                </select>
+
+                <input type="hidden" name="pageC" th:value="${pageC}">
+                <button type="submit" class="apply-btn">Apply</button>
+            </form>
+
             <table>
                 <tr>
                     <th>Number</th>
@@ -80,6 +98,9 @@
                     <th>Create date</th>
                     <th>Due date</th>
                     <th>Delete</th>
+                </tr>
+                <tr th:if="${listCurrent.isEmpty()}">
+                    <td colspan="8" style="text-align:center;">Not thing</td>
                 </tr>
                 <tr th:each="task, iterStat : ${listCurrent}">
                     <td th:text="${iterStat.index + 1 + (listCurrent.number * listCurrent.size)}"></td>
@@ -98,14 +119,14 @@
                     <td colspan="8">
                         <div class="pagination-container">
                             <a th:if="${listCurrent.hasPrevious()}"
-                               th:href="@{/tasks/finished(page=${listCurrent.number - 1}, size=${listCurrent.size})}">⟵</a>
+                               th:href="@{/tasks/current(pageC=${listCurrent.number - 1}, sizeC=${listCurrent.size})}">⟵</a>
 
                             <span class="page-info">
                             Page <span th:text="${listCurrent.number + 1}"></span> /
                             <span th:text="${listCurrent.totalPages}"></span>
                                     </span>
                             <a th:if="${listCurrent.hasNext()}"
-                               th:href="@{/tasks/current(page=${listCurrent.number + 1}, size=${listCurrent.size})}">⟶</a>
+                               th:href="@{/tasks/current(pageC=${listCurrent.number + 1}, sizeC=${listCurrent.size})}">⟶</a>
                         </div>
                     </td>
                 </tr>
@@ -114,6 +135,22 @@
 
         <!-- Finished Section -->
         <div th:if="${activeTab == 'finished'}" class="task-section">
+            <form th:action="@{/tasks/finished}" method="get" class="filter">
+
+                <label for="textFind">Find by Name Task:</label>
+                <input th:value="${textFindF}" type="text" name="textFindF" id="textFindF" class="textFind">
+
+                <label for="sizeF">Show per page:</label>
+                <select name="sizeF" id="sizeF">
+                    <option th:value="5" th:selected="${sizeF == 5}">5</option>
+                    <option th:value="10" th:selected="${sizeF == 10}">10</option>
+                    <option th:value="15" th:selected="${sizeF == 15}">15</option>
+                    <option th:value="20" th:selected="${sizeF == 20}">20</option>
+                </select>
+
+                <input type="hidden" name="pageF" th:value="${pageF}">
+                <button type="submit" class="apply-btn">Apply</button>
+            </form>
             <table>
                 <tr>
                     <th>Number</th>
@@ -122,6 +159,9 @@
                     <th>Create date</th>
                     <th>Due date</th>
                     <th>Delete</th>
+                </tr>
+                <tr th:if="${listFinished.isEmpty()}">
+                    <td colspan="8" style="text-align:center;">Not thing</td>
                 </tr>
                 <tr th:each="task, iterStat : ${listFinished}">
                     <td th:text="${iterStat.index + 1 + (listFinished.number * listFinished.size)}"></td>
@@ -141,7 +181,7 @@
                     <td colspan="8">
                         <div class="pagination-container">
                             <a th:if="${listFinished.hasPrevious()}"
-                               th:href="@{/tasks/finished(page=${listFinished.number - 1}, size=${listFinished.size})}">⟵</a>
+                               th:href="@{/tasks/finished(pageF=${listFinished.number - 1}, sizeF=${listFinished.size})}">⟵</a>
 
                             <span class="page-info">
                             Page <span th:text="${listFinished.number + 1}"></span> /
@@ -149,7 +189,7 @@
                                     </span>
 
                             <a th:if="${listFinished.hasNext()}"
-                               th:href="@{/tasks/finished(page=${listFinished.number + 1}, size=${listFinished.size})}">⟶</a>
+                               th:href="@{/tasks/finished(pageF=${listFinished.number + 1}, sizeF=${listFinished.size})}">⟶</a>
                         </div>
                     </td>
                 </tr>
@@ -158,6 +198,22 @@
 
         <!-- Removed Section -->
         <div th:if="${activeTab == 'removed'}" class="task-section">
+            <form th:action="@{/tasks/removed}" method="get" class="filter">
+
+                <label for="textFind">Find by Name Task:</label>
+                <input th:value="${textFindR}" type="text" name="textFindR" id="textFindR" class="textFind">
+
+                <label for="sizeR">Show per page:</label>
+                <select name="sizeR" id="sizeR">
+                    <option th:value="5" th:selected="${sizeR == 5}">5</option>
+                    <option th:value="10" th:selected="${sizeR == 10}">10</option>
+                    <option th:value="15" th:selected="${sizeR == 15}">15</option>
+                    <option th:value="20" th:selected="${sizeR == 20}">20</option>
+                </select>
+
+                <input type="hidden" name="pageF" th:value="${pageF}">
+                <button type="submit" class="apply-btn">Apply</button>
+            </form>
             <table>
                 <tr>
                     <th>Number</th>
@@ -167,6 +223,9 @@
                     <th>Due date</th>
                     <th>Restore</th>
                     <th>Delete</th>
+                </tr>
+                <tr th:if="${listRemoved.isEmpty()}">
+                    <td colspan="8" style="text-align:center;">Not thing</td>
                 </tr>
                 <tr th:each="task, iterStat : ${listRemoved}">
                     <td th:text="${iterStat.index + 1 + (listRemoved.number * listRemoved.size)}"></td>
@@ -191,7 +250,7 @@
                     <td colspan="8">
                         <div class="pagination-container">
                             <a th:if="${listRemoved.hasPrevious()}"
-                               th:href="@{/tasks/removed(page=${listRemoved.number - 1}, size=${listRemoved.size})}">⟵</a>
+                               th:href="@{/tasks/removed(pageR=${listRemoved.number - 1}, sizeR=${listRemoved.size})}">⟵</a>
 
                             <span class="page-info">
                             Page <span th:text="${listRemoved.number + 1}"></span> /
@@ -199,7 +258,7 @@
                                     </span>
 
                             <a th:if="${listRemoved.hasNext()}"
-                               th:href="@{/tasks/removed(page=${listRemoved.number + 1}, size=${listRemoved.size})}">⟶</a>
+                               th:href="@{/tasks/removed(pageR=${listRemoved.number + 1}, sizeR=${listRemoved.size})}">⟶</a>
                         </div>
                     </td>
                 </tr>

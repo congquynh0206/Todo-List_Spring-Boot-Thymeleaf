@@ -12,7 +12,10 @@ body {
     color: #2d3748;
     line-height: 1.6;
 }
-
+.textFind{
+    margin-bottom: 50px;
+    padding: 3px;
+}
 /* Background Image */
 .background-image {
     position: fixed;
@@ -387,9 +390,9 @@ button:hover {
     margin-bottom: 15px;
 }
 
-input[type="text"],
+input[type="text"]:not(.textFind),
 input[type="email"],
-input[type="password"] {
+input[type="password"]{
     width: 100%;
     padding: 16px 20px;
     border: 2px solid #e2e8f0;
@@ -399,9 +402,9 @@ input[type="password"] {
     background: #f7fafc;
 }
 
-input[type="text"]:focus,
+input[type="text"]:focus:not(.textFind),
 input[type="email"]:focus,
-input[type="password"]:focus {
+input[type="password"]:focus{
     outline: none;
     border-color: #667eea;
     background: white;
