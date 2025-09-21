@@ -57,7 +57,6 @@
                 message = "Keep going 💪";
             }
 
-
             model.addAttribute("user", user);
             model.addAttribute("role", user.getRole());
             model.addAttribute("tasks", tasks);
@@ -76,9 +75,7 @@
             String userEmail = authentication.getName();
 
             User user = userService.findByEmail(userEmail).orElse(null);
-
             task.setUser(user);
-
             model.addAttribute("openAddModal", true);
             model.addAttribute("newTask", task);
             model.addAttribute("user", user);

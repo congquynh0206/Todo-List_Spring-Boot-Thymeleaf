@@ -1,6 +1,4 @@
-/* Login Page - Phong cách hiện đại đồng nhất */
-
-/* Reset và Base Styles */
+/* Reset & Base */
 * {
     margin: 0;
     padding: 0;
@@ -21,7 +19,6 @@ body {
     overflow-x: hidden;
 }
 
-/* Background pattern giống các page khác */
 body::before {
     content: '';
     position: fixed;
@@ -33,7 +30,7 @@ body::before {
     z-index: -1;
 }
 
-/* Top Navigation Buttons */
+/* Top Buttons */
 .top-buttons {
     position: absolute;
     top: 30px;
@@ -100,7 +97,7 @@ body::before {
     z-index: 1;
 }
 
-/* Login Container */
+/* Container */
 .login-container {
     background: rgba(255, 255, 255, 0.95);
     backdrop-filter: blur(20px);
@@ -114,18 +111,6 @@ body::before {
     position: relative;
 }
 
-@keyframes slideUp {
-    from {
-        opacity: 0;
-        transform: translateY(50px);
-    }
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
-}
-
-/* Header */
 .login-container h2 {
     font-size: 32px;
     font-weight: 700;
@@ -149,7 +134,7 @@ body::before {
     border-radius: 2px;
 }
 
-/* Form Styling */
+/* Form */
 form {
     display: flex;
     flex-direction: column;
@@ -217,11 +202,6 @@ form {
     animation: fadeIn 0.5s ease-out;
 }
 
-@keyframes fadeIn {
-    from { opacity: 0; }
-    to { opacity: 1; }
-}
-
 .error-message {
     background: rgba(245, 101, 101, 0.1);
     color: #e53e3e;
@@ -234,7 +214,7 @@ form {
     border: 2px solid rgba(72, 187, 120, 0.2);
 }
 
-/* Login Button */
+/* Button */
 .login-btn {
     background: linear-gradient(45deg, #667eea, #764ba2);
     color: white;
@@ -281,7 +261,7 @@ form {
     box-shadow: 0 4px 20px rgba(102, 126, 234, 0.3);
 }
 
-/* Floating elements animation */
+/* Floating Elements */
 .login-container::before {
     content: '';
     position: absolute;
@@ -308,45 +288,56 @@ form {
     z-index: -1;
 }
 
+/* Animation */
+@keyframes slideUp {
+    from {
+        opacity: 0;
+        transform: translateY(50px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
 @keyframes float {
     0%, 100% { transform: translateY(0px); }
     50% { transform: translateY(-20px); }
 }
 
-/* Responsive Design */
+/* Responsive */
 @media (max-width: 768px) {
     .login-container {
         margin: 20px;
         padding: 40px 30px;
         border-radius: 20px;
     }
-
     .login-container h2 {
         font-size: 28px;
         margin-bottom: 35px;
     }
-
     .form-group input {
         padding: 16px 20px;
         font-size: 15px;
     }
-
     .login-btn {
         padding: 16px 20px;
         font-size: 15px;
     }
-
     .top-buttons {
         top: 20px;
         right: 20px;
         gap: 10px;
     }
-
     .small-btn {
         padding: 10px 16px;
         font-size: 12px;
     }
-
     .eye-icon {
         width: 20px;
         height: 20px;
@@ -359,42 +350,36 @@ form {
         margin: 15px;
         padding: 30px 25px;
     }
-
     .login-container h2 {
         font-size: 24px;
         margin-bottom: 30px;
     }
-
     .form-group input {
         padding: 14px 18px;
         font-size: 14px;
         border-radius: 12px;
     }
-
     .login-btn {
         padding: 14px 18px;
         font-size: 14px;
         border-radius: 12px;
     }
-
     .top-buttons {
         top: 15px;
         right: 15px;
         gap: 8px;
     }
-
     .small-btn {
         padding: 8px 12px;
         font-size: 11px;
         border-radius: 8px;
     }
-
     form {
         gap: 20px;
     }
 }
 
-/* Focus visible cho accessibility */
+/* Accessibility */
 .login-btn:focus-visible,
 .small-btn:focus-visible,
 input:focus-visible {
@@ -402,7 +387,7 @@ input:focus-visible {
     outline-offset: 2px;
 }
 
-/* Custom scrollbar */
+/* Scrollbar */
 ::-webkit-scrollbar {
     width: 8px;
 }
@@ -421,7 +406,7 @@ input:focus-visible {
     background: linear-gradient(45deg, #5a67d8, #6b46c1);
 }
 
-/* Reduced motion support */
+/* Reduced Motion */
 @media (prefers-reduced-motion: reduce) {
     * {
         animation-duration: 0.01ms !important;
@@ -430,19 +415,17 @@ input:focus-visible {
     }
 }
 
-/* Dark mode support */
+/* Dark Mode */
 @media (prefers-color-scheme: dark) {
     .login-container {
         background: rgb(203 219 251 / 95%);
         color: #e2e8f0;
     }
-
     .form-group input {
         background: #FFFFFF;
         color: black;
         border-color: rgba(255, 255, 255, 0.1);
     }
-
     .form-group input::placeholder {
         color: #a0aec0;
     }

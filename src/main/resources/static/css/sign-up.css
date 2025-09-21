@@ -1,4 +1,4 @@
-/* Reset */
+/* Reset & Base */
 * {
     margin: 0;
     padding: 0;
@@ -10,7 +10,6 @@ html, body {
     font-family: Inter, sans-serif;
 }
 
-/* Nền toàn màn hình */
 body {
     background: url("../image/background.png") no-repeat center center;
     background-size: cover;
@@ -19,13 +18,71 @@ body {
     align-items: center;
 }
 
-/* Nút ở góc trên phải */
+/* Layout */
 .top-buttons {
     position: absolute;
     top: 1rem;
     right: 1rem;
     display: flex;
     gap: 0.5rem;
+}
+
+/* Container & Form */
+.form-container {
+    background: rgba(89, 71, 71, 0.5);
+    padding: 2rem;
+    border: 2px solid white;
+    border-radius: 1rem;
+    text-align: center;
+    width: 320px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.4);
+}
+
+.form-container h2 {
+    color: white;
+    margin-bottom: 1.5rem;
+    font-size: 1.8rem;
+    letter-spacing: 1px;
+}
+
+/* Input & Button */
+.form-container input {
+    display: block;
+    width: 100%;
+    padding: 0.8rem;
+    margin-bottom: 1rem;
+    border-radius: 0.5rem;
+    border: 2px solid white;
+    background: rgba(255, 255, 255, 0.15);
+    color: white;
+    font-size: 1rem;
+}
+
+.form-container input::placeholder {
+    color: #eee;
+}
+
+.form-container button {
+    width: 100%;
+    padding: 0.8rem;
+    border: 2px solid white;
+    border-radius: 0.5rem;
+    background: mediumpurple;
+    color: white;
+    font-size: 1.1rem;
+    cursor: pointer;
+    transition: opacity 0.2s ease-in-out;
+    margin-top: 0.7em;
+}
+
+.form-container button:hover {
+    opacity: 80%;
+}
+
+button[type="submit"]:disabled {
+    background-color: #bdc3c7;
+    cursor: not-allowed;
+    opacity: 0.7;
 }
 
 .small-btn {
@@ -43,89 +100,31 @@ body {
     opacity: 80%;
 }
 
-/* Khối Sign-Up giữa màn hình */
-.form-container {
-    background: rgba(89, 71, 71, 0.5); /* nền mờ */
-    padding: 2rem;
-    border: 2px solid white;
-    border-radius: 1rem;
-    text-align: center;
-    width: 320px;
-    box-shadow: 0 4px 12px rgba(0,0,0,0.4);
-}
-
-.form-container h2 {
-    color: white;
-    margin-bottom: 1.5rem;
-    font-size: 1.8rem;
-    letter-spacing: 1px;
-}
-
-/* Input form */
-.form-container input {
-    display: block;
-    width: 100%;
-    padding: 0.8rem;
-    margin-bottom: 1rem;
-    border-radius: 0.5rem;
-    border: 2px solid white;
-    background: rgba(255, 255, 255, 0.15);
-    color: white;
-    font-size: 1rem;
-}
-
-.form-container input::placeholder {
-    color: #eee;
-}
-
-/* Nút sign-up */
-.form-container button {
-    width: 100%;
-    padding: 0.8rem;
-    border: 2px solid white;
-    border-radius: 0.5rem;
-    background: mediumpurple;
-    color: white;
-    font-size: 1.1rem;
-    cursor: pointer;
-    transition: opacity 0.2s ease-in-out;
-    margin-top: 0.7em;
-}
-
-.form-container button:hover {
-    opacity: 80%;
-}
 .small-btn:disabled {
     opacity: 0.6;
 }
+
+/* Link & Group */
 a {
     text-decoration: none;
     color: white;
 }
+
 .form-group {
     margin-bottom: 1rem;
     display: flex;
     flex-direction: column;
 }
 
-.error {
-    color: red;
-    font-size: 0.9rem;
-    margin-top: 0.3rem;
-    display: none;
-}
+/* Password field & Eye icon */
 .password-group {
     position: relative;
     display: flex;
     flex-direction: column;
 }
 
-.password-group {
-    position: relative;
-}
-
 .password-group input {
-    padding-right: 35px; /* chừa chỗ cho icon */
+    padding-right: 35px;
 }
 
 .eye-icon {
@@ -144,9 +143,7 @@ a {
     opacity: 1;
 }
 
-
-
-/* CSS cho error messages */
+/* Messages */
 .error {
     color: #e74c3c;
     font-size: 12px;
@@ -155,7 +152,6 @@ a {
     animation: fadeIn 0.3s ease;
 }
 
-/* Error message từ backend */
 .error-message {
     background-color: #f8d7da;
     color: #721c24;
@@ -168,12 +164,6 @@ a {
     animation: shake 0.5s ease-in-out;
 }
 
-@keyframes fadeIn {
-    from { opacity: 0; transform: translateY(-5px); }
-    to { opacity: 1; transform: translateY(0); }
-}
-
-/* CSS cho success message */
 .success-message {
     text-align: center;
     padding: 30px;
@@ -196,6 +186,25 @@ a {
     opacity: 0.9;
 }
 
+/* Validation states */
+input.error {
+    border-color: #e74c3c;
+    box-shadow: 0 0 5px rgba(231, 76, 60, 0.3);
+}
+
+/* Animations */
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(-5px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes shake {
+    0% { transform: translateX(0); }
+    10%, 30%, 50%, 70%, 90% { transform: translateX(-5px); }
+    20%, 40%, 60%, 80% { transform: translateX(5px); }
+    100% { transform: translateX(0); }
+}
+
 @keyframes slideIn {
     from {
         opacity: 0;
@@ -206,17 +215,3 @@ a {
         transform: translateY(0) scale(1);
     }
 }
-
-/* CSS cho button states */
-button[type="submit"]:disabled {
-    background-color: #bdc3c7;
-    cursor: not-allowed;
-    opacity: 0.7;
-}
-
-/* Form validation states */
-input.error {
-    border-color: #e74c3c;
-    box-shadow: 0 0 5px rgba(231, 76, 60, 0.3);
-}
-

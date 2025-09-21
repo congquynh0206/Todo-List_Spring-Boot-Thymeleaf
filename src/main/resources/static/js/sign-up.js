@@ -19,13 +19,6 @@ document.addEventListener("DOMContentLoaded", () => {
             err.style.display = "none";
         });
 
-        // Validate tên không null
-        if (usernameInput.value.trim() === "") {
-            usernameError.textContent = "Display Name cannot empty!";
-            usernameError.style.display = "block";
-            isValid = false;
-        }
-
         // Validate email format
         const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
         if (!emailPattern.test(emailInput.value.trim())) {
@@ -40,14 +33,10 @@ document.addEventListener("DOMContentLoaded", () => {
             passwordError.style.display = "block";
             isValid = false;
         }
-
-        // Nếu validation client-side thành công, submit form
         if (isValid) {
             const submitBtn = form.querySelector('button[type="submit"]');
             submitBtn.disabled = true;
             submitBtn.textContent = "Registering...";
-
-            // Submit form bình thường, để backend xử lý
             form.submit();
         }
     });
@@ -61,20 +50,14 @@ document.addEventListener("DOMContentLoaded", () => {
     // Hiển thị thông báo thành công và chuyển hướng
     function showSuccessMessage() {
         const formContainer = document.querySelector('.form-container');
-
-        // Tạo thông báo thành công
         const successDiv = document.createElement('div');
         successDiv.className = 'success-message';
         successDiv.innerHTML = `
             <h3> Register successfully!</h3>
             <p>Redirecting to login page...</p>
         `;
-
-        // Thay thế form bằng thông báo thành công
         formContainer.innerHTML = '';
         formContainer.appendChild(successDiv);
-
-        // Chuyển hướng sau 2 giây
         setTimeout(() => {
             window.location.href = '/login';
         }, 2000);

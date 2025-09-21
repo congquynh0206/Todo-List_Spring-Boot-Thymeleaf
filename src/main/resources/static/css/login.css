@@ -1,4 +1,4 @@
-/* reset */
+/* Reset & Base */
 * {
     margin: 0;
     padding: 0;
@@ -18,8 +18,7 @@ body {
     align-items: center;
 }
 
-
-/* nút ở góc trên phải */
+/* Layout */
 .top-buttons {
     position: absolute;
     top: 1rem;
@@ -28,6 +27,21 @@ body {
     gap: 0.5rem;
 }
 
+.login-container {
+    background: rgba(89, 71, 71, 0.5);
+    padding: 2rem;
+    border: 2px solid white;
+    border-radius: 1rem;
+    text-align: center;
+    width: 300px;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+}
+
+.password-group {
+    position: relative;
+}
+
+/* Components: Button */
 .small-btn {
     background: rgba(150, 150, 150, 0.5);
     color: white;
@@ -39,17 +53,27 @@ body {
     transition: opacity 0.2s ease-in-out;
 }
 
-/* khối login giữa màn hình */
-.login-container {
-    background: rgba(89, 71, 71, 0.5); /* nền mờ */
-    padding: 2rem;
+.login-btn {
+    width: 100%;
+    padding: 0.8rem;
     border: 2px solid white;
-    border-radius: 1rem;
-    text-align: center;
-    width: 300px;
-    box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+    border-radius: 0.5rem;
+    background: mediumpurple;
+    color: white;
+    font-size: 1.1rem;
+    cursor: pointer;
 }
 
+.small-btn:hover,
+.login-btn:hover {
+    opacity: 80%;
+}
+
+.small-btn:disabled {
+    opacity: 0.6;
+}
+
+/* Components: Input & Text */
 .login-container h2 {
     color: white;
     margin-bottom: 1.5rem;
@@ -72,31 +96,12 @@ body {
     color: #eee;
 }
 
-.login-btn {
-    width: 100%;
-    padding: 0.8rem;
-    border: 2px solid white;
-    border-radius: 0.5rem;
-    background: mediumpurple;
-    color: white;
-    font-size: 1.1rem;
-    cursor: pointer;
-}
-.small-btn:hover,
-.login-btn:hover {
-    opacity: 80%;
-}
-.small-btn:disabled {
-    opacity: 0.6;
-}
 a {
     text-decoration: none;
     color: white;
 }
-.password-group {
-    position: relative; /* thêm dòng này */
-}
 
+/* Components: Icon */
 .eye-icon {
     display: none;
     position: absolute;
@@ -113,9 +118,7 @@ a {
     opacity: 1;
 }
 
-
-
-/* Thêm vào file login.css */
+/* Message */
 .error-message {
     background-color: #f8d7da;
     color: #721c24;
@@ -127,6 +130,7 @@ a {
     text-align: center;
     animation: shake 0.5s ease-in-out;
 }
+
 .success-message {
     background-color: #aaf896;
     color: black;
@@ -138,14 +142,7 @@ a {
     text-align: center;
 }
 
-@keyframes shake {
-    0% { transform: translateX(0); }
-    10%, 30%, 50%, 70%, 90% { transform: translateX(-5px); }
-    20%, 40%, 60%, 80% { transform: translateX(5px); }
-    100% { transform: translateX(0); }
-}
-
-/* Style cho input khi có lỗi */
+/* Form Error State */
 .form-group.error input {
     border-color: #dc3545;
     box-shadow: 0 0 5px rgba(220, 53, 69, 0.3);
@@ -154,4 +151,12 @@ a {
 .form-group.error input:focus {
     border-color: #dc3545;
     box-shadow: 0 0 8px rgba(220, 53, 69, 0.5);
+}
+
+/* Animation */
+@keyframes shake {
+    0% { transform: translateX(0); }
+    10%, 30%, 50%, 70%, 90% { transform: translateX(-5px); }
+    20%, 40%, 60%, 80% { transform: translateX(5px); }
+    100% { transform: translateX(0); }
 }

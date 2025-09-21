@@ -1,6 +1,8 @@
+/* ============================= */
 /* Admin Dashboard - Đồng nhất với Personal và Home pages */
+/* ============================= */
 
-/* Reset và Base Styles */
+/* ==== Reset và Base Styles ==== */
 * {
     margin: 0;
     padding: 0;
@@ -14,24 +16,30 @@ body {
     color: #2d3748;
     line-height: 1.6;
 }
-#textFind{
-    padding:3px;
+
+/* ============================= */
+/* Filter & Search */
+/* ============================= */
+#textFind {
+    padding: 3px;
 }
-.filter{
+
+.filter {
     background: white;
     padding: 25px;
     border-radius: 16px;
     box-shadow: 0 10px 40px rgba(0, 0, 0, 0.08);
     border: 1px solid rgba(226, 232, 240, 0.8);
-    margin-bottom: 30px;
+    margin-bottom: 20px;
     display: flex;
     align-items: center;
     gap: 20px;
     flex-wrap: wrap;
-    margin-bottom: 20px;
 }
 
-/* Background Image - giống hệt personal page */
+/* ============================= */
+/* Background Image */
+/* ============================= */
 .background-image {
     position: fixed;
     top: 0;
@@ -45,7 +53,9 @@ body {
     z-index: -1;
 }
 
-/* Main Layout - giống personal page */
+/* ============================= */
+/* Main Layout */
+/* ============================= */
 .main-content {
     display: flex;
     max-width: 1600px;
@@ -54,7 +64,9 @@ body {
     padding: 0 20px;
 }
 
-/* Sidebar Styling - giống hệt personal page */
+/* ============================= */
+/* Sidebar Styling */
+/* ============================= */
 .sidebar {
     width: 320px;
     background: rgba(255, 255, 255, 0.95);
@@ -68,7 +80,9 @@ body {
     top: 20px;
 }
 
-/* User Profile - giống personal page */
+/* ============================= */
+/* User Profile */
+/* ============================= */
 .user-profile {
     text-align: center;
     margin-bottom: 40px;
@@ -89,7 +103,6 @@ body {
     box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
     transition: transform 0.3s ease;
 }
-
 .avatar-img:hover {
     transform: scale(1.05);
 }
@@ -101,7 +114,6 @@ body {
     display: flex;
     gap: 5px;
 }
-
 .upload-btn, .reset-btn {
     width: 32px;
     height: 32px;
@@ -115,25 +127,19 @@ body {
     transition: all 0.3s ease;
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
 }
-
 .upload-btn {
     background: linear-gradient(45deg, #4facfe, #00f2fe);
     color: white;
 }
-
 .reset-btn {
     background: linear-gradient(45deg, #ff6b6b, #ee5a24);
     color: white;
 }
-
 .upload-btn:hover, .reset-btn:hover {
     transform: translateY(-2px);
     box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
 }
-
-#avatarFile {
-    display: none;
-}
+#avatarFile { display: none; }
 
 .profile-line {
     width: 50px;
@@ -142,14 +148,12 @@ body {
     margin: 15px auto;
     border-radius: 2px;
 }
-
 .profile-name {
     font-size: 24px;
     font-weight: 700;
     color: #2d3748;
     margin-bottom: 15px;
 }
-
 .profile-info {
     background: rgba(102, 126, 234, 0.1);
     border-radius: 12px;
@@ -157,22 +161,17 @@ body {
     font-size: 14px;
     color: #4a5568;
 }
+.email-info, .role-info { margin-bottom: 8px; }
+.email-info:last-child, .role-info:last-child { margin-bottom: 0; }
 
-.email-info, .role-info {
-    margin-bottom: 8px;
-}
-
-.email-info:last-child, .role-info:last-child {
-    margin-bottom: 0;
-}
-
-/* Navigation Menu - giống personal page */
+/* ============================= */
+/* Navigation Menu */
+/* ============================= */
 .nav-menu {
     display: flex;
     flex-direction: column;
     gap: 8px;
 }
-
 .nav-item {
     display: flex;
     align-items: center;
@@ -186,7 +185,6 @@ body {
     position: relative;
     overflow: hidden;
 }
-
 .nav-item::before {
     content: '';
     position: absolute;
@@ -198,19 +196,15 @@ body {
     transition: left 0.3s ease;
     z-index: -1;
 }
-
-.nav-item:hover::before,
-.nav-item.active::before {
-    left: 0;
-}
-
-.nav-item:hover,
-.nav-item.active {
+.nav-item:hover::before, .nav-item.active::before { left: 0; }
+.nav-item:hover, .nav-item.active {
     color: white;
     transform: translateX(5px);
 }
 
-/* Content Area - giống personal page */
+/* ============================= */
+/* Content Area */
+/* ============================= */
 .content-area {
     flex: 1;
     background: rgba(255, 255, 255, 0.95);
@@ -221,8 +215,13 @@ body {
     border: 1px solid rgba(255, 255, 255, 0.2);
     position: relative;
 }
-
-.home-icon{
+.content-header {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    margin-bottom: 20px;
+}
+.home-icon {
     position: absolute;
     right: 35px;
     top: 35px;
@@ -232,33 +231,36 @@ body {
     opacity: 0.7;
     transition: all 0.3s ease;
 }
-
 .home-icon:hover {
     opacity: 1;
     transform: scale(1.1);
 }
 
-/* Messages - giống personal page */
+/* ============================= */
+/* Messages */
+/* ============================= */
 .success, .error {
+    position: absolute;
+    left: 35px;
+    top: 35px;
     padding: 16px 20px;
     border-radius: 12px;
-    margin-bottom: 20px;
     font-weight: 500;
 }
-
 .success {
     background: linear-gradient(45deg, #48bb78, #38a169);
     color: white;
     box-shadow: 0 4px 20px rgba(72, 187, 120, 0.3);
 }
-
 .error {
     background: linear-gradient(45deg, #f56565, #e53e3e);
     color: white;
     box-shadow: 0 4px 20px rgba(245, 101, 101, 0.3);
 }
 
+/* ============================= */
 /* Dashboard Section */
+/* ============================= */
 .dashboard-section {
     display: grid;
     grid-template-columns: 1fr 1fr;
@@ -266,7 +268,6 @@ body {
     align-items: start;
     margin-top: 70px;
 }
-
 .dashboard-section canvas {
     background: white;
     border-radius: 16px;
@@ -277,7 +278,9 @@ body {
     height: auto !important;
 }
 
+/* ============================= */
 /* Section Headers */
+/* ============================= */
 h2 {
     font-size: 28px;
     font-weight: 700;
@@ -286,7 +289,6 @@ h2 {
     position: relative;
     display: inline-block;
 }
-
 h2::after {
     content: '';
     position: absolute;
@@ -298,12 +300,13 @@ h2::after {
     border-radius: 2px;
 }
 
-/* Table Styling - giống personal page nhưng có thêm avatar */
+/* ============================= */
+/* Table Styling */
+/* ============================= */
 .user-section, .task-section {
     overflow-x: auto;
     margin-top: 85px;
 }
-
 table {
     width: 100%;
     border-collapse: collapse;
@@ -313,7 +316,6 @@ table {
     box-shadow: 0 10px 40px rgba(0, 0, 0, 0.08);
     margin-bottom: 30px;
 }
-
 th {
     background: linear-gradient(45deg, #667eea, #764ba2);
     color: white;
@@ -324,20 +326,13 @@ th {
     text-transform: uppercase;
     letter-spacing: 0.5px;
 }
-
 td {
     padding: 16px;
     border-bottom: 1px solid #e2e8f0;
     vertical-align: middle;
 }
-
-tr:hover {
-    background: rgba(102, 126, 234, 0.05);
-}
-
-tr:last-child td {
-    border-bottom: none;
-}
+tr:hover { background: rgba(102, 126, 234, 0.05); }
+tr:last-child td { border-bottom: none; }
 
 /* Avatar trong table */
 .avatar {
@@ -349,12 +344,11 @@ tr:last-child td {
     box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
     transition: transform 0.3s ease;
 }
+.avatar:hover { transform: scale(1.1); }
 
-.avatar:hover {
-    transform: scale(1.1);
-}
-
-/* Filter Form */
+/* ============================= */
+/* Task Filter Form */
+/* ============================= */
 .task-section form {
     background: white;
     padding: 25px;
@@ -367,14 +361,12 @@ tr:last-child td {
     gap: 20px;
     flex-wrap: wrap;
 }
-
 .task-section form label {
     font-weight: 600;
     color: #4a5568;
     font-size: 14px;
     white-space: nowrap;
 }
-
 .task-section form select {
     padding: 12px 16px;
     border: 2px solid #e2e8f0;
@@ -386,7 +378,6 @@ tr:last-child td {
     transition: all 0.3s ease;
     cursor: pointer;
 }
-
 .task-section form select:focus {
     outline: none;
     border-color: #667eea;
@@ -394,7 +385,9 @@ tr:last-child td {
     box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
 }
 
-/* Buttons - đa dạng màu sắc */
+/* ============================= */
+/* Buttons */
+/* ============================= */
 button {
     border: none;
     padding: 10px 20px;
@@ -406,62 +399,54 @@ button {
     letter-spacing: 0.5px;
     transition: all 0.3s ease;
     margin: 2px;
-}
-
-/* Default button */
-button {
     background: linear-gradient(45deg, #667eea, #764ba2);
     color: white;
     box-shadow: 0 4px 15px rgba(102, 126, 234, 0.3);
 }
-
 button:hover {
     transform: translateY(-2px);
     box-shadow: 0 8px 25px rgba(102, 126, 234, 0.4);
 }
 
-/* Reset Password Button */
+/* Variants */
 .reset-pass-btn {
     background: linear-gradient(45deg, #4facfe, #00f2fe);
     box-shadow: 0 4px 15px rgba(79, 172, 254, 0.3);
 }
+.reset-pass-btn:hover { box-shadow: 0 8px 25px rgba(79, 172, 254, 0.4); }
 
-.reset-pass-btn:hover {
-    box-shadow: 0 8px 25px rgba(79, 172, 254, 0.4);
-}
-
-/* Set Admin Button */
 .set-admin-btn {
     background: linear-gradient(45deg, #ffa726, #ff9800);
     box-shadow: 0 4px 15px rgba(255, 167, 38, 0.3);
 }
+.set-admin-btn:hover { box-shadow: 0 8px 25px rgba(255, 167, 38, 0.4); }
 
-.set-admin-btn:hover {
-    box-shadow: 0 8px 25px rgba(255, 167, 38, 0.4);
-}
-
-/* Delete Button */
 .delete-btn {
     background: linear-gradient(45deg, #f56565, #e53e3e);
     box-shadow: 0 4px 15px rgba(245, 101, 101, 0.3);
 }
+.delete-btn:hover { box-shadow: 0 8px 25px rgba(245, 101, 101, 0.4); }
 
-.delete-btn:hover {
-    box-shadow: 0 8px 25px rgba(245, 101, 101, 0.4);
-}
-
-/* Apply Button */
 .apply-btn {
     background: linear-gradient(45deg, #48bb78, #38a169);
     box-shadow: 0 4px 15px rgba(72, 187, 120, 0.3);
     padding: 12px 24px;
 }
+.apply-btn:hover { box-shadow: 0 8px 25px rgba(72, 187, 120, 0.4); }
 
-.apply-btn:hover {
-    box-shadow: 0 8px 25px rgba(72, 187, 120, 0.4);
+/* Form Actions in Tables */
+td form {
+    display: inline-block;
+    margin: 0 2px;
+}
+td form button {
+    padding: 8px 16px;
+    font-size: 12px;
 }
 
-/* Pagination - giống personal page */
+/* ============================= */
+/* Pagination */
+/* ============================= */
 .pagination-container {
     display: flex;
     justify-content: center;
@@ -469,7 +454,6 @@ button:hover {
     gap: 20px;
     padding: 20px 0;
 }
-
 .pagination-container a {
     display: flex;
     align-items: center;
@@ -483,12 +467,10 @@ button:hover {
     font-weight: 600;
     transition: all 0.3s ease;
 }
-
 .pagination-container a:hover {
     transform: translateY(-2px);
     box-shadow: 0 8px 20px rgba(102, 126, 234, 0.4);
 }
-
 .page-info {
     background: rgba(102, 126, 234, 0.1);
     padding: 10px 20px;
@@ -497,231 +479,32 @@ button:hover {
     color: #4a5568;
 }
 
-/* Form Actions in Tables */
-td form {
-    display: inline-block;
-    margin: 0 2px;
-}
-
-td form button {
-    padding: 8px 16px;
-    font-size: 12px;
-}
-
+/* ============================= */
 /* Responsive Design */
+/* ============================= */
 @media (max-width: 1400px) {
-    .main-content {
-        max-width: 1200px;
-    }
-
-    .sidebar {
-        width: 280px;
-    }
-
-    .dashboard-section {
-        grid-template-columns: 1fr;
-        gap: 20px;
-    }
+    .main-content { max-width: 1200px; }
+    .sidebar { width: 280px; }
+    .dashboard-section { grid-template-columns: 1fr; gap: 20px; }
 }
 
 @media (max-width: 1200px) {
-    .main-content {
-        max-width: 1000px;
-    }
-
-    .dashboard-section canvas {
-        padding: 15px;
-    }
+    .main-content { max-width: 1000px; }
+    .dashboard-section canvas { padding: 15px; }
 }
 
 @media (max-width: 992px) {
-    .main-content {
-        flex-direction: column;
-        gap: 20px;
-    }
-
-    .sidebar {
-        width: 100%;
-        position: static;
-    }
-
-    .content-area {
-        padding: 30px 20px;
-    }
-
-    .dashboard-section {
-        grid-template-columns: 1fr;
-    }
-
+    .main-content { flex-direction: column; gap: 20px; }
+    .sidebar { width: 100%; position: static; }
+    .content-area { padding: 30px 20px; }
+    .dashboard-section { grid-template-columns: 1fr; }
     .task-section form {
         flex-direction: column;
         align-items: flex-start;
         gap: 15px;
     }
-
     .task-section form label,
-    .task-section form select {
-        width: 100%;
-    }
-}
-
-@media (max-width: 768px) {
-    .main-content {
-        margin: 10px auto;
-        padding: 0 10px;
-    }
-
-    .sidebar {
-        padding: 20px;
-        border-radius: 16px;
-    }
-
-    .content-area {
-        padding: 20px 15px;
-        border-radius: 16px;
-    }
-
-    .nav-menu {
-        display: grid;
-        grid-template-columns: 1fr 1fr;
-        gap: 10px;
-    }
-
-    .nav-item {
-        text-align: center;
-        padding: 12px 8px;
-        font-size: 14px;
-    }
-
-    table {
-        font-size: 14px;
-    }
-
-    th, td {
-        padding: 12px 8px;
-    }
-
-    .avatar {
-        width: 35px;
-        height: 35px;
-    }
-
-    .profile-name {
-        font-size: 20px;
-    }
-
-    .avatar-img {
-        width: 80px;
-        height: 80px;
-    }
-
-    h2 {
-        font-size: 24px;
-    }
-
-    .dashboard-section canvas {
-        padding: 10px;
-    }
-}
-
-@media (max-width: 480px) {
-    .sidebar {
-        padding: 15px;
-    }
-
-    .content-area {
-        padding: 15px 10px;
-    }
-
-    .nav-menu {
-        grid-template-columns: 1fr;
-        gap: 8px;
-    }
-
-    .nav-item {
-        padding: 12px 16px;
-    }
-
-    .task-section form {
-        padding: 20px 15px;
-    }
-
-    td form button {
-        padding: 6px 12px;
-        font-size: 11px;
-        margin: 1px;
-    }
-
-    .avatar {
-        width: 30px;
-        height: 30px;
-    }
-
-    h2 {
-        font-size: 22px;
-        margin-bottom: 20px;
-    }
+    .task-section form select { width: 100%; }
 }
 
 
-
-/* Custom Scrollbar */
-::-webkit-scrollbar {
-    width: 8px;
-}
-
-::-webkit-scrollbar-track {
-    background: #f1f1f1;
-    border-radius: 4px;
-}
-
-::-webkit-scrollbar-thumb {
-    background: linear-gradient(45deg, #667eea, #764ba2);
-    border-radius: 4px;
-}
-
-::-webkit-scrollbar-thumb:hover {
-    background: linear-gradient(45deg, #5a67d8, #6b46c1);
-}
-
-/* Focus states cho accessibility */
-button:focus-visible,
-select:focus-visible,
-a:focus-visible {
-    outline: 2px solid #667eea;
-    outline-offset: 2px;
-}
-
-/* Content Area */
-.content-area {
-    flex: 1;
-    background: rgba(255, 255, 255, 0.95);
-    backdrop-filter: blur(20px);
-    border-radius: 24px;
-    padding: 40px;
-    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.1);
-    border: 1px solid rgba(255, 255, 255, 0.2);
-    position: relative;
-}
-
-
-/* Messages */
-.success, .error {
-    position: absolute;
-    left: 35px;
-    top: 35px;
-    padding: 16px 20px;
-    border-radius: 12px;
-    font-weight: 500;
-}
-.content-area {
-    position: relative;
-    padding: 20px;
-}
-
-.content-header {
-    display: flex;
-    align-items: center;
-    gap: 20px;
-    margin-bottom: 20px;
-}

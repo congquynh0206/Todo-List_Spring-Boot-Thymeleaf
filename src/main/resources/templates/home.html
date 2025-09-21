@@ -11,7 +11,7 @@
 <!-- Overlay -->
 <div id="overlay" class="overlay"></div>
 
-<!-- Thanh top-bar -->
+<!-- Top-bar -->
 <div th:replace="fragments/topbar :: topbar"></div>
 
 <!-- To-do List -->
@@ -25,7 +25,7 @@
         </div>
     </div>
 
-    <!-- Hiển thị danh sách tasks -->
+    <!-- View tasks -->
     <div th:each="task : ${tasks.content}" class="todo-item"
          th:data-id="${task.task_id}"
          th:data-title="${task.title}"

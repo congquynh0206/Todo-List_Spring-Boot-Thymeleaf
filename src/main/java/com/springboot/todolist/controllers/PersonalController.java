@@ -317,6 +317,4 @@ public class PersonalController {
         userService.save(user);
         return "redirect:/personal";
     }
-
-
 }

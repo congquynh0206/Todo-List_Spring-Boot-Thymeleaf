@@ -1,56 +1,17 @@
-/* Reset */
-
+/* Reset & Base */
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
 }
-.content-area {
-    position: relative;
-    padding: 20px;
-}
-
-.content-header {
-    display: flex;
-    align-items: center;
-    gap: 20px;
-    margin-bottom: 20px;
-}
-
-.success {
-    color: green;
-    font-weight: bold;
-}
-
-.error {
-    color: red;
-    font-weight: bold;
-}
-
-
-th {
-    text-align: center;
-}
-
 
 html, body {
     height: 100vh;
     width: 100vw;
     font-family: Inter, sans-serif;
-    overflow: hidden; /* No scroll */
+    overflow: hidden;
 }
-.change_infor{
-    display: flex;
-    flex-direction: column;
-    gap:10px;
-}
-.home-icon{
-    position: absolute;
-    right: 35px;
-    top: 15px;
-    width: 50px;
-    cursor: pointer;
-}
+
 /* Background */
 .background-image {
     position: fixed;
@@ -63,7 +24,15 @@ html, body {
     z-index: -1;
 }
 
-/* Main Content */
+.home-icon {
+    position: absolute;
+    right: 35px;
+    top: 15px;
+    width: 50px;
+    cursor: pointer;
+}
+
+/* Layout */
 .main-content {
     position: absolute;
     top: 69px;
@@ -75,13 +44,30 @@ html, body {
     border-top: 1px solid #000;
 }
 
-/* Sidebar */
 .sidebar {
     width: 260px;
     height: 100%;
     padding: 20px 15px;
     background: #FFFFE0;
     border-right: 1px solid #000;
+}
+
+.content-area {
+    flex: 1;
+    padding: 40px;
+    display: flex;
+    flex-direction: column;
+    gap: 25px;
+    overflow-y: auto;
+    position: relative;
+}
+
+/* Header */
+.content-header {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    margin-bottom: 20px;
 }
 
 /* User Profile */
@@ -127,9 +113,8 @@ html, body {
 }
 
 #avatarFile {
-    display: none; /* ẩn input file */
+    display: none;
 }
-
 
 .profile-line {
     width: 80%;
@@ -150,7 +135,7 @@ html, body {
     line-height: 1.4;
 }
 
-/* Navigation Menu */
+/* Navigation */
 .nav-menu {
     width: 100%;
     margin-top: 20px;
@@ -176,16 +161,6 @@ html, body {
 
 .nav-item:hover {
     background: #f2f2f2;
-}
-
-/* Content Area */
-.content-area {
-    flex: 1;
-    padding: 40px;
-    display: flex;
-    flex-direction: column;
-    gap: 25px;
-    overflow-y: auto;
 }
 
 /* Info Sections */
@@ -219,6 +194,7 @@ html, body {
     display: flex;
     align-items: center;
 }
+
 .input-container input {
     width: 100%;
     border: none;
@@ -244,15 +220,25 @@ html, body {
     background: #bbb;
 }
 
-.error-message{
-    color: #dc3545;
-}
-.success-message{
-    color: green;
+/* Messages */
+.success { color: green; font-weight: bold; }
+.error   { color: red; font-weight: bold; }
+.error-message   { color: #dc3545; }
+.success-message { color: green; }
+
+/* Forms */
+form {
+    display: inline-block;
+    margin: 0 4px;
 }
 
+.change_infor {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
 
-/* Container styling */
+/* Task Section */
 .task-section {
     margin: 20px 0;
     padding: 20px;
@@ -262,7 +248,7 @@ html, body {
     border: 1px solid #e5e7eb;
 }
 
-/* Table styling */
+/* Tables */
 table {
     width: 100%;
     border-collapse: collapse;
@@ -273,7 +259,6 @@ table {
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
 }
 
-/* Header styling */
 th {
     background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
     color: white;
@@ -285,24 +270,14 @@ th {
     text-transform: uppercase;
     border-bottom: 3px solid #5a67d8;
     position: relative;
+    text-align: center;
 }
 
-th:first-child {
-    border-top-left-radius: 8px;
-}
+th:first-child { border-top-left-radius: 8px; }
+th:last-child  { border-top-right-radius: 8px; }
 
-th:last-child {
-    border-top-right-radius: 8px;
-}
-
-/* Row styling */
-tr:nth-child(even) {
-    background-color: #f8fafc;
-}
-
-tr:nth-child(odd) {
-    background-color: #ffffff;
-}
+tr:nth-child(even) { background-color: #f8fafc; }
+tr:nth-child(odd)  { background-color: #ffffff; }
 
 tr:hover {
     background-color: #e2e8f0;
@@ -310,7 +285,6 @@ tr:hover {
     transition: all 0.2s ease;
 }
 
-/* Cell styling */
 td {
     padding: 14px 12px;
     border-bottom: 1px solid #e2e8f0;
@@ -319,7 +293,6 @@ td {
     vertical-align: middle;
 }
 
-/* Number column */
 td:first-child {
     font-weight: 600;
     color: #667eea;
@@ -328,7 +301,6 @@ td:first-child {
     border-right: 2px solid #e2e8f0;
 }
 
-/* Title column */
 td:nth-child(2) {
     font-weight: 600;
     color: #2d3748;
@@ -338,7 +310,6 @@ td:nth-child(2) {
     white-space: nowrap;
 }
 
-/* Description column */
 td:nth-child(3) {
     max-width: 300px;
     overflow: hidden;
@@ -347,7 +318,6 @@ td:nth-child(3) {
     color: #718096;
 }
 
-/* Date columns */
 td:nth-child(4), td:nth-child(5) {
     font-family: 'Courier New', monospace;
     font-size: 12px;
@@ -355,7 +325,12 @@ td:nth-child(4), td:nth-child(5) {
     white-space: nowrap;
 }
 
-/* Button styling */
+td:last-child, td:nth-last-child(2) {
+    text-align: center;
+    padding: 12px 8px;
+}
+
+/* Buttons */
 button[type="submit"]:not(.nav-btn-topbar) {
     padding: 8px 16px;
     border: none;
@@ -369,8 +344,7 @@ button[type="submit"]:not(.nav-btn-topbar) {
     min-width: 80px;
 }
 
-/* Delete buttons */
-button[type="submit"]:not(.restore-btn):not(.nav-btn-topbar){
+button[type="submit"]:not(.restore-btn):not(.nav-btn-topbar) {
     background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%);
     color: white;
     box-shadow: 0 2px 4px rgba(239, 68, 68, 0.3);
@@ -382,7 +356,6 @@ button[type="submit"]:not(.restore-btn):not(.nav-btn-topbar):hover {
     box-shadow: 0 4px 8px rgba(239, 68, 68, 0.4);
 }
 
-/* Restore buttons */
 .restore-btn {
     background: linear-gradient(135deg, #10b981 0%, #059669 100%);
     color: white;
@@ -396,19 +369,7 @@ button[type="submit"]:not(.restore-btn):not(.nav-btn-topbar):hover {
     box-shadow: 0 4px 8px rgba(16, 185, 129, 0.4);
 }
 
-/* Form styling */
-form {
-    display: inline-block;
-    margin: 0 4px;
-}
-
-/* Action columns */
-td:last-child, td:nth-last-child(2) {
-    text-align: center;
-    padding: 12px 8px;
-}
-
-/* Section-specific styling */
+/* Section-specific tables */
 div[th\:if*="'current'"] table th {
     background: linear-gradient(135deg, #3b82f6 0%, #1d4ed8 100%);
 }
@@ -421,7 +382,7 @@ div[th\:if*="'removed'"] table th {
     background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%);
 }
 
-/* Empty state styling */
+/* Empty State */
 table:empty::after {
     content: "Không có dữ liệu để hiển thị";
     display: block;
@@ -431,7 +392,7 @@ table:empty::after {
     font-style: italic;
 }
 
-/* Loading animation */
+/* Loading */
 .loading {
     opacity: 0.7;
     pointer-events: none;
@@ -456,9 +417,7 @@ table:empty::after {
     100% { transform: rotate(360deg); }
 }
 
-
-
-/* Styling cho hàng phân trang */
+/* Pagination */
 .task-section table tr:last-child {
     background-color: #f8f9fa;
     border-top: 2px solid #dee2e6;
@@ -470,16 +429,13 @@ table:empty::after {
     border: none;
 }
 
-/* Container cho phân trang */
 .pagination-container {
     display: flex;
     align-items: center;
     justify-content: center;
     gap: 20px;
-
 }
 
-/* Styling cho các link Previous/Next */
 .pagination-container a {
     color: #007bff !important;
     text-decoration: none;
@@ -501,7 +457,6 @@ table:empty::after {
     transform: translateY(0);
 }
 
-/* Styling cho thông tin trang */
 .page-info {
     font-weight: 600;
     color: #495057;
@@ -515,5 +470,3 @@ table:empty::after {
     color: #007bff;
     font-weight: bold;
 }
-
-

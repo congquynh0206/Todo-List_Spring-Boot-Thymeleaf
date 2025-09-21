@@ -1,3 +1,4 @@
+/* Top Bar */
 .top-bar {
     position: absolute;
     top: 0;
@@ -13,7 +14,28 @@
     border-bottom: 2px solid white;
 }
 
-.nav-btn-topbar{
+.username {
+    color: white;
+    font-size: 1.2rem;
+}
+
+.avatar-topBar {
+    display: block;
+    width: 50px;
+    height: 50px;
+    background: #d9d9d9;
+    border-radius: 50%;
+    margin-left: 1rem;
+    object-fit: cover;
+}
+
+a {
+    text-decoration: none;
+    color: white;
+}
+
+/* Navigation Buttons */
+.nav-btn-topbar {
     padding: 0.5rem 1.2rem;
     background: rgba(185, 144, 183, 0.6);
     border: 2px solid white;
@@ -28,25 +50,6 @@
     opacity: 0.8;
 }
 
-.username {
-    color: white;
-    font-size: 1.2rem;
-}
-
-.avatar-topBar{
-    display: block;
-    width: 50px;
-    height: 50px;
-    background: #d9d9d9;
-    border-radius: 50%;
-    margin-left: 1rem;
-    object-fit: cover;
-}
-
-a {
-    text-decoration: none;
-    color: white;
-}
 /* Toggle Switch */
 .toggle-switch {
     -webkit-appearance: none;
@@ -73,9 +76,8 @@ a {
     transition: transform 0.3s ease;
 }
 
-/* Khi bật */
 .toggle-switch:checked {
-    background: #667eea; /* xanh tím nhạt */
+    background: #667eea;
 }
 
 .toggle-switch:checked::before {

@@ -1,5 +1,6 @@
-/* Topbar Styling - Đồng nhất với Personal và Home pages */
-
+/* ==============================
+   Topbar Base Styling
+   ============================== */
 .top-bar {
     background: rgba(255, 255, 255, 0.95);
     backdrop-filter: blur(20px);
@@ -17,10 +18,18 @@
     z-index: 100;
     animation: fadeInDown 0.6s ease-out;
 }
+.top-bar:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 15px 50px rgba(0, 0, 0, 0.12);
+}
+.top-bar .nav-btn:first-child,
 .nav-btn-topbar.manage-btn {
     margin-right: auto;
 }
-/* Toggle Switch */
+
+/* ==============================
+   Toggle Switch
+   ============================== */
 .toggle-switch {
     -webkit-appearance: none;
     appearance: none;
@@ -33,7 +42,6 @@
     outline: none;
     transition: background 0.3s ease;
 }
-
 .toggle-switch::before {
     content: "";
     position: absolute;
@@ -45,20 +53,16 @@
     border-radius: 50%;
     transition: transform 0.3s ease;
 }
-
-/* Khi bật */
 .toggle-switch:checked {
-    background: #667eea; /* xanh tím nhạt */
+    background: #667eea;
 }
-
 .toggle-switch:checked::before {
     transform: translateX(24px);
 }
 
-
-
-
-/* Navigation Buttons */
+/* ==============================
+   Navigation Buttons
+   ============================== */
 .nav-btn-topbar {
     background: linear-gradient(45deg, #667eea, #764ba2);
     color: white;
@@ -75,7 +79,6 @@
     overflow: hidden;
     display: inline-block;
 }
-
 .nav-btn-topbar::before {
     content: '';
     position: absolute;
@@ -88,36 +91,40 @@
     transform: translate(-50%, -50%);
     transition: all 0.5s ease;
 }
-
 .nav-btn-topbar:hover::before {
     width: 200px;
     height: 200px;
 }
-
 .nav-btn-topbar:hover {
     transform: translateY(-2px);
     box-shadow: 0 8px 25px rgba(102, 126, 234, 0.4);
-    color: white;
 }
-
 .nav-btn-topbar:active {
     transform: translateY(0);
     box-shadow: 0 4px 15px rgba(102, 126, 234, 0.3);
 }
-
-/* Nav button với nested anchor */
+/* Anchor bên trong nav button */
 .nav-btn-topbar a {
     color: inherit;
     text-decoration: none;
     position: relative;
     z-index: 1;
 }
-
 .nav-btn-topbar a:hover {
     color: inherit;
 }
+/* Đặc biệt cho Sign-Out */
+.nav-btn:has(a[href*="/login"]) {
+    background: linear-gradient(45deg, #f56565, #e53e3e);
+    box-shadow: 0 4px 15px rgba(245, 101, 101, 0.3);
+}
+.nav-btn:has(a[href*="/login"]):hover {
+    box-shadow: 0 8px 25px rgba(245, 101, 101, 0.4);
+}
 
-/* Username Display */
+/* ==============================
+   Username Display
+   ============================== */
 .username {
     font-size: 16px;
     font-weight: 600;
@@ -130,43 +137,28 @@
     position: relative;
     overflow: hidden;
 }
-
 .username::before {
     content: '👋';
     margin-right: 8px;
     animation: wave 2s infinite;
 }
-
 @keyframes wave {
-    0%, 20%, 60%, 100% {
-        transform: rotate(0deg);
-    }
-    10% {
-        transform: rotate(14deg);
-    }
-    30% {
-        transform: rotate(-8deg);
-    }
-    40% {
-        transform: rotate(14deg);
-    }
-    50% {
-        transform: rotate(-4deg);
-    }
-    70% {
-        transform: rotate(10deg);
-    }
-    80% {
-        transform: rotate(-2deg);
-    }
+    0%, 20%, 60%, 100% { transform: rotate(0deg); }
+    10% { transform: rotate(14deg); }
+    30% { transform: rotate(-8deg); }
+    40% { transform: rotate(14deg); }
+    50% { transform: rotate(-4deg); }
+    70% { transform: rotate(10deg); }
+    80% { transform: rotate(-2deg); }
 }
-
 .username:hover {
     background: rgba(102, 126, 234, 0.15);
     transform: scale(1.02);
 }
 
-/* Avatar Link và Image */
+/* ==============================
+   Avatar Styling
+   ============================== */
 .avatar-link {
     display: flex;
     align-items: center;
@@ -175,7 +167,6 @@
     transition: all 0.3s ease;
     position: relative;
 }
-
 .avatar-link::before {
     content: '';
     position: absolute;
@@ -189,21 +180,14 @@
     transition: opacity 0.3s ease;
     z-index: -1;
 }
-
 .avatar-link:hover::before {
     opacity: 1;
     animation: rotate 2s linear infinite;
 }
-
 @keyframes rotate {
-    from {
-        transform: rotate(0deg);
-    }
-    to {
-        transform: rotate(360deg);
-    }
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
 }
-
 .avatar-topBar {
     width: 45px;
     height: 45px;
@@ -215,35 +199,15 @@
     position: relative;
     z-index: 1;
 }
-
 .avatar-link:hover .avatar-topBar {
     transform: scale(1.05);
     box-shadow: 0 8px 30px rgba(0, 0, 0, 0.15);
     border-color: rgba(255, 255, 255, 1);
 }
 
-/* Hover effect cho toàn bộ topbar */
-.top-bar:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 15px 50px rgba(0, 0, 0, 0.12);
-}
-
-/* Left side grouping */
-.top-bar .nav-btn:first-child {
-    margin-right: auto;
-}
-
-/* Special styling for Sign-Out button */
-.nav-btn:has(a[href*="/login"]) {
-    background: linear-gradient(45deg, #f56565, #e53e3e);
-    box-shadow: 0 4px 15px rgba(245, 101, 101, 0.3);
-}
-
-.nav-btn:has(a[href*="/login"]):hover {
-    box-shadow: 0 8px 25px rgba(245, 101, 101, 0.4);
-}
-
-/* Responsive Design */
+/* ==============================
+   Responsive Design
+   ============================== */
 @media (max-width: 768px) {
     .top-bar {
         margin: 15px;
@@ -251,142 +215,56 @@
         border-radius: 16px;
         gap: 15px;
     }
-
-    .nav-btn {
-        padding: 10px 16px;
-        font-size: 13px;
-        border-radius: 10px;
-    }
-
-    .username {
-        font-size: 14px;
-        padding: 6px 12px;
-        border-radius: 16px;
-    }
-
-    .username::before {
-        margin-right: 6px;
-    }
-
-    .avatar-topBar {
-        width: 40px;
-        height: 40px;
-        border-width: 2px;
-    }
+    .nav-btn { padding: 10px 16px; font-size: 13px; border-radius: 10px; }
+    .username { font-size: 14px; padding: 6px 12px; border-radius: 16px; }
+    .username::before { margin-right: 6px; }
+    .avatar-topBar { width: 40px; height: 40px; border-width: 2px; }
 }
-
 @media (max-width: 480px) {
     .top-bar {
-        margin: 10px;
-        padding: 8px 15px;
-        gap: 10px;
-        flex-wrap: wrap;
+        margin: 10px; padding: 8px 15px; gap: 10px;
+        flex-wrap: wrap; justify-content: center;
     }
-
-    .nav-btn {
-        padding: 8px 12px;
-        font-size: 12px;
-        letter-spacing: 0.3px;
-    }
-
+    .nav-btn { padding: 8px 12px; font-size: 12px; letter-spacing: 0.3px; }
     .username {
-        font-size: 13px;
-        padding: 5px 10px;
-        order: -1;
-        flex: 1;
-        text-align: center;
+        font-size: 13px; padding: 5px 10px;
+        order: -1; flex: 1; text-align: center;
     }
-
-    .avatar-topBar {
-        width: 35px;
-        height: 35px;
-    }
-
-    /* Stack navigation on very small screens */
-    .top-bar {
-        justify-content: center;
-    }
-
-    .nav-btn:first-child {
-        margin-right: 10px;
-    }
+    .avatar-topBar { width: 35px; height: 35px; }
+    .nav-btn:first-child { margin-right: 10px; }
 }
 
-/* Dark mode support (optional) */
+/* ==============================
+   Accessibility + System Preferences
+   ============================== */
+/* Dark mode */
 @media (prefers-color-scheme: dark) {
-    .top-bar {
-        background: rgba(26, 32, 44, 0.95);
-        border-color: rgba(255, 255, 255, 0.1);
-    }
-
-    .username {
-        color: #e2e8f0;
-        background: rgba(102, 126, 234, 0.2);
-        border-color: rgba(102, 126, 234, 0.3);
-    }
-
-    .avatar-topBar {
-        border-color: rgba(255, 255, 255, 0.6);
-    }
+    .top-bar { background: rgba(26, 32, 44, 0.95); border-color: rgba(255, 255, 255, 0.1); }
+    .username { color: #e2e8f0; background: rgba(102, 126, 234, 0.2); border-color: rgba(102, 126, 234, 0.3); }
+    .avatar-topBar { border-color: rgba(255, 255, 255, 0.6); }
 }
-
-/* High contrast mode support */
+/* High contrast */
 @media (prefers-contrast: high) {
-    .top-bar {
-        border-width: 2px;
-        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
-    }
-
-    .nav-btn {
-        border: 2px solid rgba(255, 255, 255, 0.3);
-    }
-
-    .avatar-topBar {
-        border-width: 3px;
-    }
+    .top-bar { border-width: 2px; box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3); }
+    .nav-btn { border: 2px solid rgba(255, 255, 255, 0.3); }
+    .avatar-topBar { border-width: 3px; }
 }
-
-/* Reduced motion support */
+/* Reduced motion */
 @media (prefers-reduced-motion: reduce) {
-    .top-bar,
-    .nav-btn,
-    .username,
-    .avatar-link,
-    .avatar-topBar {
+    .top-bar, .nav-btn, .username, .avatar-link, .avatar-topBar {
         animation: none !important;
         transition-duration: 0.01ms !important;
     }
-
-    .nav-btn::before {
-        display: none;
-    }
-
-    .username::before {
-        animation: none;
-    }
-
-    .avatar-link::before {
-        animation: none;
-    }
+    .nav-btn::before, .username::before, .avatar-link::before { animation: none; display: none; }
 }
-
-/* Focus states cho accessibility */
+/* Focus visible */
 .nav-btn:focus-visible,
 .avatar-link:focus-visible {
     outline: 2px solid #667eea;
     outline-offset: 2px;
 }
-
-/* Print styles */
+/* Print */
 @media print {
-    .top-bar {
-        background: white;
-        box-shadow: none;
-        border: 1px solid #ccc;
-    }
-
-    .nav-btn {
-        background: #667eea;
-        box-shadow: none;
-    }
+    .top-bar { background: white; box-shadow: none; border: 1px solid #ccc; }
+    .nav-btn { background: #667eea; box-shadow: none; }
 }
