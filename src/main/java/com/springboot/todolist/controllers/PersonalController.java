@@ -178,8 +178,13 @@ public class PersonalController {
         String userEmail = authentication.getName();
 
         try {
-            userService.updateDisplayName(userEmail, newName);
-            redirectAttributes.addFlashAttribute("success_username", "Name updated successfully!");
+            if(!newName.isEmpty()){
+                userService.updateDisplayName(userEmail, newName);
+                redirectAttributes.addFlashAttribute("success_username", "Name updated successfully!");
+            }else {
+                redirectAttributes.addFlashAttribute("error_username", "Name cannot be empty!");
+            }
+
         } catch (Exception e) {
             redirectAttributes.addFlashAttribute("error_username", "Name updated fail!");
         }
@@ -196,6 +201,10 @@ public class PersonalController {
         String userEmail = authentication.getName();
 
         try {
+            if (newEmail.isEmpty()){
+                redirectAttributes.addFlashAttribute("error_email", "Email cannot be empty");
+                return "redirect:/personal?tab=infor";
+            }
             if (!userService.findByEmail(newEmail).isEmpty()) {
                 redirectAttributes.addFlashAttribute("error_email", "This email is existed!");
                 return "redirect:/personal?tab=infor";
@@ -228,8 +237,14 @@ public class PersonalController {
         String userEmail = authentication.getName();
 
         Optional<User> user = userService.findByEmail(userEmail);
+        if (newPassword.isEmpty()) {
+            redirectAttributes.addFlashAttribute("error_password", "Password cannot be empty!");
+            return "redirect:/personal?tab=infor";
+        }else if (newPassword.length() < 6) {
+            redirectAttributes.addFlashAttribute("error_password", "Password must be at least 6 characters!");
+            return "redirect:/personal?tab=infor";
+        }
         if (user.isPresent()) {
-            // Kiểm tra mật khẩu hiện tại
             if (passwordEncoder.matches(user.get().getPassword(), currentPassword)) {
                 redirectAttributes.addFlashAttribute("error_password", "Current password is incorrect!");
                 return "redirect:/personal?tab=infor";
@@ -248,18 +263,20 @@ public class PersonalController {
     // Upload Avatar
     @PostMapping("/update-avatar")
     public String updateAvatar(@RequestParam("avatarFile") MultipartFile file,
-                               HttpSession session,
+                               @RequestParam String from,
                                RedirectAttributes redirectAttributes) {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         String userEmail = authentication.getName();
 
-        // Kiểm tra file có rỗng không
         if (file.isEmpty()) {
             redirectAttributes.addFlashAttribute("error_avatar", "Please choose a file!");
-            return "redirect:/personal";
+            if ("admin".equals(from)) {
+                return "redirect:/admin";
+            } else {
+                return "redirect:/personal";
+            }
         }
 
-        // Kiểm tra loại file (chỉ cho phép PNG, JPG, JPEG, GIF, WEBP)
         String contentType = file.getContentType();
         if (contentType == null ||
                 !(contentType.equals("image/png") ||
@@ -267,34 +284,36 @@ public class PersonalController {
                         contentType.equals("image/gif") ||
                         contentType.equals("image/webp"))) {
             redirectAttributes.addFlashAttribute("error", "Only accept image PNG, JPG, GIF, WEBP!");
-            return "redirect:/personal";
+            if ("admin".equals(from)) {
+                return "redirect:/admin";
+            } else {
+                return "redirect:/personal";
+            }
         }
 
-        // Giới hạn dung lượng (VD: tối đa 2MB)
-        long maxFileSize = 2 * 1024 * 1024; // 2MB
+        long maxFileSize = 2 * 1024 * 1024;
         if (file.getSize() > maxFileSize) {
             redirectAttributes.addFlashAttribute("error", "Maximum file size 2MB!");
-            return "redirect:/personal";
+            if ("admin".equals(from)) {
+                return "redirect:/admin";
+            } else {
+                return "redirect:/personal";
+            }
         }
 
         try {
-            // Thư mục lưu file (trong static/uploads)
             String uploadDir = "uploads/";
 
-            // Tạo thư mục nếu chưa tồn tại
             File dir = new File(uploadDir);
             if (!dir.exists()) {
                 dir.mkdirs();
             }
 
-            // Tạo tên file duy nhất (timestamp + tên gốc)
             String fileName = System.currentTimeMillis() + "_" + file.getOriginalFilename();
 
-            // Lưu file vào server
             Path path = Paths.get(uploadDir + fileName);
             Files.write(path, file.getBytes());
 
-            // Cập nhật avatar trong DB
             User user = userService.findByEmail(userEmail).orElseThrow();
             user.setAvatar(fileName);
             userService.save(user);
@@ -304,7 +323,11 @@ public class PersonalController {
             redirectAttributes.addFlashAttribute("error", "Error uploading photo!");
         }
 
-        return "redirect:/personal";
+        if ("admin".equals(from)) {
+            return "redirect:/admin";
+        } else {
+            return "redirect:/personal";
+        }
     }
 
     @PostMapping("/reset-avatar")

@@ -29,6 +29,7 @@
                 <form th:action="@{/update-avatar}" method="post" enctype="multipart/form-data" class="upload-form">
                     <label for="avatarFile" class="upload-btn">📷</label>
                     <input type="file" id="avatarFile" name="avatarFile" accept="image/*" onchange="this.form.submit()">
+                    <input type="hidden" value="personal" name="from" >
                     <button type="button" class ="reset-btn" onclick="resetAvatar()">❌</button>
                 </form>
 
