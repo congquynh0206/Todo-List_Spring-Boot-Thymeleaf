@@ -97,9 +97,8 @@ This project is created for learning purposes and demonstrates a complete CRUD w
 
 ### 1. Prerequisites
 - **Java 17+**
-- **Maven** (IDE như IntelliJ/Eclipse thường đã tích hợp)
+- **Maven** (IDEs like IntelliJ/Eclipse usually have this integrated)
 - **SQL Server 2019+**
-- (Optional) **Node.js 18+** nếu muốn phát triển ReactJS frontend
 
 ### 2. Clone the Repository
 ```bashv
