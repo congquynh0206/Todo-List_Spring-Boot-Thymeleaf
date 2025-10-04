@@ -55,7 +55,7 @@ This project is created for learning purposes and demonstrates a complete CRUD w
 <img alt="Image personal page" width="450" src="https://github.com/user-attachments/assets/ac50cde9-e829-484c-9407-ee77f37c71f6" />
 <img alt="Image personal page" width="450" src="https://github.com/user-attachments/assets/bfe658f3-10f0-40fc-9b5e-78f7686a5c03" />
 
-- **Change Information (2 styles):*
+- **Change Information (2 styles):**
   
 <img alt="Image change infor" width="450" src="https://github.com/user-attachments/assets/87fa152d-69bd-4970-ab49-c4e5cdaaeae4" />
 <img alt="Image change infor" width="450" src="https://github.com/user-attachments/assets/4185a587-9adb-410a-8fd1-d175f5c04545" />
@@ -91,6 +91,8 @@ This project is created for learning purposes and demonstrates a complete CRUD w
   - `ADMIN` role: extended access to dashboard, user & task management
 - Sensitive operations (like user management and admin stats) are **restricted to Admin accounts**.
 
+
+
 ## Installation & Setup
 
 ### 1. Prerequisites
@@ -100,8 +102,25 @@ This project is created for learning purposes and demonstrates a complete CRUD w
 - (Optional) **Node.js 18+** nếu muốn phát triển ReactJS frontend
 
 ### 2. Clone the Repository
+```bashv
 git clone https://github.com/congquynh0206/Todo-List_Spring-Boot-Thymeleaf.git
 cd Todo-List_Spring-Boot-Thymeleaf
+```
+
+### Database Configuration
+1. Create a new database in SQL Server, for example: `todo_db`
+2. Open file `src/main/resources/application.properties` and update:
+```properties
+spring.datasource.url=jdbc:sqlserver://localhost:1433;databaseName=todo_db
+spring.datasource.username=YOUR_USERNAME
+spring.datasource.password=YOUR_PASSWORD
+spring.jpa.hibernate.ddl-auto=update
+```
+### Build & Run
+```bash
+mvn clean install
+mvn spring-boot:run
+```
 
 ## Author
 - Name: Nguyễn Công Quỳnh
