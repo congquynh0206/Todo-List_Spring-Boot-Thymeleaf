@@ -23,26 +23,47 @@ This project is created for learning purposes and demonstrates a complete CRUD w
   - Built-in **Thymeleaf** templates
   - Two UI themes (toggle switch)
 - **Demo**
-  - Login Page:
+  - **Login Page:**
+
 <img alt="Image Login" width="450" src="https://github.com/user-attachments/assets/6f45dbf9-1f24-4d88-9f8b-7f91b698b905" />
-  - Sign-up Page:
-  <img alt="Image sign-up" width="450" src="https://github.com/user-attachments/assets/b766d412-3c2c-4a40-abfc-a9a504747c63" />
-  - Home Page (2 style):
-  <img alt="Image home page" width="450" src="https://github.com/user-attachments/assets/d3a5d88d-58ce-422c-8007-59f03f4bd0ee" />  <img alt="Image home page" width="450" src="https://github.com/user-attachments/assets/7766a87b-40b5-41a9-bde2-81dbd4155305" />
-  - Add new todo (2 style):
-  <img alt="Image add new todo" width="450" src="https://github.com/user-attachments/assets/6e506b4a-5918-4462-a2c2-0bff1c69260c" />  <img alt="Image add new todo" width="450" src="https://github.com/user-attachments/assets/c3213d43-145b-43a0-a400-3f2b9511b82f" />
-  - Detail todo (2 style):
-  <img alt="Image detail todo" width="450" src="https://github.com/user-attachments/assets/66afd3e3-f19f-4975-9c97-ad148728337b" />  <img alt="Image detail todo" width="450" src="https://github.com/user-attachments/assets/f630e99b-2a46-44da-957e-088cbc84975c" />
-  - Personal Page(2 style):
-  <img  alt="Image personal page" width="450" src="https://github.com/user-attachments/assets/bfe658f3-10f0-40fc-9b5e-78f7686a5c03" /> <img  alt="Image personal page" width="450" src="https://github.com/user-attachments/assets/ac50cde9-e829-484c-9407-ee77f37c71f6" />
-  - Change Information (2 style):
-  <img alt="Image change infor" width="450" src="https://github.com/user-attachments/assets/4185a587-9adb-410a-8fd1-d175f5c04545" />  <img alt="Image change infor" width="450" src="https://github.com/user-attachments/assets/87fa152d-69bd-4970-ab49-c4e5cdaaeae4" />
-  - Admin page (2 style):
-  <img alt="Image admin" width="450" src="https://github.com/user-attachments/assets/ed7e7add-cc26-4894-b65a-3eb05a7287c8" />
+
+- **Sign-up Page:**
+
+<img alt="Image sign-up" width="450" src="https://github.com/user-attachments/assets/b766d412-3c2c-4a40-abfc-a9a504747c63" />
+
+- **Home Page (2 styles):**
+
+<img alt="Image home page" width="450" src="https://github.com/user-attachments/assets/d3a5d88d-58ce-422c-8007-59f03f4bd0ee" />
+<img alt="Image home page" width="450" src="https://github.com/user-attachments/assets/7766a87b-40b5-41a9-bde2-81dbd4155305" />
+
+- **Add New Todo (2 styles):**
+
+<img alt="Image add new todo" width="450" src="https://github.com/user-attachments/assets/6e506b4a-5918-4462-a2c2-0bff1c69260c" />
+<img alt="Image add new todo" width="450" src="https://github.com/user-attachments/assets/c3213d43-145b-43a0-a400-3f2b9511b82f" />
+
+- **Detail Todo (2 styles):**
+
+<img alt="Image detail todo" width="450" src="https://github.com/user-attachments/assets/66afd3e3-f19f-4975-9c97-ad148728337b" />
+<img alt="Image detail todo" width="450" src="https://github.com/user-attachments/assets/f630e99b-2a46-44da-957e-088cbc84975c" />
+
+- **Personal Page (2 styles):**
+
+<img alt="Image personal page" width="450" src="https://github.com/user-attachments/assets/bfe658f3-10f0-40fc-9b5e-78f7686a5c03" />
+<img alt="Image personal page" width="450" src="https://github.com/user-attachments/assets/ac50cde9-e829-484c-9407-ee77f37c71f6" />
+
+- **Change Information (2 styles):**
+
+<img alt="Image change infor" width="450" src="https://github.com/user-attachments/assets/4185a587-9adb-410a-8fd1-d175f5c04545" />
+<img alt="Image change infor" width="450" src="https://github.com/user-attachments/assets/87fa152d-69bd-4970-ab49-c4e5cdaaeae4" />
+
+- **Admin Page (multiple views):**
+
+<img alt="Image admin" width="450" src="https://github.com/user-attachments/assets/ed7e7add-cc26-4894-b65a-3eb05a7287c8" />
 <img alt="Image admin" width="450" src="https://github.com/user-attachments/assets/d87c5ad3-26e0-4154-8bfb-28d38b487388" />
 <img alt="Image admin" width="450" src="https://github.com/user-attachments/assets/e93ff238-2737-4da7-8166-b682585076e7" />
 <img alt="Image admin" width="450" src="https://github.com/user-attachments/assets/a8188010-c8f7-4927-8dba-503cc991a7ae" />
 <img alt="Image admin" width="450" src="https://github.com/user-attachments/assets/341e6815-8bc5-4a30-93d0-e745d39ade23" />
+
 
 ## Usage
 
